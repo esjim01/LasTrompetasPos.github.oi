@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Las Trompetas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos rápidos de "Alta Categoría" */
+        body { background-color: #f4f7f9; }
+        .stat-card { border-radius: 12px; transition: transform 0.3s; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-icon { font-size: 3rem; opacity: 0.2; position: absolute; right: 10px; bottom: 10px; }
+        .card { border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.05) !important; }
+        .nav-wrapper { padding: 0 20px; }
+        .btn-flat:hover { background-color: rgba(0,0,0,0.05); border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <nav class="indigo darken-4 z-depth-2">
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo hide-on-med-and-down"><i class="material-icons">analytics</i>Las Trompetas</a>
+            <ul class="right">
+                <li><a href="ventas.html" class="tooltipped" data-tooltip="Ir a Ventas"><i class="material-icons left">shopping_cart</i>Ventas</a></li>
+                <li><a href="index.html"><i class="material-icons left">inventory</i>Inventario</a></li>
+                <li><a href="index.html"><i class="material-icons">logout</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 30px; width: 90%;">
+        
+        <div class="row">
+            <div class="col s12">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title grey-text text-darken-2" style="font-size: 1.2rem;">Rango de Análisis</span>
+                        <div class="row" style="margin-bottom: 0;">
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">date_range</i>
+                                <input type="date" id="filtro-desde">
+                                <label class="active">Fecha Inicial</label>
+                            </div>
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">event</i>
+                                <input type="date" id="filtro-hasta">
+                                <label class="active">Fecha Final</label>
+                            </div>
+                            <div class="col s12 m4" style="padding-top: 15px;">
+                                <button class="btn-large indigo darken-4 waves-effect waves-light w100" style="width: 100%; border-radius: 10px;" onclick="cargarDashboard()">
+                                    <i class="material-icons left">search</i>Actualizar Datos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m6 l3">
+                <div class="card stat-card white">
+                    <div class="card-content">
+                        <p class="grey-text uppercase">Ventas Totales</p>
+                        <h4 id="txt-ventas-totales" class="indigo-text text-darken-4">$0</h4>
+                        <i class="material-icons stat-icon indigo-text">payments</i>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card stat-card white">
+                    <div class="card-content">
+                        <p class="grey-text uppercase">Ganancia Neta</p>
+                        <h4 id="txt-ganancia" class="green-text text-darken-2">$0</h4>
+                        <i class="material-icons stat-icon green-text">trending_up</i>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card stat-card white">
+                    <div class="card-content">
+                        <p class="grey-text uppercase">Producto Top</p>
+                        <h5 id="txt-producto-top" class="truncate">Cargando...</h5>
+                        <i class="material-icons stat-icon blue-text">star</i>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6 l3">
+                <div class="card stat-card white">
+                    <div class="card-content">
+                        <p class="grey-text uppercase">Vendedor Estrella</p>
+                        <h5 id="txt-vendedor-top" class="truncate">Cargando...</h5>
+                        <i class="material-icons stat-icon orange-text">emoji_events</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 l8">
+                <div class="card">
+                    <div class="card-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                            <span class="card-title">Rendimiento Comercial</span>
+                            <div class="btn-group">
+                                <button class="btn-flat waves-effect" onclick="cambiarVistaGrafico('vendedor')">Vendedores</button>
+                                <button class="btn-flat waves-effect" onclick="cambiarVistaGrafico('dia')">Por Día</button>
+                            </div>
+                        </div>
+                        <div class="chart-container" style="position: relative; height:40vh;">
+                            <canvas id="chart-ventas"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 l4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Categorías</span>
+                        <div class="chart-container" style="position: relative; height:40vh;">
+                            <canvas id="chart-categorias"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
+                <div class="card horizontal grey darken-4 white-text">
+                    <div class="card-stacked">
+                        <div class="card-content center row">
+                            <div class="col s12 m4">
+                                <p class="grey-text">Clientes Atendidos</p>
+                                <h3 id="txt-total-personas">0</h3>
+                            </div>
+                            <div class="col s12 m4" style="border-left: 1px solid #444; border-right: 1px solid #444;">
+                                <p class="grey-text">Ticket Promedio</p>
+                                <h3 id="txt-ticket-promedio">$0</h3>
+                            </div>
+                            <div class="col s12 m4">
+                                <p class="grey-text">Estado del Negocio</p>
+                                <h5 id="txt-estado" style="margin-top:20px"><span class="badge green white-text">Saludable</span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

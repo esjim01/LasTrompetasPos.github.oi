@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ventas - Las Trompetas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <nav class="indigo darken-4 z-depth-2">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo hide-on-small-only">Las Trompetas</a>
+        <a href="#" class="brand-logo center show-on-small hide-on-med-and-up" style="font-size: 1.2rem">Ventas</a>
+
+        <ul class="right">
+          <li id="li-inventario">
+            <a href="index.html" class="tooltipped" data-position="bottom" data-tooltip="Inventario">
+              <i class="material-icons">inventory</i>
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="cerrarSesion()" class="tooltipped" data-position="bottom" data-tooltip="Salir">
+              <i class="material-icons">exit_to_app</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="main-wrapper">
+      <aside class="sidebar-nav" id="menu-categorias"></aside>
+
+      <section class="content-area">
+        <div class="search-bar-container z-depth-1">
+          <div class="input-field header-search" style="margin: 0">
+            <i class="material-icons prefix indigo-text">search</i>
+            <input type="text" id="busqueda-venta" placeholder="¿Qué busca el cliente?" onkeyup="buscarProductoVenta()" />
+          </div>
+        </div>
+
+        <div id="catalogo-productos" class="products-grid"></div>
+      </section>
+    </div>
+
+
+    <div id="modal-pedido" class="modal bottom-sheet">
+      <div class="modal-content container">
+        <div class="header-pedido" style="display: flex; justify-content: space-between; align-items: center;">
+          <h4 class="bold">Tu Pedido</h4>
+          <button class="modal-close btn-flat"><i class="material-icons">close</i></button>
+        </div>
+
+        <div class="divider"></div>
+
+        <ul class="collection" id="lista-carrito" style="border: none; max-height: 350px; overflow-y: auto"></ul>
+
+        <div class="total-box grey lighten-4">
+          <span style="font-size: 1.2rem" class="grey-text text-darken-2">Total a Pagar:</span>
+          <span style="font-size: 1.5rem" class="bold indigo-text">$<span id="total-venta">0</span></span>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+          <div class="col s12 m6">
+            <p class="grey-text"><b>¿Registrar Asistencia?</b></p>
+            <div class="switch">
+              <label>
+                No <input type="checkbox" id="check-personas" onchange="togglePersonas()" />
+                <span class="lever"></span> Sí
+              </label>
+            </div>
+          </div>
+
+          <div class="col s12 m6" id="contenedor-personas" style="display: none">
+            <div class="input-field">
+              <i class="material-icons prefix">groups</i>
+              <input type="number" id="num-personas" value="1" min="1" />
+              <label class="active" for="num-personas">Asistentes</label>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-large indigo darken-4 waves-effect waves-light btn-finalizar-venta" onclick="confirmarVenta()" style="width: 100%; border-radius: 15px; height: 65px; font-weight: bold; margin-bottom: 20px;">
+          FINALIZAR VENTA <i class="material-icons right">payments</i>
+        </button>
+      </div>
+    </div>
+    <div class="floating-cart">
+      <a href="#modal-pedido" class="btn-floating btn-large waves-effect waves-light amber darken-3 modal-trigger pulse">
+        <i class="material-icons">shopping_cart</i>
+        <span id="badge-cart" class="new badge red pulse" data-badge-caption="">0</span>
+      </a>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/ventas.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        M.Modal.init(document.querySelectorAll(".modal"), {
+          preventScrolling: true,
+          outDuration: 250
+        });
+        M.Tooltip.init(document.querySelectorAll(".tooltipped"));
+      });
+    </script>
+  </body>
+</html>

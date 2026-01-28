@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso - Las Trompetas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="login-body">
+
+    <div class="card login-card">
+        <div class="card-content">
+            <div class="logo-container">
+                <img src="img/Las trompetas.jpg" alt="Las Trompetas Logo" onerror="this.src='https://via.placeholder.com/150'">
+                <h5 class="indigo-text text-darken-4" style="font-weight: 700; margin-top: 15px;">Bienvenido</h5>
+                <p class="grey-text">Panel Administrativo</p>
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">person</i>
+                <input type="text" id="user" autocomplete="username">
+                <label for="user">Usuario</label>
+            </div>
+
+            <div class="input-field">
+                <i class="material-icons prefix">lock</i>
+                <input type="password" id="pass" autocomplete="current-password">
+                <label for="pass">Contraseña</label>
+            </div>
+
+            <button class="btn btn-login waves-effect waves-light" id="btn-entrar" onclick="iniciarSesion()">
+                Entrar <i class="material-icons right">login</i>
+            </button>
+
+            <div class="loading-overlay" id="loader">
+                <div class="progress indigo lighten-4">
+                    <div class="indeterminate indigo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        async function iniciarSesion() {
+            const user = document.getElementById("user").value.trim();
+            const pass = document.getElementById("pass").value.trim();
+            const btn = document.getElementById("btn-entrar");
+            const loader = document.getElementById("loader");
+
+            if (!user || !pass) return M.toast({html: 'Completa los datos', classes: 'orange'});
+
+            btn.disabled = true;
+            loader.style.display = "block";
+
+            try {
+                const res = await fetch("/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user, pass }),
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem("usuarioRol", data.rol);
+                    localStorage.setItem("usuarioNombre", data.user);
+                    window.location.href = (data.rol === "ADMIN") ? "index.html" : "ventas.html";
+                } else {
+                    M.toast({html: data.mensaje, classes: 'red'});
+                    btn.disabled = false;
+                    loader.style.display = "none";
+                }
+            } catch (error) {
+                M.toast({html: 'Error de servidor', classes: 'red'});
+                btn.disabled = false;
+                loader.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Las Trompetas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="grey lighten-4">
+    <nav class="indigo darken-4 z-depth-2">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo"><i class="material-icons left">inventory</i>Inventario</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="dashboard.html"><i class="material-icons left">insert_chart</i>Dashboard</a></li>
+                <li><a href="usuarios.html"><i class="material-icons left">verified_user</i>Usuarios</a></li>
+                <li><a href="ventas.html" class="amber darken-3 btn" style="border-radius: 8px;">Punto de Venta</a></li>
+                <li><a href="#" onclick="cerrarSesion()"><i class="material-icons">exit_to_app</i></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 30px; width: 95%;">
+        <div class="row">
+            <div class="col s12 l4">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-content">
+                        <span class="card-title indigo-text text-darken-4"><b>Nuevo Producto</b></span>
+                        
+                        <div class="input-field">
+                            <i class="material-icons prefix">label</i>
+                            <input type="text" id="nombre">
+                            <label for="nombre">Nombre</label>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="material-icons prefix">category</i>
+                            <select id="categoria">
+                                <option value="" disabled selected>Categoría</option>
+                                <option value="Cervezas">Cervezas</option>
+                                <option value="Rones">Rones</option>
+                                <option value="Aguardientes">Aguardientes</option>
+                                <option value="Whisky">Whisky</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+
+                        <div class="row" style="margin-bottom: 0;">
+                            <div class="input-field col s6">
+                                <input type="number" id="cantidad">
+                                <label for="cantidad">Stock</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input type="number" id="precio">
+                                <label for="precio">P. Venta</label>
+                            </div>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="material-icons prefix">attach_money</i>
+                            <input type="number" id="costo">
+                            <label for="costo">Costo Neto (Inversión)</label>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn indigo darken-1 btn-small" style="border-radius: 8px;">
+                                <span><i class="material-icons">image</i></span>
+                                <input type="file" id="input-imagen" accept="image/*">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Subir foto">
+                            </div>
+                        </div>
+
+                        <img id="preview-img" src="" alt="Vista previa" style="display:none; width:100%; max-height:120px; object-fit:contain; margin:10px 0; border-radius:8px;">
+
+                        <button class="btn-large indigo accent-4 waves-effect waves-light w100" style="width:100%; border-radius:12px; margin-top:15px;" onclick="guardarProducto()">
+                            Guardar Producto <i class="material-icons right">add_circle</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 l8">
+                <div class="card-panel z-depth-1" style="border-radius: 15px; padding: 10px 20px;">
+                    <div class="input-field" style="margin:0;">
+                        <i class="material-icons prefix indigo-text">search</i>
+                        <input type="text" id="busqueda-venta" onkeyup="filtrarProductos()" placeholder="Buscar en el inventario...">
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="highlight inventory-table responsive-table">
+                        <thead class="grey lighten-3">
+                            <tr>
+                                <th>Producto</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                                <th>Venta</th>
+                                <th>Costo</th>
+                                <th>Fecha</th>
+                                <th class="center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-cuerpo"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 40px;">
+            <div class="col s12">
+                <h5 class="grey-text text-darken-2"><i class="material-icons left">history</i> Movimientos Recientes</h5>
+                <div class="card" style="border-radius: 15px; overflow: hidden;">
+                    <table class="highlight">
+                        <thead class="indigo darken-4 white-text">
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Vendedor</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-historial"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-editar" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 class="indigo-text"><b>Editar Información</b></h5>
+            <hr>
+            <div class="row">
+                <input type="hidden" id="edit-nombre-original">
+                <div class="input-field col s12">
+                    <input type="text" id="edit-nombre" class="active">
+                    <label class="active">Nombre del Producto</label>
+                </div>
+                <div class="input-field col s4">
+                    <input type="number" id="edit-cantidad">
+                    <label class="active">Stock</label>
+                </div>
+                <div class="input-field col s4">
+                    <input type="number" id="edit-precio">
+                    <label class="active">Precio Venta</label>
+                </div>
+                <div class="input-field col s4">
+                    <input type="number" id="edit-costo">
+                    <label class="active">Costo Neto</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="modal-close btn-flat grey-text">Cancelar</button>
+            <button class="btn green darken-2" onclick="actualizarProducto()" style="border-radius: 8px;">
+                Guardar Cambios <i class="material-icons right">check</i>
+            </button>
+        </div>
+    </div>
+
+    <div id="modal-eliminar" class="modal">
+        <div class="modal-content center-align">
+            <i class="material-icons large red-text">delete_forever</i>
+            <h4>¿Eliminar producto?</h4>
+            <p id="nombre-eliminar-display" class="bold indigo-text"></p>
+            <input type="hidden" id="nombre-eliminar-hidden">
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+            <button class="modal-close btn-flat">Atrás</button>
+            <button class="btn red" onclick="confirmarBorrado()">Eliminar Definitivamente</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/inventory.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            M.Modal.init(document.querySelectorAll('.modal'));
+            M.FormSelect.init(document.querySelectorAll('select'));
+        });
+    </script>
+</body>
+</html>
