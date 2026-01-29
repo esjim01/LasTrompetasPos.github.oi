@@ -20,7 +20,7 @@ const CATEGORIAS_DEFINIDAS = [
 (function () {
   function verificarSesion() {
     const rol = localStorage.getItem("usuarioRol");
-    if (!rol) window.location.replace("login.html");
+    if (!rol) window.location.replace("index.html");
 
     // --- LÓGICA DE RESTRICCIÓN PARA EL BOTÓN INVENTARIO ---
     // Esperamos a que el DOM cargue para buscar el ID
@@ -37,10 +37,10 @@ const CATEGORIAS_DEFINIDAS = [
   }
   verificarSesion();
 })();
-
+//
 function cerrarSesion() {
   localStorage.clear();
-  window.location.replace("login.html");
+  window.location.replace("index.html");//
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -195,7 +195,7 @@ function actualizarInterfazCarrito() {
   let total = 0;
   let cantidadTotal = 0;
 
-  carrito.forEach((item, index) => {
+  carrito.forEach((item, index) => {//
     const subtotal = item.precio * item.cantidad;
     total += subtotal;
     cantidadTotal += item.cantidad;

@@ -14,69 +14,40 @@ const RUTA_INVENTARIO = path.join(RUTA_DATA, "inventario.xlsx");
 const RUTA_VENTAS = path.join(RUTA_DATA, "ventas.xlsx");
 const RUTA_USUARIOS = path.join(RUTA_DATA, "usuarios.xlsx");
 
+// Crear carpeta data si no existe
 if (!fs.existsSync(RUTA_DATA)) fs.mkdirSync(RUTA_DATA);
 
 // --- MIDDLEWARES ---
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));// Para servir archivos estáticos como CSS, JS, imágenes
+app.use(express.static(__dirname));// Para servir archivos raíz como index.html
 
-const USUARIOS_SISTEMA = [
-  { usuario: "admin", clave: "1234", rol: "ADMIN" },
-  { usuario: "vendedor1", clave: "5678", rol: "VENDEDOR" },
-];
 
-// --- FUNCIONES DE APOYO (LÓGICA MEJORADA) ---
 
-function leerInventario() {
-  try {
-    if (!fs.existsSync(RUTA_INVENTARIO)) return [];
-    const libro = XLSX.readFile(RUTA_INVENTARIO);
-    const datos = XLSX.utils.sheet_to_json(libro.Sheets[libro.SheetNames[0]]);
-    return datos.map((p) => ({
-      nombre: p.nombre ? String(p.nombre).trim() : "Sin Nombre",
-      categoria: p.categoria || "Otros",
-      cantidad: Number(p.cantidad) || 0,
-      precio: Number(p.precio) || 0,
-      fecha_registro: p.fecha_registro || new Date().toLocaleDateString(),
-      costo: Number(p.costo) || 0,
-    }));
-  } catch (e) {
-    return [];
-  }
-}
+// Rutas para servir HTML
+// --- 🔥 AGREGA ESTO AQUÍ: RUTAS SEGURAS A TUS PÁGINAS HTML 🔥 ---
+// Esto arregla el error 404 del Dashboard y los menús para siempre.
 
-function leerVentas() {
-  try {
-    if (!fs.existsSync(RUTA_VENTAS)) return [];
-    const libro = XLSX.readFile(RUTA_VENTAS);
-    return XLSX.utils.sheet_to_json(libro.Sheets[libro.SheetNames[0]]);
-  } catch (e) {
-    return [];
-  }
-}
+// 1. Ruta para el Dashboard
+app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, "public", "dashboard.html")));
+app.get("/dashboard.html", (req, res) => res.sendFile(path.join(__dirname, "public", "dashboard.html")));
 
-function guardarExcel(ruta, datos) {
-  try {
-    const nuevoLibro = XLSX.utils.book_new();
-    const nuevaHoja = XLSX.utils.json_to_sheet(datos);
-    XLSX.utils.book_append_sheet(nuevoLibro, nuevaHoja, "Datos");
+// 2. Ruta para Inventario
+app.get("/inventario", (req, res) => res.sendFile(path.join(__dirname, "public", "inventario.html")));
+app.get("/inventario.html", (req, res) => res.sendFile(path.join(__dirname, "public", "inventario.html")));
 
-    // El error EBUSY ocurre exactamente aquí:
-    XLSX.writeFile(nuevoLibro, ruta);
-    console.log(`✅ Archivo guardado: ${path.basename(ruta)}`);
-    return true;
-  } catch (error) {
-    if (error.code === "EBUSY") {
-      console.error(
-        `❌ ERROR CRÍTICO: El archivo ${path.basename(ruta)} está abierto en Excel. Ciérralo para poder guardar.`,
-      );
-    } else {
-      console.error("❌ Error al guardar Excel:", error);
-    }
-    return false;
-  }
-}
+// 3. Ruta para Ventas
+app.get("/ventas", (req, res) => res.sendFile(path.join(__dirname, "public", "ventas.html")));
+app.get("/ventas.html", (req, res) => res.sendFile(path.join(__dirname, "public", "ventas.html")));
+
+// 4. Ruta para Usuarios
+app.get("/usuarios", (req, res) => res.sendFile(path.join(__dirname, "public", "usuarios.html")));
+app.get("/usuarios.html", (req, res) => res.sendFile(path.join(__dirname, "public", "usuarios.html")));
+
+// Ruta para el Login
+app.get("/index", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
+app.get("/index.html", (req, res) => res.sendFile(path.join(__dirname, "public", "index.html")));
 
 // --- CONFIGURACIÓN MULTER ---
 const storage = multer.diskStorage({
@@ -99,9 +70,62 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// --- RUTAS API ---
+// --- FUNCIONES DE APOYO (LÓGICA MEJORADA) ---
+// Función para leer inventario
+function leerInventario() {
+  try {
+    if (!fs.existsSync(RUTA_INVENTARIO)) return [];
+    const libro = XLSX.readFile(RUTA_INVENTARIO);
+    const datos = XLSX.utils.sheet_to_json(libro.Sheets[libro.SheetNames[0]]);
+    return datos.map((p) => ({
+      nombre: p.nombre ? String(p.nombre).trim() : "Sin Nombre",
+      categoria: p.categoria || "Otros",
+      cantidad: Number(p.cantidad) || 0,
+      precio: Number(p.precio) || 0,
+      fecha_registro: p.fecha_registro || new Date().toLocaleDateString(),
+      costo: Number(p.costo) || 0,
+    }));
+  } catch (e) {
+    return [];
+  }
+}
+// Función para leer ventas
+function leerVentas() {
+  try {
+    if (!fs.existsSync(RUTA_VENTAS)) return [];
+    const libro = XLSX.readFile(RUTA_VENTAS);
+    return XLSX.utils.sheet_to_json(libro.Sheets[libro.SheetNames[0]]);
+  } catch (e) {
+    return [];
+  }
+}
 
-app.post("/api/login", (req, res) => {
+// Función para guardar datos en un archivo Excel
+function guardarExcel(ruta, datos) {
+  try {
+    const nuevoLibro = XLSX.utils.book_new();
+    const nuevaHoja = XLSX.utils.json_to_sheet(datos);
+    XLSX.utils.book_append_sheet(nuevoLibro, nuevaHoja, "Datos");
+
+    // El error EBUSY ocurre exactamente aquí:
+    XLSX.writeFile(nuevoLibro, ruta);
+    console.log(`✅ Archivo guardado: ${path.basename(ruta)}`);
+    return true;
+  } catch (error) {
+    if (error.code === "EBUSY") {
+      console.error(
+        `❌ ERROR CRÍTICO: El archivo ${path.basename(ruta)} está abierto en Excel. Ciérralo para poder guardar.`,
+      );
+    } else {
+      console.error("❌ Error al guardar Excel:", error);
+    }
+    return false;
+  }
+}
+
+// --- RUTAS API ---
+// --- RUTA DE LOGIN MEJORADA ---
+app.post("/api/index", (req, res) => {
   try {
     const usuarioInput = (req.body.usuario || req.body.user || "")
       .toString()
@@ -156,6 +180,7 @@ app.post("/api/login", (req, res) => {
   }
 });
 
+// --- RUTAS DE INVENTARIO Y VENTAS ---
 app.get("/api/inventario", (req, res) => {
     try {
         const inventario = leerInventario(); // Asegúrate de que esta función devuelva el array
@@ -191,6 +216,7 @@ app.post("/api/inventario/agregar", upload.single("imagen"), (req, res) => {
   }
 });
 
+// --- RUTA DE HISTORIAL DE VENTAS CORREGIDA ---
 app.get("/api/ventas/historial", (req, res) => {
     try {
         if (fs.existsSync(RUTA_VENTAS)) {
@@ -290,6 +316,7 @@ app.post("/api/ventas/anular", (req, res) => {
   }
 });
 
+
 // --- RUTA PARA EDITAR PRODUCTO ---
 app.put("/api/inventario/editar", (req, res) => {
   const { nombreOriginal, nombreNuevo, cantidad, precio, costo } = req.body;
@@ -329,51 +356,7 @@ app.delete("/api/inventario/eliminar", (req, res) => {
 
 app.listen(PORT, () => console.log(`🚀 Servidor en puerto ${PORT}`));
 
-// --- RUTA DE LOGIN DESDE EXCEL ---
-app.post("/api/login", (req, res) => {
-  try {
-    const usuarioInput = req.body.usuario || req.body.user;
-    const claveInput = req.body.clave || req.body.pass;
-
-    // 1. Leemos el archivo de usuarios
-    const RUTA_USUARIOS = path.join(RUTA_DATA, "usuarios.xlsx");
-
-    // Si no existe el archivo, creamos uno por defecto para que no te quedes fuera
-    if (!fs.existsSync(RUTA_USUARIOS)) {
-      const adminInicial = [{ usuario: "admin", clave: "1234", rol: "ADMIN" }];
-      guardarExcel(RUTA_USUARIOS, adminInicial);
-    }
-
-    const libro = XLSX.readFile(RUTA_USUARIOS);
-    const usuarios = XLSX.utils.sheet_to_json(
-      libro.Sheets[libro.SheetNames[0]],
-    );
-
-    // 2. Buscamos al usuario
-    const encontrado = usuarios.find(
-      (u) =>
-        String(u.usuario).trim() === usuarioInput &&
-        String(u.clave).trim() === claveInput,
-    );
-
-    if (encontrado) {
-      res.json({
-        exito: true,
-        rol: encontrado.rol,
-        user: encontrado.usuario,
-      });
-    } else {
-      console.log(`❌ Intento de login fallido para: ${usuarioInput}`);
-      res
-        .status(401)
-        .json({ exito: false, mensaje: "Usuario o clave incorrectos" });
-    }
-  } catch (error) {
-    console.error("Error en login excel:", error);
-    res.status(500).json({ exito: false });
-  }
-});
-
+// --- RUTAS DE USUARIOS ---
 // Obtener lista de usuarios
 app.get("/api/usuarios/ver", (req, res) => {
   try {

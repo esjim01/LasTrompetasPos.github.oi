@@ -1,7 +1,7 @@
 // login.js - Proyecto Las Trompetas
 
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");
+    const loginForm = document.getElementById("login-form");//
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const claveVal = document.getElementById("clave").value;
 
             try {
-                const response = await fetch("/api/login", {
+                const response = await fetch("/api/index", { //
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Redirección según el rol
                     setTimeout(() => {
                         if (data.rol === "ADMIN") {
-                            window.location.href = "index.html"; // Panel de Inventario
+                            window.location.href = "inventario.html"; // Panel de Inventario
                         } else {
                             window.location.href = "ventas.html"; // Panel de POS
                         }

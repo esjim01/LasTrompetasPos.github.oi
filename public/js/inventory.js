@@ -4,11 +4,11 @@
 (function () {
   function verificarSesion() {
     const rol = localStorage.getItem("usuarioRol");
-    if (!rol) window.location.replace("login.html");
+    if (!rol) window.location.replace("/");
   }
   verificarSesion();
 })();
-
+// --- INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", function () {
   M.AutoInit();
   const rol = localStorage.getItem("usuarioRol");
@@ -67,26 +67,31 @@ async function cargarInventario() {
     productos.forEach((p) => {
       // Definimos valores seguros para evitar errores en el modal
       const nombre = p.nombre || '';
+      const categoria = p.categoria || 'Sin categoría';
       const cantidad = Number(p.cantidad) || 0;
       const precio = Number(p.precio) || 0;
       const costo = Number(p.costo) || 0;
+      const fecha = p.fecha_registro || '-';
       
       const colorBadge = cantidad < 5 ? "red" : "indigo";
+
+      // Escapar comillas simples en el nombre para el onclick
+      const nombreEscapado = nombre.replace(/'/g, "\\'");
 
       // Insertamos la fila directamente
       tabla.innerHTML += `
                 <tr>
                     <td>${nombre}</td>
-                    <td class="indigo-text"><b>${p.categoria || 'Sin categoría'}</b></td>
+                    <td class="indigo-text"><b>${categoria}</b></td>
                     <td><span class="new badge ${colorBadge}" data-badge-caption="und">${cantidad}</span></td>
                     <td>$${precio.toLocaleString()}</td>
                     <td>$${costo.toLocaleString()}</td>
-                    <td>${p.fecha_registro || '-'}</td>
+                    <td>${fecha}</td>
                     <td>
-                        <button class="btn-floating btn-small blue" onclick="abrirModalEditar('${nombre}', ${cantidad}, ${precio}, ${costo})">
+                        <button class="btn-floating btn-small blue" onclick="abrirModalEditar('${nombreEscapado}', ${cantidad}, ${precio}, ${costo})">
                             <i class="material-icons">edit</i>
                         </button>
-                        <button class="btn-floating btn-small red" onclick="prepararEliminacion('${nombre}')">
+                        <button class="btn-floating btn-small red" onclick="prepararEliminacion('${nombreEscapado}')">
                             <i class="material-icons">delete</i>
                         </button>
                     </td>
@@ -134,11 +139,13 @@ async function guardarProducto() {
 
       // 1. Limpiar el formulario
       nombreInput.value = "";
+      categoriaInput.value = "";
       cantidadInput.value = "";
       precioInput.value = "";
+      costoInput.value = "";
       if (inputImagen) inputImagen.value = "";
       const preview = document.getElementById("preview-img");
-      if (preview) preview.style.display = "none";
+      if (preview) { preview.style.display = "none"; preview.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; }
 
       // 2. REFRESCAR LA TABLA SIN RECARGAR PÁGINA
       await cargarInventario();
@@ -171,6 +178,7 @@ function filtrarProductos() {
     });
 }
 
+// --- ACTUALIZAR PRODUCTO ---
 async function actualizarProducto() {
   // Usamos una función auxiliar para capturar el valor o devolver vacío si no existe
   const getVal = (id) =>
@@ -207,6 +215,7 @@ async function actualizarProducto() {
   }
 }
 
+// --- ELIMINAR PRODUCTO ---
 async function confirmarBorrado() {
   const nombre = document.getElementById("nombre-eliminar-hidden").value;
   const res = await fetch("/api/inventario/eliminar", {
@@ -249,6 +258,7 @@ async function cargarHistorial() {
   }
 }
 
+// --- ANULAR VENTA ---
 async function anularVenta(id) {
   if (!confirm("¿Anular venta?")) return;
   const res = await fetch("/api/ventas/anular", {
@@ -262,10 +272,11 @@ async function anularVenta(id) {
     cargarInventario();
   }
 }
-
-function abrirModalEditar(nombre, cantidad, precio, costo) {
+// --- FUNCIONES MODALES ---
+function abrirModalEditar(nombre, categoria, cantidad, precio, costo) {
   document.getElementById("edit-nombre-original").value = nombre;
   document.getElementById("edit-nombre").value = nombre;
+  document.getElementById("edit-categoria").value = categoria;
   document.getElementById("edit-cantidad").value = cantidad;
   document.getElementById("edit-precio").value = precio;
   if (document.getElementById("edit-costo")) {
@@ -274,7 +285,7 @@ function abrirModalEditar(nombre, cantidad, precio, costo) {
   M.updateTextFields();
   M.Modal.getInstance(document.getElementById("modal-editar")).open();
 }
-
+// Preparar eliminación
 function prepararEliminacion(nombre) {
   document.getElementById("nombre-eliminar-display").innerText = nombre;
   document.getElementById("nombre-eliminar-hidden").value = nombre;
@@ -284,6 +295,8 @@ function prepararEliminacion(nombre) {
 // --- FUNCIÓN SALIR CORREGIDA ---
 function cerrarSesion() {
   console.log("Cerrando sesión...");
-  localStorage.clear(); // Borra rol, nombre, etc.
-  window.location.replace("login.html"); // Redirección forzada
+    if (confirm("¿Estás seguro de cerrar sesión?")) {
+        localStorage.clear();
+        window.location.replace("/");  // Va a la raíz
+    }
 }

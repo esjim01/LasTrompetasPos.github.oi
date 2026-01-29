@@ -6,16 +6,16 @@
     <title>Inventario - Las Trompetas</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="grey lighten-4">
     <nav class="indigo darken-4 z-depth-2">
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo"><i class="material-icons left">inventory</i>Inventario</a>
             <ul class="right hide-on-med-and-down">
-                <li><a href="dashboard.html"><i class="material-icons left">insert_chart</i>Dashboard</a></li>
-                <li><a href="usuarios.html"><i class="material-icons left">verified_user</i>Usuarios</a></li>
-                <li><a href="ventas.html" class="amber darken-3 btn" style="border-radius: 8px;">Punto de Venta</a></li>
+                <li><a href="/public/dashboard.html"><i class="material-icons left">insert_chart</i>Dashboard</a></li>
+                <li><a href="/public/usuarios.html"><i class="material-icons left">verified_user</i>Usuarios</a></li>
+                <li><a href="/public/ventas.html" class="amber darken-3 btn" style="border-radius: 8px;">Punto de Venta</a></li>
                 <li><a href="#" onclick="cerrarSesion()"><i class="material-icons">exit_to_app</i></a></li>
             </ul>
         </div>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
 
-                        <img id="preview-img" src="" alt="Vista previa" style="display:none; width:100%; max-height:120px; object-fit:contain; margin:10px 0; border-radius:8px;">
+                        <img id="preview-img" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Vista previa" style="display:none; width:100%; max-height:120px; object-fit:contain; margin:10px 0; border-radius:8px;">
 
                         <button class="btn-large indigo accent-4 waves-effect waves-light w100" style="width:100%; border-radius:12px; margin-top:15px;" onclick="guardarProducto()">
                             Guardar Producto <i class="material-icons right">add_circle</i>

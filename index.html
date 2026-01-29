@@ -13,7 +13,7 @@
     <div class="card login-card">
         <div class="card-content">
             <div class="logo-container">
-                <img src="img/Las trompetas.jpg" alt="Las Trompetas Logo" onerror="this.src='https://via.placeholder.com/150'">
+                <img src="img/Las_trompetas.jpg" alt="Las Trompetas Logo" onerror="this.src='https://via.placeholder.com/150'">
                 <h5 class="indigo-text text-darken-4" style="font-weight: 700; margin-top: 15px;">Bienvenido</h5>
                 <p class="grey-text">Panel Administrativo</p>
             </div>
@@ -54,9 +54,9 @@
 
             btn.disabled = true;
             loader.style.display = "block";
-
+            // Realizar solicitud de login
             try {
-                const res = await fetch("/api/login", {
+                const res = await fetch("/api/index", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ user, pass }),
@@ -67,18 +67,25 @@
                 if (res.ok) {
                     localStorage.setItem("usuarioRol", data.rol);
                     localStorage.setItem("usuarioNombre", data.user);
-                    window.location.href = (data.rol === "ADMIN") ? "index.html" : "ventas.html";
+                    window.location.href = (data.rol === "ADMIN") ? "inventario.html" : "ventas.html" ;
                 } else {
-                    M.toast({html: data.mensaje, classes: 'red'});
+                    M.toast({html: data.mensaje || 'Credenciales inválidas', classes: 'red'});
                     btn.disabled = false;
                     loader.style.display = "none";
                 }
             } catch (error) {
+                console.error("Error en login:", error);
                 M.toast({html: 'Error de servidor', classes: 'red'});
                 btn.disabled = false;
                 loader.style.display = "none";
             }
         }
+        // Permitir login con Enter
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('pass').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') iniciarSesion();
+            });
+        });
     </script>
 </body>
 </html>
