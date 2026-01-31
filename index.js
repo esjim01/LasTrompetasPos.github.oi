@@ -341,19 +341,61 @@ app.put("/api/inventario/editar", (req, res) => {
   }
 });
 
-// --- RUTA PARA ELIMINAR PRODUCTO ---
+
+// --- RUTA ELIMINAR PRODUCTO (Excel + Imagen) ---
 app.delete("/api/inventario/eliminar", (req, res) => {
   const { nombre } = req.body;
+  
+  // Definimos dónde están las imágenes
+  const carpetaImg = path.join(__dirname, 'public/img');
+
   try {
+    // 1. LEER EXCEL (Usamos tu función existente)
     let inventario = leerInventario();
+
+    // 2. BUSCAR EL PRODUCTO (Para saber qué foto borrar antes de eliminarlo)
+    const productoAborrar = inventario.find((p) => p.nombre === nombre);
+
+    if (productoAborrar) {
+        // --- INICIO BLOQUE BORRAR IMAGEN ---
+        // Convertimos el nombre del producto al nombre del archivo (normalización)
+        const nombreArchivo = nombre
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "") // Quitar tildes
+            .replace(/[^a-z0-9]/g, "_")      // Caracteres raros a guion bajo
+            .replace(/_+/g, "_")             // Evitar guiones dobles
+            .replace(/^_|_$/g, "")           // Trim
+            + ".jpg";                        // Extensión
+
+        const rutaCompleta = path.join(carpetaImg, nombreArchivo);
+
+        // Verificamos si la imagen existe y la borramos
+        if (fs.existsSync(rutaCompleta)) {
+            try {
+                fs.unlinkSync(rutaCompleta);
+                console.log(`Imagen eliminada físicamente: ${nombreArchivo}`);
+            } catch (errorImg) {
+                console.error("No se pudo borrar la imagen del disco:", errorImg);
+                // No detenemos el proceso, lo importante es borrar del Excel
+            }
+        }
+        // --- FIN BLOQUE BORRAR IMAGEN ---
+    }
+
+    // 3. ELIMINAR DEL ARRAY (Lógica de datos)
     const filtrado = inventario.filter((p) => p.nombre !== nombre);
+
+    // 4. GUARDAR CAMBIOS EN EXCEL (Usamos tu función existente)
     guardarExcel(RUTA_INVENTARIO, filtrado);
-    res.json({ mensaje: "Producto eliminado" });
+
+    res.json({ mensaje: "Producto e imagen eliminados correctamente" });
+
   } catch (e) {
-    res.status(500).json({ mensaje: "Error" });
+    console.error("Error en eliminación:", e);
+    res.status(500).json({ mensaje: "Error al eliminar producto" });
   }
 });
-
 app.listen(PORT, () => console.log(`🚀 Servidor en puerto ${PORT}`));
 
 // --- RUTAS DE USUARIOS ---

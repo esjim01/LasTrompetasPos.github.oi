@@ -1,407 +1,296 @@
-// ventas.js - Proyecto Las Trompetas (REPARADO)
+// ventas.js - Proyecto Las Trompetas (OPTIMIZADO)
 
-// --- 2. VARIABLES GLOBALES ---
+// --- VARIABLES GLOBALES ---
 let carrito = [];
 let todosLosProductos = [];
-let productosBase = [];
-const CATEGORIAS_DEFINIDAS = [
-  "Todas",
-  "Cervezas",
-  "Rones",
-  "Aguardientes",
-  "Whisky",
-  "Vinos",
-  "Energizantes",
-  "Gaseosas",
-  "Otros",
-];
+const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whisky", "Comida", "Otros"];
 
-// --- 1. SEGURIDAD Y SESIÓN (En ventas.js) ---
+// --- VERIFICACIÓN DE SESIÓN ---
 (function () {
-  function verificarSesion() {
     const rol = localStorage.getItem("usuarioRol");
-    if (!rol) window.location.replace("index.html");
+    if (!rol) window.location.replace("/");
 
-    // --- LÓGICA DE RESTRICCIÓN PARA EL BOTÓN INVENTARIO ---
-    // Esperamos a que el DOM cargue para buscar el ID
     document.addEventListener("DOMContentLoaded", () => {
-      const liInventario = document.getElementById("li-inventario");
-
-      if (liInventario) {
-        if (rol !== "ADMIN") {
-          // Si no es admin, borramos el botón por completo de la vista
-          liInventario.style.display = "none";
+        const liInventario = document.getElementById("li-inventario");
+        // Solo ADMIN puede ver el botón de inventario en el nav
+        if (liInventario && rol !== "ADMIN") {
+            liInventario.style.display = "none";
         }
-      }
     });
-  }
-  verificarSesion();
 })();
-//
+
 function cerrarSesion() {
-  localStorage.clear();
-  window.location.replace("index.html");//
+    if(confirm("¿Cerrar sesión?")) {
+        localStorage.clear();
+        window.location.replace("/");
+    }
 }
 
+// --- INICIO ---
 document.addEventListener("DOMContentLoaded", function () {
-  M.AutoInit();
-  cargarDatos();
-  // Intentamos cargar el historial al iniciar por si la tabla existe en la página actual
-  if (document.getElementById("tabla-historial")) {
-    cargarHistorial();
-  }
+    M.AutoInit();
+    cargarDatos();
 });
 
-// --- 3. LÓGICA DE PRODUCTOS ---
+// --- CARGA DE DATOS ---
 async function cargarDatos() {
-  try {
-    const res = await fetch("/api/inventario/ver");
-    const data = await res.json(); // Guardamos el resultado en una variable temporal
+    try {
+        const res = await fetch("/api/inventario/ver");
+        if (!res.ok) throw new Error("Error server");
+        todosLosProductos = await res.json();
 
-    todosLosProductos = data;
-    productosBase = data; // <<--- ESTA ES LA LÍNEA CLAVE QUE DEBES AGREGAR
-
-    generarMenuCategorias();
-    renderizarCatalogo(todosLosProductos);
-  } catch (error) {
-    M.toast({ html: "Error al cargar productos", classes: "red" });
-  }
+        generarMenuCategorias();
+        renderizarCatalogo(todosLosProductos);
+    } catch (error) {
+        console.error(error);
+        M.toast({ html: "Error de conexión con inventario", classes: "red" });
+    }
 }
 
+// --- GENERACIÓN DE MENÚS (Escritorio y Móvil) ---
 function generarMenuCategorias() {
-  const menu = document.getElementById("menu-categorias");
-  if (!menu) return;
+    const menuDesktop = document.getElementById("menu-categorias");
+    const menuMobile = document.getElementById("menu-categorias-movil");
+    
+    if (!menuDesktop) return;
 
-  const iconos = {
-    Todas: "grid_view",
-    Cervezas: "sports_bar",
-    Rones: "liquor",
-    Aguardientes: "local_bar",
-    Whisky: "wine_bar",
-    Vinos: "icecream",
-    Energizantes: "bolt",
-    Gaseosas: "local_drink",
-    Otros: "more_horiz",
-  };
+    const iconos = {
+        Todas: "grid_view", Cervezas: "sports_bar", Rones: "liquor",
+        Aguardientes: "local_bar", Whisky: "wine_bar", Comida: "restaurant", Otros: "more_horiz"
+    };
 
-  menu.innerHTML = `
-        <p class="sidebar-title">Navegación</p>
-        ${CATEGORIAS_DEFINIDAS.map(
-          (cat) => `
-            <div class="cat-item ${cat === "Todas" ? "active" : ""}" 
-                 onclick="ejecutarFiltro('${cat}', this)">
-                <i class="material-icons">${iconos[cat] || "label"}</i>
-                <span>${cat}</span>
-            </div>
-        `,
-        ).join("")}
-    `;
+    // HTML para escritorio (Lista vertical)
+    let htmlDesktop = `<div class="indigo lighten-5" style="padding:15px; font-weight:bold; color:#1a237e">CATEGORÍAS</div>`;
+    
+    // HTML para móvil (Chips horizontales)
+    let htmlMobile = ``;
+
+    CATEGORIAS_DEFINIDAS.forEach(cat => {
+        const icon = iconos[cat] || "label";
+        const isActive = cat === "Todas" ? "active" : "";
+        
+        // Desktop
+        htmlDesktop += `
+            <div class="cat-item ${isActive}" onclick="filtrarPorCategoria('${cat}', this)">
+                <i class="material-icons">${icon}</i> ${cat}
+            </div>`;
+
+        // Mobile
+        htmlMobile += `
+            <div class="chip ${isActive ? 'indigo white-text' : ''}" onclick="filtrarPorCategoria('${cat}', null, true)">
+                ${cat}
+            </div>`;
+    });
+
+    menuDesktop.innerHTML = htmlDesktop;
+    if (menuMobile) menuMobile.innerHTML = htmlMobile;
 }
 
-function renderizarCatalogo(listaAmostrar, nombreCat = "Todas") {
-  const contenedor = document.getElementById("catalogo-productos");
-  if (!contenedor) return;
-  contenedor.innerHTML = "";
+// --- RENDERIZADO DE PRODUCTOS ---
+function renderizarCatalogo(lista, categoria = "Todas") {
+    const contenedor = document.getElementById("catalogo-productos");
+    contenedor.innerHTML = "";
 
-  if (listaAmostrar.length === 0) {
-    contenedor.innerHTML = `<div class="col s12 center-align grey-text"><p>No hay productos en esta categoría</p></div>`;
-    return;
-  }
-
-  listaAmostrar.forEach((p) => {
-    // Normalización de imagen
-    const nombreArchivo = p.nombre
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]/g, "_")
-      .replace(/_+/g, "_")
-      .replace(/^_|_$/g, "");
-
-    const urlImagen = `img/${nombreArchivo}.jpg?v=${Date.now()}`;
-    const nombreEscapado = p.nombre
-      .replace(/'/g, "\\'")
-      .replace(/"/g, "&quot;");
-
-    // Determinar color de stock
-    let stockClass = "stock-ok";
-    let stockIcon = "check_circle";
-    if (p.cantidad <= 0) {
-      stockClass = "stock-low red-text";
-      stockIcon = "error_outline";
-    } else if (p.cantidad < 5) {
-      stockClass = "stock-low orange-text";
-      stockIcon = "warning";
+    if (lista.length === 0) {
+        contenedor.innerHTML = `<div class="col s12 center-align grey-text" style="margin-top:50px">
+            <i class="material-icons large">search_off</i>
+            <h5>No hay productos aquí</h5>
+        </div>`;
+        return;
     }
 
-    contenedor.innerHTML += `
-            <div class="product-card hoverable animate__animated animate__fadeIn" 
-                 onclick="${p.cantidad > 0 ? `agregarAlCarrito('${nombreEscapado}', ${p.precio}, ${p.cantidad})` : "M.toast({html: 'Sin stock', classes:'red'})"}">
-                <div class="card-image">
-                    <img src="${urlImagen}" 
-                         onerror="this.onerror=null; this.src='https://placehold.co/300x400?text=Las+Trompetas'">
-                </div>
-                <div class="card-content">
-                    <span class="card-title">${p.nombre}</span>
-                    <div class="product-price">$${p.precio.toLocaleString()}</div>
-                    <div class="stock-badge ${stockClass}" style="display: flex; align-items: center; justify-content: center; gap: 5px;">
-                        <i class="material-icons" style="font-size: 14px;">${stockIcon}</i>
-                        <span>Stock: ${p.cantidad}</span>
+    lista.forEach(p => {
+        const stock = Number(p.cantidad);
+        const precio = Number(p.precio);
+        const nombreSafe = p.nombre.replace(/'/g, "\\'"); // Escapar comillas simples
+        
+        // Lógica visual de Stock
+        let badgeColor = "green";
+        let disabled = "";
+        let opacity = "1";
+        
+        if (stock <= 0) {
+            badgeColor = "grey";
+            disabled = "style='pointer-events:none; filter:grayscale(1); opacity:0.6'";
+        } else if (stock < 5) {
+            badgeColor = "red";
+        }
+
+        // Si la imagen falla, ponemos una genérica elegante
+        const imgUrl = `img/${p.nombre.replace(/\s+/g, '_').toLowerCase()}.jpg`; 
+        // Nota: En producción idealmente validas si existe la imagen, si no, usas placeholder.
+
+        contenedor.innerHTML += `
+            <div class="col s6 m4 l3">
+                <div class="card product-card hoverable" ${disabled} onclick="agregarAlCarrito('${nombreSafe}', ${precio}, ${stock})">
+                    <div class="card-image">
+                        <img src="${imgUrl}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Sin+Foto'">
+                    </div>
+                    <div class="card-content">
+                        <span class="truncate" style="font-weight:500; font-size:1.1em" title="${p.nombre}">${p.nombre}</span>
+                        <div class="product-price">$${precio.toLocaleString()}</div>
+                        <span class="new badge ${badgeColor}" data-badge-caption="stock" style="float:none; margin:0 auto; padding: 2px 8px; border-radius:4px;">${stock}</span>
                     </div>
                 </div>
-            </div>`;
-  });
+            </div>
+        `;
+    });
 }
 
-// --- 4. CARRITO ---
-function agregarAlCarrito(nombre, precio, stockDisponible) {
-  console.log("Intentando agregar:", nombre, precio, stockDisponible);
-
-  // 1. Buscar si el producto ya está en el carrito
-  const itemExistente = carrito.find((item) => item.nombre === nombre);
-
-  if (itemExistente) {
-    if (itemExistente.cantidad < stockDisponible) {
-      itemExistente.cantidad++;
-      M.toast({ html: `+1 ${nombre}`, classes: "blue" });
-    } else {
-      M.toast({ html: "Stock agotado", classes: "red" });
+// --- FILTROS Y BÚSQUEDA ---
+function filtrarPorCategoria(categoria, elementoDOM, esMovil = false) {
+    // Actualizar visualmente la selección
+    if (!esMovil) {
+        document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+        if(elementoDOM) elementoDOM.classList.add('active');
     }
-  } else {
-    // 2. Si es nuevo y hay stock, agregarlo
-    if (stockDisponible > 0) {
-      carrito.push({
-        nombre: nombre,
-        precio: precio,
-        cantidad: 1,
-      });
-      M.toast({ html: `${nombre} agregado`, classes: "green" });
-    } else {
-      M.toast({ html: "Sin stock disponible", classes: "red" });
-    }
-  }
 
-  // 3. Actualizar la lista visual del carrito y el total
-  actualizarInterfazCarrito();
+    const filtrados = categoria === "Todas" 
+        ? todosLosProductos 
+        : todosLosProductos.filter(p => p.categoria === categoria);
+        
+    renderizarCatalogo(filtrados, categoria);
+}
+
+function buscarProductoVenta() {
+    const texto = document.getElementById("busqueda-venta").value.toLowerCase();
+    const filtrados = todosLosProductos.filter(p => 
+        p.nombre.toLowerCase().includes(texto) || 
+        (p.categoria && p.categoria.toLowerCase().includes(texto))
+    );
+    renderizarCatalogo(filtrados);
+}
+
+// --- LÓGICA DEL CARRITO ---
+function agregarAlCarrito(nombre, precio, stockMax) {
+    const item = carrito.find(i => i.nombre === nombre);
+
+    if (item) {
+        if (item.cantidad < stockMax) {
+            item.cantidad++;
+            M.toast({ html: 'Agregado +1', classes: 'green rounded', displayLength: 1000 });
+        } else {
+            M.toast({ html: '¡Stock máximo alcanzado!', classes: 'orange rounded' });
+        }
+    } else {
+        carrito.push({ nombre, precio, cantidad: 1, stockMax });
+        M.toast({ html: 'Producto agregado', classes: 'green rounded', displayLength: 1000 });
+    }
+    actualizarInterfazCarrito();
 }
 
 function actualizarInterfazCarrito() {
-  const listaCarrito = document.getElementById("lista-carrito");
-  const totalElemento = document.getElementById("total-venta");
-  const badge = document.getElementById("badge-cart");
+    const lista = document.getElementById("lista-carrito");
+    const badge = document.getElementById("badge-cart");
+    const totalEl = document.getElementById("total-venta");
+    
+    lista.innerHTML = "";
+    let total = 0;
+    let itemsCount = 0;
 
-  if (!listaCarrito) return;
-  listaCarrito.innerHTML = "";
-  let total = 0;
-  let cantidadTotal = 0;
+    carrito.forEach((item, index) => {
+        total += item.precio * item.cantidad;
+        itemsCount += item.cantidad;
 
-  carrito.forEach((item, index) => {//
-    const subtotal = item.precio * item.cantidad;
-    total += subtotal;
-    cantidadTotal += item.cantidad;
-
-    // Dentro de tu función actualizarInterfazCarrito
-listaCarrito.innerHTML += `
-    <li class="collection-item" style="padding: 15px !important;">
-        <div style="margin-bottom: 8px;">
-            <span class="bold" style="font-size: 0.95rem; display: block;">${item.nombre}</span>
-        </div>
-        
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="controles-carrito">
-                <button class="btn-floating btn-small btn-cant" onclick="cambiarCantidad(${index}, -1)">
-                    <i class="material-icons">remove</i>
-                </button>
-                <span class="bold">${item.cantidad}</span>
-                <button class="btn-floating btn-small btn-cant" onclick="cambiarCantidad(${index}, 1)">
-                    <i class="material-icons">add</i>
-                </button>
-            </div>
-            
-            <div style="text-align: right;">
-                <span class="indigo-text bold" style="font-size: 1rem;">$${(item.precio * item.cantidad).toLocaleString()}</span>
-                <i class="material-icons red-text" onclick="eliminarDelCarrito(${index})" style="margin-left: 10px; cursor: pointer; vertical-align: middle;">delete_outline</i>
-            </div>
-        </div>
-    </li>
-`;
-  });
-
-  if (totalElemento) totalElemento.innerText = total.toLocaleString();
-  if (badge) badge.innerText = cantidadTotal;
-}
-function cambiarCantidad(index, delta) {
-  const item = carrito[index];
-  if (!item) return;
-
-  // 1. Lógica para SUMAR (delta positivo, ej: +1)
-  if (delta > 0) {
-    // Buscamos en productosBase con trim() para evitar errores por espacios en el Excel
-    const productoEnInventario = productosBase.find(
-      (p) => p.nombre.trim() === item.nombre.trim(),
-    );
-    const stockActual = productoEnInventario
-      ? Number(productoEnInventario.cantidad)
-      : 0;
-
-    if (item.cantidad < stockActual) {
-      item.cantidad += 1;
-    } else {
-      M.toast({ html: "No hay más stock disponible", classes: "orange" });
-      return; // Salimos para no actualizar interfaz innecesariamente
-    }
-  }
-  // 2. Lógica para RESTAR (delta negativo, ej: -1)
-  else {
-    if (item.cantidad > 1) {
-      item.cantidad -= 1;
-    } else {
-      // Si la cantidad es 1 y restamos, se elimina el producto
-      eliminarDelCarrito(index);
-      return;
-    }
-  }
-
-  // 3. ACTUALIZACIÓN CRÍTICA
-  // Asegúrate de que esta función redibuje la tabla y recalcule el TOTAL general
-  actualizarInterfazCarrito();
-}
-
-function eliminarDelCarrito(index) {
-  carrito.splice(index, 1);
-  actualizarInterfazCarrito();
-  M.toast({ html: "Producto quitado", classes: "red" });
-
-  // Si el carrito queda vacío, cerramos la "cinta"
-  if (carrito.length === 0) {
-    const instance = M.Modal.getInstance(
-      document.getElementById("modal-pedido"),
-    );
-    instance.close();
-  }
-}
-
-// --- 5. HISTORIAL Y CONFIRMACIÓN ---
-async function cargarHistorial() {
-  try {
-    const res = await fetch(`/api/ventas/historial?t=${Date.now()}`);
-    const ventas = await res.json();
-    const tabla = document.getElementById("tabla-historial");
-    if (!tabla) return;
-
-    tabla.innerHTML = "";
-    // Invertimos para ver la última venta arriba
-    ventas.reverse().forEach((v) => {
-      tabla.innerHTML += `
-                <tr>
-                    <td><b>${v.Fecha}</b><br><small>${v.Hora}</small></td>
-                    <td><span class="chip">${v.Vendedor}</span></td>
-                    <td style="font-size: 0.85rem;">${v.Productos}</td>
-                    <td><b>$${(v.Total || 0).toLocaleString()}</b></td>
-                    <td>
-                        <button class="btn-small red" onclick="anularVenta('${v["ID Venta"]}')">
-                            <i class="material-icons">delete</i>
-                        </button>
-                    </td>
-                </tr>`;
+        lista.innerHTML += `
+            <li class="collection-item avatar" style="min-height: auto; padding-left: 15px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; width:100%">
+                    <div style="flex-grow:1">
+                        <span class="title" style="font-weight:bold">${item.nombre}</span>
+                        <p class="grey-text">$${item.precio.toLocaleString()} x ${item.cantidad} = <span class="indigo-text">$${(item.precio * item.cantidad).toLocaleString()}</span></p>
+                    </div>
+                    
+                    <div class="secondary-content" style="display:flex; align-items:center; gap:10px; position:static">
+                        <button class="btn-small btn-flat red-text" onclick="modificarCantidad(${index}, -1)"><i class="material-icons">remove_circle_outline</i></button>
+                        <span style="font-size:1.2em; font-weight:bold">${item.cantidad}</span>
+                        <button class="btn-small btn-flat green-text" onclick="modificarCantidad(${index}, 1)"><i class="material-icons">add_circle_outline</i></button>
+                    </div>
+                </div>
+            </li>
+        `;
     });
-  } catch (error) {
-    console.error("Error historial:", error);
-  }
+
+    if(carrito.length === 0) {
+        lista.innerHTML = "<div class='center padding-20 grey-text'>Carrito vacío</div>";
+    }
+
+    totalEl.innerText = total.toLocaleString();
+    badge.innerText = itemsCount;
+    
+    // Ocultar badge si es 0
+    badge.style.display = itemsCount > 0 ? 'block' : 'none';
 }
 
+function modificarCantidad(index, delta) {
+    const item = carrito[index];
+    
+    if (delta > 0) {
+        if (item.cantidad < item.stockMax) {
+            item.cantidad++;
+        } else {
+            M.toast({html: 'No hay más stock', classes:'orange'});
+        }
+    } else {
+        item.cantidad--;
+        if (item.cantidad === 0) {
+            carrito.splice(index, 1);
+        }
+    }
+    actualizarInterfazCarrito();
+}
+
+// --- FINALIZAR VENTA ---
 async function confirmarVenta() {
-  if (carrito.length === 0) return M.toast({ html: "Carrito vacío" });
+    if (carrito.length === 0) return M.toast({ html: "El carrito está vacío" });
 
-  const checkActivo = document.getElementById("check-personas").checked;
-  //
-  const inputPersonas = document.getElementById("num-personas");
-  let nPersonas = 0;
-
-  if (checkActivo) {
-    // .value siempre devuelve un String, lo pasamos a Número
-    nPersonas = parseInt(inputPersonas.value);
-
-    if (isNaN(nPersonas) || nPersonas < 1) {
-      return M.toast({
-        html: "Por favor, ingresa un número válido de personas",
-        classes: "red",
-      });
+    // Lógica de Personas
+    const checkPersonas = document.getElementById("check-personas").checked;
+    let numPersonas = 0;
+    if (checkPersonas) {
+        numPersonas = parseInt(document.getElementById("num-personas").value) || 0;
     }
-  }
 
-  const datosVenta = {
-    carrito: carrito,
-    vendedor: localStorage.getItem("usuarioNombre") || "Admin",
-    total: carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0),
-    idVenta: "V-" + Date.now(),
-    numPersonas: nPersonas, // Enviamos el dato al servidor
-  };
+    const datosVenta = {
+        carrito: carrito,
+        vendedor: localStorage.getItem("usuarioNombre") || "Vendedor",
+        total: carrito.reduce((sum, i) => sum + (i.precio * i.cantidad), 0),
+        idVenta: "V-" + Date.now(),
+        numPersonas: numPersonas
+    };
 
-  try {
-    const res = await fetch("/api/ventas/confirmar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datosVenta),
-    });
+    try {
+        const res = await fetch("/api/ventas/confirmar", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datosVenta),
+        });
 
-    if (res.ok) {
-      M.toast({ html: "✅ Venta exitosa", classes: "green" });
-      carrito = [];
-      actualizarInterfazCarrito();
-      M.Modal.getInstance(document.getElementById("modal-pedido")).close();
+        if (res.ok) {
+            M.toast({ html: "¡Venta Realizada con Éxito!", classes: "green darken-2 rounded" });
+            
+            // Limpieza
+            carrito = [];
+            actualizarInterfazCarrito();
+            M.Modal.getInstance(document.getElementById("modal-pedido")).close();
+            
+            // Refrescar inventario (Stocks han cambiado)
+            cargarDatos(); 
+            
+            // Opcional: Resetear personas
+            document.getElementById("check-personas").checked = false;
+            togglePersonas();
 
-      // REFRESCAR TODO
-      cargarDatos(); // Actualiza stock en tarjetas
-      cargarHistorial(); // Actualiza tabla de ventas
-    } else {
-      const err = await res.json();
-      M.toast({ html: "Error: " + err.mensaje });
+        } else {
+            M.toast({ html: "Error al registrar venta", classes: "red" });
+        }
+    } catch (e) {
+        console.error(e);
+        M.toast({ html: "Error de conexión", classes: "red" });
     }
-  } catch (e) {
-    M.toast({ html: "Error de conexión", classes: "red" });
-  }
 }
 
-async function anularVenta(id) {
-  if (!confirm("¿Anular esta venta? El stock será devuelto.")) return;
-  try {
-    const res = await fetch("/api/ventas/anular", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ idVenta: id }),
-    });
-    if (res.ok) {
-      M.toast({ html: "Venta anulada" });
-      cargarHistorial();
-      cargarDatos();
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// Filtros y búsqueda
-function ejecutarFiltro(cat, el) {
-  document
-    .querySelectorAll(".cat-item")
-    .forEach((i) => i.classList.remove("active"));
-  if (el) el.classList.add("active");
-  const filtrados =
-    cat === "Todas"
-      ? todosLosProductos
-      : todosLosProductos.filter((p) => p.categoria === cat);
-  renderizarCatalogo(filtrados, cat);
-}
-// Toggle personas
 function togglePersonas() {
-  const check = document.getElementById("check-personas");
-  const contenedor = document.getElementById("contenedor-personas");
-
-  if (check.checked) {
-    contenedor.style.display = "block";
-  } else {
-    contenedor.style.display = "none";
-    document.getElementById("num-personas").value = 1; // Resetear valor
-  }
+    const check = document.getElementById("check-personas");
+    const div = document.getElementById("contenedor-personas");
+    div.style.display = check.checked ? "block" : "none";
 }

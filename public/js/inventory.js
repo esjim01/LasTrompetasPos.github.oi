@@ -1,302 +1,291 @@
-// inventory.js - Proyecto Las Trompetas (REPARADO)
-
+// inventory.js - Proyecto Las Trompetas (CORREGIDO)
 
 (function () {
-  function verificarSesion() {
-    const rol = localStorage.getItem("usuarioRol");
-    if (!rol) window.location.replace("/");
-  }
-  verificarSesion();
+    function verificarSesion() {
+        const rol = localStorage.getItem("usuarioRol");
+        if (!rol) window.location.replace("/");
+    }
+    verificarSesion();
 })();
+
 // --- INICIALIZACIÓN ---
 document.addEventListener("DOMContentLoaded", function () {
-  M.AutoInit();
-  const rol = localStorage.getItem("usuarioRol");
-  if (rol === "VENDEDOR") {
-    const form = document.querySelector(".col.m4");
-    if (form) form.style.display = "none";
-    const tablaCol = document.querySelector(".col.m8");
-    if (tablaCol) tablaCol.classList.replace("m8", "m12");
-  }
-  cargarInventario();
-  cargarHistorial(); // También cargamos historial aquí si existe la tabla
+    M.AutoInit();
+    // Inicializar selects específicamente
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems);
+    
+    cargarInventario();
+    cargarHistorial();
 });
 
 // --- VISTA PREVIA DE IMAGEN ---
 const inputImg = document.getElementById("input-imagen");
 if (inputImg) {
-  inputImg.addEventListener("change", function () {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const preview = document.getElementById("preview-img");
-      if (preview) {
-        preview.src = e.target.result;
-        preview.style.display = "block";
-      }
-    };
-    if (this.files[0]) reader.readAsDataURL(this.files[0]);
-  });
+    inputImg.addEventListener("change", function (e) {
+        const reader = new FileReader();
+        const preview = document.getElementById("preview-img");
+        
+        reader.onload = (event) => {
+            if (preview) {
+                preview.src = event.target.result;
+                preview.style.display = "block";
+            }
+        };
+        if (this.files[0]) reader.readAsDataURL(this.files[0]);
+    });
 }
-
-document.getElementById('input-imagen').addEventListener('change', function(e) {
-    const reader = new FileReader();
-    const preview = document.getElementById('preview-img');
-    
-    reader.onload = function() {
-        preview.src = reader.result;
-        preview.style.display = 'block';
-    }
-    
-    if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
-    }
-});
 
 // --- CRUD INVENTARIO ---
 async function cargarInventario() {
-  try {
-    const res = await fetch("/api/inventario/ver");
-    const productos = await res.json();
-    
-    // Usamos tu ID real: tabla-cuerpo
-    const tabla = document.getElementById("tabla-cuerpo");
-    if (!tabla) return;
-    
-    tabla.innerHTML = "";
+    try {
+        const res = await fetch("/api/inventario/ver");
+        if (!res.ok) throw new Error("Error en la respuesta del servidor");
+        const productos = await res.json();
+        
+        const tabla = document.getElementById("tabla-cuerpo");
+        if (!tabla) return;
+        
+        tabla.innerHTML = "";
 
-    productos.forEach((p) => {
-      // Definimos valores seguros para evitar errores en el modal
-      const nombre = p.nombre || '';
-      const categoria = p.categoria || 'Sin categoría';
-      const cantidad = Number(p.cantidad) || 0;
-      const precio = Number(p.precio) || 0;
-      const costo = Number(p.costo) || 0;
-      const fecha = p.fecha_registro || '-';
-      
-      const colorBadge = cantidad < 5 ? "red" : "indigo";
+        productos.forEach((p) => {
+            const nombre = p.nombre || '';
+            const categoria = p.categoria || 'Otros';
+            const cantidad = Number(p.cantidad) || 0;
+            const precio = Number(p.precio) || 0;
+            const costo = Number(p.costo) || 0;
+            
+            // Badge visual para stock bajo
+            let badgeHtml = '';
+            if (cantidad <= 5) {
+                badgeHtml = `<span class="new badge red" data-badge-caption="bajos">${cantidad}</span>`;
+            } else {
+                badgeHtml = `<span class="new badge blue lighten-4 blue-text text-darken-4" data-badge-caption="">${cantidad}</span>`;
+            }
 
-      // Escapar comillas simples en el nombre para el onclick
-      const nombreEscapado = nombre.replace(/'/g, "\\'");
+            // IMPORTANTE: Escapar comillas para evitar errores en onclick
+            const nombreSafe = nombre.replace(/'/g, "\\'");
+            const catSafe = categoria.replace(/'/g, "\\'");
 
-      // Insertamos la fila directamente
-      tabla.innerHTML += `
-                <tr>
-                    <td>${nombre}</td>
-                    <td class="indigo-text"><b>${categoria}</b></td>
-                    <td><span class="new badge ${colorBadge}" data-badge-caption="und">${cantidad}</span></td>
-                    <td>$${precio.toLocaleString()}</td>
-                    <td>$${costo.toLocaleString()}</td>
-                    <td>${fecha}</td>
-                    <td>
-                        <button class="btn-floating btn-small blue" onclick="abrirModalEditar('${nombreEscapado}', ${cantidad}, ${precio}, ${costo})">
-                            <i class="material-icons">edit</i>
+            // AQUI ESTABA EL ERROR: Ahora pasamos 5 argumentos, incluyendo la categoría
+            tabla.innerHTML += `
+                <tr style="border-bottom: 1px solid #f1f1f1;">
+                    <td style="padding-left: 20px; font-weight:500;">${nombre}</td>
+                    <td><span class="chip small">${categoria}</span></td>
+                    <td class="center">${badgeHtml}</td>
+                    <td class="green-text text-darken-2"><b>$${precio.toLocaleString()}</b></td>
+                    <td class="grey-text">$${costo.toLocaleString()}</td>
+                    <td class="center">
+                        <button class="btn-floating btn-small indigo lighten-5" style="box-shadow:none" onclick="abrirModalEditar('${nombreSafe}', '${catSafe}', ${cantidad}, ${precio}, ${costo})">
+                            <i class="material-icons indigo-text">edit</i>
                         </button>
-                        <button class="btn-floating btn-small red" onclick="prepararEliminacion('${nombreEscapado}')">
+                        <button class="btn-floating btn-small red lighten-5" style="box-shadow:none" onclick="prepararEliminacion('${nombreSafe}')">
+                            <i class="material-icons red-text">delete</i>
+                        </button>
+                    </td>
+                </tr>`;
+        });
+    } catch (e) {
+        console.error("Error cargando inventario", e);
+        M.toast({ html: "No se pudo cargar el inventario", classes: "red" });
+    }
+}
+
+// --- FUNCIONES MODALES (CORREGIDAS) ---
+// Ahora recibe 5 argumentos correctamente
+function abrirModalEditar(nombre, categoria, cantidad, precio, costo) {
+    document.getElementById("edit-nombre-original").value = nombre;
+    document.getElementById("edit-nombre").value = nombre;
+    
+    // Asignar categoría y refrescar el select de Materialize
+    const selectCat = document.getElementById("edit-categoria");
+    if(selectCat) {
+        selectCat.value = categoria;
+    }
+    
+    document.getElementById("edit-cantidad").value = cantidad;
+    document.getElementById("edit-precio").value = precio;
+    
+    if (document.getElementById("edit-costo")) {
+        document.getElementById("edit-costo").value = costo || 0;
+    }
+
+    M.updateTextFields(); // Actualizar labels flotantes
+    
+    // IMPORTANTE: Reinicializar el select para que muestre el valor preseleccionado visualmente
+    var elems = document.querySelectorAll('select');
+    M.FormSelect.init(elems);
+
+    const modal = document.getElementById("modal-editar");
+    M.Modal.getInstance(modal).open();
+}
+
+function prepararEliminacion(nombre) {
+    document.getElementById("nombre-eliminar-display").innerText = nombre;
+    document.getElementById("nombre-eliminar-hidden").value = nombre;
+    const modal = document.getElementById("modal-eliminar");
+    M.Modal.getInstance(modal).open();
+}
+
+// --- ACTUALIZAR PRODUCTO ---
+async function actualizarProducto() {
+    const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : "";
+
+    const datos = {
+        nombreOriginal: getVal("edit-nombre-original"),
+        nombreNuevo: getVal("edit-nombre"),
+        categoria: getVal("edit-categoria"), // Nuevo campo
+        cantidad: getVal("edit-cantidad"),
+        precio: getVal("edit-precio"),
+        costo: getVal("edit-costo"),
+    };
+
+    if (!datos.nombreNuevo || !datos.precio) {
+        return M.toast({ html: "Nombre y Precio requeridos", classes: "red" });
+    }
+
+    try {
+        const res = await fetch("/api/inventario/editar", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos),
+        });
+
+        if (res.ok) {
+            M.toast({ html: "Producto actualizado", classes: "green rounded" });
+            M.Modal.getInstance(document.getElementById("modal-editar")).close();
+            cargarInventario();
+        } else {
+            M.toast({ html: "Error al actualizar", classes: "red rounded" });
+        }
+    } catch(e) {
+        console.error(e);
+        M.toast({ html: "Error de conexión", classes: "red" });
+    }
+}
+
+// --- GUARDAR NUEVO PRODUCTO ---
+async function guardarProducto() {
+    const formData = new FormData();
+    const nombre = document.getElementById("nombre").value;
+    const categoria = document.getElementById("categoria").value;
+    const cantidad = document.getElementById("cantidad").value;
+    const precio = document.getElementById("precio").value;
+    const costo = document.getElementById("costo").value;
+    const imagen = document.getElementById("input-imagen").files[0];
+
+    if (!nombre) return M.toast({ html: "Escribe un nombre", classes: "red" });
+
+    formData.append("nombre", nombre);
+    formData.append("categoria", categoria || "Otros");
+    formData.append("cantidad", cantidad || 0);
+    formData.append("precio", precio || 0);
+    formData.append("costo", costo || 0);
+    if (imagen) formData.append("imagen", imagen);
+
+    try {
+        const res = await fetch("/api/inventario/agregar", {
+            method: "POST",
+            body: formData,
+        });
+
+        if (res.ok) {
+            M.toast({ html: "Producto Guardado", classes: "green rounded" });
+            
+            // Limpiar campos
+            document.getElementById("nombre").value = "";
+            document.getElementById("cantidad").value = "";
+            document.getElementById("precio").value = "";
+            document.getElementById("costo").value = "";
+            document.getElementById("input-imagen").value = "";
+            document.getElementById("preview-img").style.display = "none";
+            
+            cargarInventario();
+        } else {
+            M.toast({ html: "Error al guardar", classes: "red" });
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+// --- ELIMINAR ---
+async function confirmarBorrado() {
+    const nombre = document.getElementById("nombre-eliminar-hidden").value;
+    try {
+        const res = await fetch("/api/inventario/eliminar", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nombre }),
+        });
+        if (res.ok) {
+            M.toast({ html: "Producto Eliminado", classes: "orange rounded" });
+            M.Modal.getInstance(document.getElementById("modal-eliminar")).close();
+            cargarInventario();
+        }
+    } catch (e) { console.error(e); }
+}
+
+// --- HISTORIAL ---
+async function cargarHistorial() {
+    try {
+        const res = await fetch("/api/ventas/historial?t=" + Date.now());
+        if(!res.ok) return; // Si falla, salimos silenciosamente
+        const ventas = await res.json();
+        const tabla = document.getElementById("tabla-historial");
+        if (!tabla) return;
+        tabla.innerHTML = "";
+
+        ventas.reverse().slice(0, 10).forEach((v) => { // Solo mostramos las últimas 10
+            tabla.innerHTML += `
+                <tr>
+                    <td>${v.Fecha} <span class="grey-text text-lighten-1" style="font-size:0.8em">${v.Hora}</span></td>
+                    <td>${v.Vendedor}</td>
+                    <td class="truncate" style="max-width: 150px;" title="${v.Productos}">${v.Productos}</td>
+                    <td><b>$${(v.Total || 0).toLocaleString()}</b></td>
+                    <td>
+                        <button class="btn-flat btn-small red-text waves-effect" onclick="anularVenta('${v["ID Venta"]}')">
                             <i class="material-icons">delete</i>
                         </button>
                     </td>
                 </tr>`;
-      
-      // LA LÍNEA "tabla.innerHTML += fila;" FUE ELIMINADA PORQUE CAUSABA EL ERROR
-    });
-  } catch (e) {
-    console.error("Error cargando inventario", e);
-    M.toast({ html: "Error al conectar con el servidor", classes: "red" });
-  }
-}
-
-// --- GUARDAR PRODUCTO CON REFRESCO AUTOMÁTICO ---
-async function guardarProducto() {
-  const formData = new FormData();
-  const nombreInput = document.getElementById("nombre");
-  const categoriaInput = document.getElementById("categoria");
-  const cantidadInput = document.getElementById("cantidad");
-  const precioInput = document.getElementById("precio");
-  const inputImagen = document.getElementById("input-imagen");
-  const costoInput = document.getElementById("costo");
-
-  if (!nombreInput.value)
-    return M.toast({ html: "El nombre es obligatorio", classes: "red" });
-
-  formData.append("nombre", nombreInput.value);
-  formData.append("categoria", categoriaInput.value);
-  formData.append("cantidad", cantidadInput.value);
-  formData.append("precio", precioInput.value);
-  formData.append("costo", costoInput.value);
-
-  if (inputImagen.files[0]) {
-    formData.append("imagen", inputImagen.files[0]);
-  }
-
-  try {
-    const res = await fetch("/api/inventario/agregar", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (res.ok) {
-      M.toast({ html: "✅ Producto guardado con éxito", classes: "green" });
-
-      // 1. Limpiar el formulario
-      nombreInput.value = "";
-      categoriaInput.value = "";
-      cantidadInput.value = "";
-      precioInput.value = "";
-      costoInput.value = "";
-      if (inputImagen) inputImagen.value = "";
-      const preview = document.getElementById("preview-img");
-      if (preview) { preview.style.display = "none"; preview.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; }
-
-      // 2. REFRESCAR LA TABLA SIN RECARGAR PÁGINA
-      await cargarInventario();
-
-      // 3. Re-inicializar etiquetas de Materialize (para que no se amontonen)
-      M.updateTextFields();
-    } else {
-      M.toast({ html: "❌ Error al guardar", classes: "red" });
+        });
+    } catch (e) {
+        console.error("Error historial", e);
     }
-  } catch (error) {
-    console.error("Error:", error);
-    M.toast({ html: "Error de conexión", classes: "red" });
-  }
 }
-/* FILTRAR PRODUCTOS EN TIEMPO REAL */
+
+async function anularVenta(id) {
+    if (!confirm("¿Estás seguro de anular esta venta? Se devolverán los productos al inventario.")) return;
+    try {
+        const res = await fetch("/api/ventas/anular", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ idVenta: id }),
+        });
+        if (res.ok) {
+            M.toast({ html: "Venta Anulada Correctamente", classes: "green rounded" });
+            cargarHistorial();
+            cargarInventario();
+        } else {
+            M.toast({ html: "Error al anular", classes: "red" });
+        }
+    } catch(e) { console.error(e); }
+}
+
 function filtrarProductos() {
     const texto = document.getElementById('busqueda-venta').value.toLowerCase();
     const filas = document.querySelectorAll('#tabla-cuerpo tr');
 
     filas.forEach(fila => {
-        // Obtenemos el texto de la columna Producto (index 0) y Categoría (index 1)
-        const nombre = fila.cells[0].innerText.toLowerCase();
-        const categoria = fila.cells[1].innerText.toLowerCase();
-
-        if (nombre.includes(texto) || categoria.includes(texto)) {
-            fila.style.display = ""; // Muestra la fila
-        } else {
-            fila.style.display = "none"; // Oculta la fila
-        }
+        const textoFila = fila.innerText.toLowerCase();
+        fila.style.display = textoFila.includes(texto) ? "" : "none";
     });
 }
 
-// --- ACTUALIZAR PRODUCTO ---
-async function actualizarProducto() {
-  // Usamos una función auxiliar para capturar el valor o devolver vacío si no existe
-  const getVal = (id) =>
-    document.getElementById(id) ? document.getElementById(id).value : "";
-
-  const datos = {
-    nombreOriginal: getVal("edit-nombre-original"),
-    nombreNuevo: getVal("edit-nombre"),
-    cantidad: getVal("edit-cantidad"),
-    precio: getVal("edit-precio"),
-    costo: getVal("edit-costo"), // Ahora sí funcionará porque agregamos el HTML
-  };
-
-  // Validación simple antes de enviar
-  if (!datos.nombreNuevo || !datos.precio) {
-    return M.toast({
-      html: "Nombre y Precio son obligatorios",
-      classes: "red",
-    });
-  }
-
-  const res = await fetch("/api/inventario/editar", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(datos),
-  });
-
-  if (res.ok) {
-    M.toast({ html: "Actualizado correctamente", classes: "green" });
-    M.Modal.getInstance(document.getElementById("modal-editar")).close();
-    cargarInventario();
-  } else {
-    M.toast({ html: "Error al actualizar", classes: "red" });
-  }
-}
-
-// --- ELIMINAR PRODUCTO ---
-async function confirmarBorrado() {
-  const nombre = document.getElementById("nombre-eliminar-hidden").value;
-  const res = await fetch("/api/inventario/eliminar", {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nombre }),
-  });
-  if (res.ok) {
-    M.toast({ html: "Eliminado", classes: "green" });
-    M.Modal.getInstance(document.getElementById("modal-eliminar")).close();
-    cargarInventario();
-  }
-}
-
-// --- HISTORIAL (SINCRONIZADO CON INDEX.JS) ---
-async function cargarHistorial() {
-  try {
-    const res = await fetch("/api/ventas/historial?t=" + Date.now());
-    const ventas = await res.json();
-    const tabla = document.getElementById("tabla-historial");
-    if (!tabla) return;
-    tabla.innerHTML = "";
-
-    ventas.reverse().forEach((v) => {
-      tabla.innerHTML += `
-                <tr>
-                    <td><b>${v.Fecha}</b><br><small>${v.Hora}</small></td>
-                    <td><span class="chip">${v.Vendedor}</span></td>
-                    <td style="font-size:0.8rem">${v.Productos}</td>
-                    <td><b>$${(v.Total || 0).toLocaleString()}</b></td>
-                    <td>
-                        <button class="btn-small red" onclick="anularVenta('${v["ID Venta"]}')">
-                            <i class="material-icons">delete_sweep</i>
-                        </button>
-                    </td>
-                </tr>`;
-    });
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// --- ANULAR VENTA ---
-async function anularVenta(id) {
-  if (!confirm("¿Anular venta?")) return;
-  const res = await fetch("/api/ventas/anular", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ idVenta: id }),
-  });
-  if (res.ok) {
-    M.toast({ html: "Venta anulada" });
-    cargarHistorial();
-    cargarInventario();
-  }
-}
-// --- FUNCIONES MODALES ---
-function abrirModalEditar(nombre, categoria, cantidad, precio, costo) {
-  document.getElementById("edit-nombre-original").value = nombre;
-  document.getElementById("edit-nombre").value = nombre;
-  document.getElementById("edit-categoria").value = categoria;
-  document.getElementById("edit-cantidad").value = cantidad;
-  document.getElementById("edit-precio").value = precio;
-  if (document.getElementById("edit-costo")) {
-    document.getElementById("edit-costo").value = costo || 0;
-  }
-  M.updateTextFields();
-  M.Modal.getInstance(document.getElementById("modal-editar")).open();
-}
-// Preparar eliminación
-function prepararEliminacion(nombre) {
-  document.getElementById("nombre-eliminar-display").innerText = nombre;
-  document.getElementById("nombre-eliminar-hidden").value = nombre;
-  M.Modal.getInstance(document.getElementById("modal-eliminar")).open();
-}
-
-// --- FUNCIÓN SALIR CORREGIDA ---
 function cerrarSesion() {
-  console.log("Cerrando sesión...");
-    if (confirm("¿Estás seguro de cerrar sesión?")) {
+    if (confirm("¿Cerrar sesión?")) {
         localStorage.clear();
-        window.location.replace("/");  // Va a la raíz
+        window.location.replace("/");
     }
 }
