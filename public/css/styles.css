@@ -1,15 +1,29 @@
 /* ==========================================================================
+   ÍNDICE DE CONTENIDOS
+   1. Variables y Configuración Base
+   2. Componentes Globales (Botones, Modales, Inputs)
+   3. Layout y Navegación (Sidebar, Navbar)
+   4. Módulo: Login
+   5. Módulo: Dashboard (KPIs, Gráficos, Filtros)
+   6. Módulo: Inventario (Tablas, Stocks)
+   7. Módulo: Punto de Venta (Grid Productos, Tarjetas)
+   8. Módulo: Carrito de Compras
+   9. Responsividad (Media Queries)
+   ========================================================================== */
+
+/* ==========================================================================
    1. VARIABLES Y CONFIGURACIÓN BASE
    ========================================================================== */
 :root {
-  --primary-color: #1a237e;
-  --accent-color: #ffab40;
+  --primary-color: #1a237e;  /* Indigo oscuro */
+  --accent-color: #ffab40;   /* Naranja suave */
   --text-soft: #c5cae9;
   --bg-light: #f4f7f9;
   --white: #ffffff;
   --danger: #ff5252;
   --success: #2e7d32;
   --warning: #f57c00;
+  --gray-bg: #f0f2f5;
 }
 
 body {
@@ -18,29 +32,48 @@ body {
   margin: 0;
 }
 
-nav {
-  margin-bottom: 20px;
+/* Clases de utilidad para el body */
+.dashboard-body {
+  background-color: var(--gray-bg);
+}
+
+.login-body {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #000051 100%);
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ==========================================================================
-   2. COMPONENTES GLOBALES (MODALES Y BOTONES)
+   2. COMPONENTES GLOBALES
    ========================================================================== */
+/* Tarjetas Genéricas */
 .card {
   border-radius: 10px;
 }
+
+.card-panel h3 {
+  font-size: 2rem; 
+}
+
+/* Modales */
 .modal {
   border-radius: 20px !important;
 }
+
 .modal .modal-footer {
   background-color: #f8f9fa;
   border-top: 1px solid #eee;
 }
 
-.input-field .prefix {
-  color: var(--primary-color);
+.modal.bottom-sheet {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  max-height: 85% !important;
 }
 
-/* Estructura de botones en modales */
+/* Botones y Estructuras de Modal */
 .container-botones {
   display: flex;
   justify-content: space-evenly;
@@ -56,17 +89,109 @@ nav {
   border-radius: 8px;
 }
 
-/* ==========================================================================
-   3. MÓDULO DE LOGIN (PREMIUM)
-   ========================================================================== */
-.login-body {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #000051 100%);
-  display: flex;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
+/* Inputs */
+.input-field .prefix {
+  color: var(--primary-color);
 }
 
+/* ==========================================================================
+   3. LAYOUT Y NAVEGACIÓN
+   ========================================================================== */
+nav {
+  margin-bottom: 20px;
+}
+
+/* Navbar Dashboard */
+.dashboard-nav {
+  background: #fff;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05) !important;
+  height: 70px;
+  line-height: 70px;
+}
+
+.dashboard-nav .brand-logo {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.dashboard-nav ul a {
+  color: #555;
+  font-weight: 500;
+}
+
+.dashboard-nav ul a:hover {
+  background-color: rgba(0,0,0,0.02);
+  color: var(--primary-color);
+}
+
+/* Sidebar de Categorías (POS) */
+.main-wrapper {
+  display: flex;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  background-color: #f4f7f6;
+}
+
+.sidebar-nav {
+  width: 260px;
+  background: #fff;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  padding-top: 10px;
+  z-index: 10;
+}
+
+.sidebar-title {
+  padding: 0 20px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #9e9e9e;
+}
+
+/* Items de Categoría (Unificados) */
+.cat-item {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  color: #546e7a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+  font-weight: 500;
+}
+
+.cat-item:hover {
+  background: #f5f5f5;
+}
+
+.cat-item.active {
+  background: #e8eaf6;
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+  font-weight: 700;
+}
+
+.cat-item i {
+  margin-right: 15px;
+}
+
+/* Contenedor Principal de Contenido */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.main-container {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+/* ==========================================================================
+   4. MÓDULO: LOGIN
+   ========================================================================== */
 .login-card {
   width: 380px;
   border-radius: 20px !important;
@@ -80,6 +205,7 @@ nav {
   text-align: center;
   margin-bottom: 20px;
 }
+
 .logo-container img {
   width: 130px;
   height: 130px;
@@ -97,13 +223,161 @@ nav {
 }
 
 /* ==========================================================================
-   4. MÓDULO DE INVENTARIO (ADMIN)
+   5. MÓDULO: DASHBOARD
+   ========================================================================== */
+/* Filtros */
+.filter-card {
+  border-radius: 16px !important;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+}
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-wrapper .input-field {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.btn-filter {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0 25px;
+  height: 45px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3);
+  transition: transform 0.2s;
+}
+.btn-filter:hover { transform: translateY(-2px); }
+
+/* KPI Cards */
+.kpi-card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+/* Colores KPI */
+.kpi-primary { border-left: 6px solid var(--primary-color); }
+.kpi-success { border-left: 6px solid var(--success); }
+.kpi-info    { border-left: 6px solid #29b6f6; }
+.kpi-warning { border-left: 6px solid var(--accent-color); }
+
+.kpi-content p {
+  color: #888;
+  font-size: 0.9rem;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.kpi-content h4, .kpi-content h5 {
+  margin: 10px 0 0 0;
+  font-weight: 700;
+  color: #333;
+}
+
+.kpi-icon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  color: white;
+}
+
+.kpi-primary .kpi-icon { background: var(--primary-color); box-shadow: 0 5px 15px rgba(26,35,126,0.4); }
+.kpi-success .kpi-icon { background: var(--success); box-shadow: 0 5px 15px rgba(46,125,50,0.4); }
+.kpi-info .kpi-icon    { background: #29b6f6; box-shadow: 0 5px 15px rgba(41,182,246,0.4); }
+.kpi-warning .kpi-icon { background: var(--accent-color); box-shadow: 0 5px 15px rgba(255,171,64,0.4); }
+
+/* Gráficos */
+.chart-card {
+  border-radius: 20px !important;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
+  border: none;
+}
+
+.card-header {
+  padding: 20px 24px 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chart-wrapper {
+  position: relative;
+  height: 350px;
+  width: 100%;
+}
+
+/* Resumen Inferior */
+.summary-card {
+  border-radius: 20px !important;
+  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
+}
+
+.summary-item {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.summary-item i {
+  font-size: 2.5rem;
+  opacity: 0.3;
+}
+
+.divider-vertical {
+  width: 1px;
+  height: 60px;
+  background-color: #eee;
+}
+
+/* ==========================================================================
+   6. MÓDULO: INVENTARIO
    ========================================================================== */
 .table-container {
   background: var(--white);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
 }
 
 .stock-status {
@@ -123,62 +397,10 @@ nav {
 }
 
 /* ==========================================================================
-   5. LAYOUT PRINCIPAL VENTAS (POS)
+   7. MÓDULO: PUNTO DE VENTA (PRODUCTOS)
    ========================================================================== */
-.main-wrapper {
-  display: flex;
-  height: calc(100vh - 64px);
-  overflow: hidden;
-  background-color: #f4f7f6;
-}
-
-/* Sidebar de Categorías */
-.sidebar-nav {
-  width: 260px;
-  background: #fff;
-  border-right: 1px solid #e0e0e0;
-  overflow-y: auto;
-  padding-top: 10px;
-  z-index: 10;
-}
-
-.sidebar-title {
-  padding: 0 20px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #9e9e9e;
-}
-
-.cat-item {
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  color: #546e7a;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border-left: 4px solid transparent;
-}
-
-.cat-item:hover {
-  background: #f5f5f5;
-}
-.cat-item.active {
-  background: #e8eaf6;
-  color: var(--primary-color);
-  border-left: 4px solid var(--primary-color);
-  font-weight: 600;
-}
-
-.cat-item i {
-  margin-right: 15px;
-}
-
-/* Área de Contenido */
-.content-area {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
+.pos-container { 
+  padding-top: 20px; 
 }
 
 .search-bar-container {
@@ -189,15 +411,14 @@ nav {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* ==========================================================================
-   6. GRID DE PRODUCTOS Y TARJETAS
-   ========================================================================== */
+/* Grid de Productos */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
 }
 
+/* Tarjeta de Producto (Unificada) */
 .product-card {
   background: var(--white);
   border-radius: 15px !important;
@@ -207,6 +428,7 @@ nav {
   height: 380px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .product-card:hover {
@@ -220,6 +442,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
 }
 
 .product-card .card-image img {
@@ -232,6 +455,7 @@ nav {
   padding: 15px !important;
   text-align: center;
   flex-grow: 1;
+  background-color: #FAFAFA; /* Fondo ligero para separar texto de imagen */
 }
 
 .product-card .card-title {
@@ -243,6 +467,7 @@ nav {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
+  color: #333;
 }
 
 .product-price {
@@ -253,13 +478,13 @@ nav {
 }
 
 /* ==========================================================================
-   7. CARRITO FLOTANTE Y MODAL DE PEDIDO (CORREGIDO)
+   8. MÓDULO: CARRITO DE COMPRAS
    ========================================================================== */
 .floating-cart {
-  position: fixed !important; /* Fijo a la pantalla, no al contenido */
+  position: fixed !important; 
   bottom: 30px !important;
   right: 25px !important;
-  z-index: 2100 !important; /* Superior al navbar y modales base */
+  z-index: 2100 !important; 
 }
 
 #badge-cart {
@@ -273,38 +498,22 @@ nav {
   font-size: 12px;
 }
 
-/* Modal del Pedido */
+/* Modal del Pedido Específico */
 #modal-pedido {
   max-height: 85% !important;
   width: 100% !important;
   border-radius: 25px 25px 0 0 !important;
 }
 
-@media (min-width: 993px) {
-  #modal-pedido {
-    width: 40% !important;
-    right: 0;
-    left: auto;
-  }
-}
-
-/* Items del Carrito */
+/* Items dentro del Carrito */
 #lista-carrito .collection-item {
   display: flex !important;
-  flex-direction: column !important; /* Nombre arriba, controles abajo */
+  flex-direction: column !important;
   align-items: flex-start !important;
   padding: 15px !important;
 }
 
-/* Crear una fila para los controles debajo del nombre */
-.cart-controls-row {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  margin-top: 8px;
-}
-
+.cart-controls-row,
 .controles-item-carrito {
   display: flex;
   justify-content: space-between;
@@ -319,17 +528,18 @@ nav {
   gap: 15px;
 }
 
-.btn-cant i {
-  color: #1a237e !important; /* Color azul oscuro para contraste */
-  line-height: 32px !important; /* Centrado vertical */
-  font-size: 20px !important; /* Tamaño adecuado */
-  display: block !important;
-}
-
 .btn-cant {
-    background-color: #f5f5f5 !important; /* Gris muy claro de fondo */
-    border: 1px solid #ddd !important;   /* Borde para definir el círculo */
-    box-shadow: none !important;
+  background-color: #f5f5f5 !important;
+  border: 1px solid #ddd !important;
+  box-shadow: none !important;
+}
+.btn-cant:hover { background-color: #e0e0e0 !important; }
+
+.btn-cant i {
+  color: var(--primary-color) !important;
+  line-height: 32px !important;
+  font-size: 20px !important;
+  display: block !important;
 }
 
 .total-box {
@@ -342,42 +552,44 @@ nav {
   align-items: center;
 }
 
-.btn-cant:hover {
-    background-color: #e0e0e0 !important;
-}
-
 /* ==========================================================================
-   8. RESPONSIVIDAD (MOBILE FIRST ADJUSTMENTS)
+   9. RESPONSIVIDAD (MEDIA QUERIES)
    ========================================================================== */
+
+/* Tablets y Escritorios Pequeños (Hasta 992px) */
 @media (max-width: 992px) {
+  /* Login */
+  .login-card { width: 90%; }
+
+  /* Layout POS */
   .main-wrapper {
-    display: block !important; /* Cambiamos de flex a block */
-    height: auto !important; /* Liberamos la altura fija */
-    overflow: visible !important; /* Permitimos el scroll de la página */
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
   }
 
   .content-area {
     height: auto !important;
     overflow: visible !important;
-    padding-bottom: 80px; /* Espacio extra para que el carrito no tape el último producto */
+    padding-bottom: 80px; 
   }
 
+  /* Sidebar Horizontal */
   .sidebar-nav {
     width: 100% !important;
     height: auto !important;
     display: flex !important;
-    flex-direction: row !important; /* Convertir en fila */
-    overflow-x: auto !important; /* Permitir scroll lateral */
+    flex-direction: row !important;
+    overflow-x: auto !important;
     white-space: nowrap;
     position: sticky;
     top: 0;
     z-index: 1000;
     background: white;
+    border-bottom: 1px solid #eee;
   }
 
-  .sidebar-title {
-    display: none;
-  }
+  .sidebar-title { display: none; }
 
   .cat-item {
     display: inline-flex !important;
@@ -389,381 +601,72 @@ nav {
   .cat-item.active {
     border-bottom: 3px solid var(--primary-color);
   }
+}
 
-  .login-card {
-    width: 90%;
+/* Escritorios Grandes (Más de 993px) */
+@media (min-width: 993px) {
+  #modal-pedido {
+    width: 40% !important;
+    right: 0;
+    left: auto;
+    border-radius: 20px 0 0 20px !important; /* Estilo drawer lateral */
+    height: 100vh !important;
+    max-height: 100vh !important;
+    top: 0 !important;
   }
 }
 
+/* Móviles (Hasta 600px) */
 @media (max-width: 600px) {
-    /* Grid de 2 columnas */
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
-        padding: 5px !important;
-    }
-
-    /* Ajuste de altura de tarjeta para que no se vea estirada */
-    .product-card {
-        height: 320px !important;
-    }
-
-    .product-card .card-image {
-        height: 140px !important;
-        padding: 10px !important;
-    }
-
-    .product-card .card-title {
-        font-size: 0.85rem !important;
-        height: 2rem;
-    }
-
-    .product-price {
-        font-size: 1.1rem !important;
-    }
-}
-
-/* ==========================================================================
-   9. ESTILOS ADICIONALES PARA REPORTES Y TABLAS
-   ========================================================================== */
-
-.table-container {
-    background: white;
-    border-radius: 15px;
-    padding: 10px;
-    margin-top: 20px;
-}
-
-@media (max-width: 600px) {
-    #tabla-reporte td {
-        border-bottom: 1px solid #f0f0f0;
-    }
-    .card-panel h3 {
-        font-size: 1.8rem;
-    }
-}
-
-/* ==========================================================================
-   10. ESTILOS EXCLUSIVOS DASHBOARD (PREMIUM UI)
-   ========================================================================== */
-
-/* Fondo y Navbar */
-.dashboard-body {
-    background-color: #f0f2f5; /* Gris muy suave y moderno */
-}
-
-.dashboard-nav {
-    background: #fff;
-    box-shadow: 0 2px 15px rgba(0,0,0,0.05) !important;
-    height: 70px;
-    line-height: 70px;
-}
-
-.dashboard-nav .brand-logo {
-    color: var(--primary-color);
-    font-weight: 700;
-    font-size: 1.5rem;
-}
-
-.dashboard-nav ul a {
-    color: #555;
-    font-weight: 500;
-}
-.dashboard-nav ul a:hover {
-    background-color: rgba(0,0,0,0.02);
-    color: var(--primary-color);
-}
-
-.main-container {
-    padding-top: 30px;
-    padding-bottom: 50px;
-}
-
-/* Tarjeta de Filtros */
-.filter-card {
-    border-radius: 16px !important;
-    border: none;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
-}
-
-.card-title-small {
-    font-size: 0.9rem;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 15px;
-}
-
-.filter-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.filter-wrapper .input-field {
-    margin: 0;
-    flex: 1;
-    min-width: 200px;
-}
-
-.btn-filter {
-    background: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0 25px;
-    height: 45px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3);
-    transition: transform 0.2s;
-}
-.btn-filter:hover { transform: translateY(-2px); }
-
-/* KPIs (Tarjetas de Indicadores) */
-.kpi-card {
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    margin-bottom: 20px;
-    height: 160px;
-    display: flex;
+  /* Dashboard */
+  .summary-card {
     flex-direction: column;
-    justify-content: center;
-}
-
-.kpi-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-}
-
-/* Decoración lateral de color */
-.kpi-primary { border-left: 6px solid var(--primary-color); }
-.kpi-success { border-left: 6px solid var(--success); }
-.kpi-info    { border-left: 6px solid #29b6f6; }
-.kpi-warning { border-left: 6px solid var(--accent-color); }
-
-.kpi-content p {
-    color: #888;
-    font-size: 0.9rem;
-    margin: 0;
-    text-transform: uppercase;
-    font-weight: 600;
-}
-
-.kpi-content h4, .kpi-content h5 {
-    margin: 10px 0 0 0;
-    font-weight: 700;
-    color: #333;
-}
-
-.kpi-icon {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.15;
-}
-
-.kpi-primary .kpi-icon { background: var(--primary-color); color: var(--primary-color); opacity: 1; color: white; box-shadow: 0 5px 15px rgba(26,35,126,0.4); }
-.kpi-success .kpi-icon { background: var(--success); color: white; opacity: 1; box-shadow: 0 5px 15px rgba(46,125,50,0.4); }
-.kpi-info .kpi-icon    { background: #29b6f6; color: white; opacity: 1; box-shadow: 0 5px 15px rgba(41,182,246,0.4); }
-.kpi-warning .kpi-icon { background: var(--accent-color); color: white; opacity: 1; box-shadow: 0 5px 15px rgba(255,171,64,0.4); }
-
-/* Gráficos */
-.chart-card {
-    border-radius: 20px !important;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
-    border: none;
-}
-
-.card-header {
-    padding: 20px 24px 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.chart-wrapper {
-    position: relative;
-    height: 350px;
+    gap: 30px;
+  }
+  .divider-vertical {
     width: 100%;
-}
+    height: 1px;
+  }
+  .kpi-card {
+    height: auto;
+    padding: 20px;
+  }
+  .kpi-icon {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-bottom: 15px;
+  }
+  .card-panel h3 {
+    font-size: 1.8rem;
+  }
 
-.chart-actions .btn-flat {
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-.chart-actions .btn-flat.active {
-    background-color: #e8eaf6;
-    color: var(--primary-color);
-}
+  /* Grid Productos */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
 
-/* Resumen Inferior */
-.summary-card {
-    border-radius: 20px !important;
-    padding: 30px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
-}
+  .product-card {
+    height: 320px !important;
+  }
 
-.summary-item {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-}
+  .product-card .card-image {
+    height: 140px !important;
+    padding: 10px !important;
+  }
 
-.summary-item i {
-    font-size: 2.5rem;
-    opacity: 0.3;
-}
+  .product-card .card-title {
+    font-size: 0.85rem !important;
+    height: 2rem;
+  }
 
-.summary-item h6 {
-    margin: 0;
-    color: #888;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
-.summary-item h4 {
-    margin: 5px 0 0 0;
-    font-weight: 700;
-    color: #333;
-}
+  .product-price {
+    font-size: 1.1rem !important;
+  }
 
-.divider-vertical {
-    width: 1px;
-    height: 60px;
-    background-color: #eee;
-}
-
-.badge-status {
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: white;
-}
-.badge-status.success { background-color: var(--success); box-shadow: 0 4px 10px rgba(46,125,50,0.3); }
-
-/* Ajustes Responsive */
-@media (max-width: 600px) {
-    .summary-card {
-        flex-direction: column;
-        gap: 30px;
-    }
-    .divider-vertical {
-        width: 100%;
-        height: 1px;
-    }
-    .kpi-card {
-        height: auto;
-        padding: 20px;
-    }
-    .kpi-icon {
-        position: relative;
-        right: auto;
-        top: auto;
-        margin-bottom: 15px;
-    }
-}
-
-/* --- ESTILOS PUNTO DE VENTA --- */
-.pos-container { padding-top: 20px; }
-
-/* Menú de Categorías (Sidebar) */
-.category-menu {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    overflow: hidden;
-    position: sticky;
-    top: 20px; /* Se queda fijo al bajar */
-}
-
-.cat-item {
-    padding: 15px 20px;
-    cursor: pointer;
-    border-left: 4px solid transparent;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    color: #546e7a;
-    font-weight: 500;
-}
-
-.cat-item:hover { background-color: #f5f5f5; }
-
-.cat-item.active {
-    background-color: #e8eaf6; /* Indigo muy suave */
-    border-left-color: #1a237e; /* Indigo oscuro */
-    color: #1a237e;
-    font-weight: bold;
-}
-
-.cat-item i { margin-right: 15px; }
-
-/* Tarjetas de Productos */
-.product-card {
-    border-radius: 12px;
-    border: none;
-    transition: transform 0.2s;
-    cursor: pointer;
-    overflow: hidden;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.product-card .card-image {
-    height: 160px; /* Altura fija para uniformidad */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    padding: 10px;
-}
-
-.product-card .card-image img {
-    max-height: 100%;
-    width: auto;
-    object-fit: contain;
-}
-
-.product-card .card-content {
-    padding: 15px !important;
-    text-align: center;
-    background: #FAFAFA;
-}
-
-.product-price {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #2e7d32; /* Verde */
-    margin: 5px 0;
-}
-
-/* Modal del Carrito */
-.modal.bottom-sheet {
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    max-height: 85% !important;
+  /* Tablas */
+  #tabla-reporte td {
+    border-bottom: 1px solid #f0f0f0;
+  }
 }

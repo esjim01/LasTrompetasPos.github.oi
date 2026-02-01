@@ -21,7 +21,10 @@
             <div class="col s12 m4">
                 <div class="card white">
                     <div class="card-content">
-                        <span class="card-title">Nuevo Usuario</span>
+                        <span class="card-title" id="form-titulo">Nuevo Usuario</span>
+                        
+                        <input type="hidden" id="user-id-original">
+
                         <div class="input-field">
                             <input type="text" id="user-nombre">
                             <label for="user-nombre">Nombre de Usuario</label>
@@ -29,6 +32,7 @@
                         <div class="input-field">
                             <input type="password" id="user-clave">
                             <label for="user-clave">Contraseña</label>
+                            <span class="helper-text" id="helper-clave"></span>
                         </div>
                         <div class="input-field">
                             <select id="user-rol">
@@ -37,21 +41,27 @@
                             </select>
                             <label>Rol del Usuario</label>
                         </div>
-                        <button class="btn indigo darken-4 btn-block" onclick="guardarUsuario()" style="width:100%">
-                            Guardar Usuario <i class="material-icons right">person_add</i>
+
+                        <button class="btn indigo darken-4" onclick="guardarUsuario()" style="width:100%; margin-bottom: 10px;" id="btn-guardar">
+                            Guardar <i class="material-icons right">save</i>
+                        </button>
+
+                        <button class="btn red lighten-2" onclick="limpiarFormulario()" style="width:100%; display:none;" id="btn-cancelar">
+                            Cancelar Edición <i class="material-icons right">cancel</i>
                         </button>
                     </div>
                 </div>
             </div>
+
             <div class="col s12 m8">
                 <div class="card white">
                     <div class="card-content">
-                        <table class="striped">
+                        <table class="striped highlight responsive-table">
                             <thead>
                                 <tr>
                                     <th>Usuario</th>
                                     <th>Rol</th>
-                                    <th>Acciones</th>
+                                    <th class="center-align">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tabla-usuarios"></tbody>

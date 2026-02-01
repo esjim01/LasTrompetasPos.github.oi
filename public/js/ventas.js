@@ -3,7 +3,7 @@
 // --- VARIABLES GLOBALES ---
 let carrito = [];
 let todosLosProductos = [];
-const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whisky", "Comida", "Otros"];
+const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whisky", "Gaseosas","Hidratantes", "Otros"];
 
 // --- VERIFICACIÓN DE SESIÓN ---
 (function () {
@@ -56,7 +56,7 @@ function generarMenuCategorias() {
 
     const iconos = {
         Todas: "grid_view", Cervezas: "sports_bar", Rones: "liquor",
-        Aguardientes: "local_bar", Whisky: "wine_bar", Comida: "restaurant", Otros: "more_horiz"
+        Aguardientes: "local_bar", Whisky: "wine_bar", Gaseosas: "opacity", Hidratantes: "local_drink", Otros: "more_horiz"
     };
 
     // HTML para escritorio (Lista vertical)
