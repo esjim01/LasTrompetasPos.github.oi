@@ -67,7 +67,7 @@ async function cargarInventario() {
             const nombreSafe = nombre.replace(/'/g, "\\'");
             const catSafe = categoria.replace(/'/g, "\\'");
 
-            // AQUI ESTABA EL ERROR: Ahora pasamos 5 argumentos, incluyendo la categoría
+           
             tabla.innerHTML += `
                 <tr style="border-bottom: 1px solid #f1f1f1;">
                     <td style="padding-left: 20px; font-weight:500;">${nombre}</td>

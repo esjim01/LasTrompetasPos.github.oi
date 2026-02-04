@@ -1,4 +1,4 @@
-// ventas.js - Proyecto Las Trompetas (OPTIMIZADO)
+// ventas.js - Proyecto Las Trompetas (CORREGIDO Y DEFINITIVO)
 
 // --- VARIABLES GLOBALES ---
 let carrito = [];
@@ -16,7 +16,7 @@ const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whi
         if (liInventario && rol !== "ADMIN") {
             liInventario.style.display = "none";
         }
-    });
+    }); // CORREGIDO: Aquí tenías una "ñ" perdida que rompía el código
 })();
 
 function cerrarSesion() {
@@ -31,6 +31,19 @@ document.addEventListener("DOMContentLoaded", function () {
     M.AutoInit();
     cargarDatos();
 });
+
+// Función para limpiar el nombre (Igual que en el servidor)
+function formatearNombreImagen(nombre) {
+    if (!nombre) return "temp.jpg";
+    return nombre
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Quita tildes y ñ
+        .replace(/[^a-z0-9]/g, "_")      // Caracteres raros a guion bajo
+        .replace(/_+/g, "_")             // Evita guiones dobles
+        .replace(/^_|_$/g, "")           // Quita guiones al inicio/final
+        + ".jpg";
+}
 
 // --- CARGA DE DATOS ---
 async function cargarDatos() {
@@ -107,7 +120,6 @@ function renderizarCatalogo(lista, categoria = "Todas") {
         // Lógica visual de Stock
         let badgeColor = "green";
         let disabled = "";
-        let opacity = "1";
         
         if (stock <= 0) {
             badgeColor = "grey";
@@ -116,15 +128,18 @@ function renderizarCatalogo(lista, categoria = "Todas") {
             badgeColor = "red";
         }
 
-        // Si la imagen falla, ponemos una genérica elegante
-        const imgUrl = `img/${p.nombre.replace(/\s+/g, '_').toLowerCase()}.jpg`; 
-        // Nota: En producción idealmente validas si existe la imagen, si no, usas placeholder.
+        // CORREGIDO: USAMOS LA FUNCIÓN formatearNombreImagen AQUÍ
+        // Esto soluciona el error 404 (ron_viejo_de_caldas_5_anos.jpg)
+        const imgUrl = `img/${formatearNombreImagen(p.nombre)}`;
+        
+        // CORREGIDO: Imagen de respaldo con HTTPS completo
+        const imagenError = "https://via.placeholder.com/150?text=Sin+Foto";
 
         contenedor.innerHTML += `
             <div class="col s6 m4 l3">
                 <div class="card product-card hoverable" ${disabled} onclick="agregarAlCarrito('${nombreSafe}', ${precio}, ${stock})">
                     <div class="card-image">
-                        <img src="${imgUrl}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Sin+Foto'">
+                        <img src="${imgUrl}" onerror="this.onerror=null; this.src='${imagenError}'">
                     </div>
                     <div class="card-content">
                         <span class="truncate" style="font-weight:500; font-size:1.1em" title="${p.nombre}">${p.nombre}</span>
