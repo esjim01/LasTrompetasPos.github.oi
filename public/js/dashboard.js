@@ -1,4 +1,5 @@
-// dashboard.js - Versión Alta Categoría
+
+// dashboard.js - Versión Alta Categoría (Adaptada a JSON)
 
 let miGrafico;
 let miGraficoCategorias;
@@ -28,9 +29,38 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cargarDashboard() {
     try {
         const resVentas = await fetch("/api/ventas/historial");
-        const ventas = await resVentas.json();
+        const rawVentas = await resVentas.json(); // Datos crudos (pueden venir en JSON o Excel)
 
-        // Corregido: Usar el mismo endpoint de inventario que definimos antes
+        // --- ADAPTADOR DE DATOS (El puente entre lo nuevo y tu código actual) ---
+        // Esto convierte el formato nuevo (items array, fecha ISO) al formato antiguo (string, DD/MM/AAAA)
+        // para que tu lógica original funcione sin tocar nada más.
+        const ventas = rawVentas.map(v => {
+            // 1. Normalizar Fecha
+            let fechaStr = v.Fecha || ""; // Intenta leer formato antiguo
+            if (!fechaStr && v.fecha) {
+                // Si es formato nuevo (ISO), convertir a DD/MM/AAAA
+                const d = new Date(v.fecha);
+                fechaStr = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+            }
+
+            // 2. Normalizar Productos (Array a String "Producto (xCant)")
+            let prodStr = v.Productos || "";
+            if (!prodStr && v.items && Array.isArray(v.items)) {
+                // Reconstruimos el string para que tu regex de abajo funcione
+                prodStr = v.items.map(i => `${i.nombre} (x${i.cantidad})`).join(", ");
+            }
+
+            // Devolvemos el objeto con las Mayúsculas que tu código espera
+            return {
+                Fecha: fechaStr,
+                Total: v.Total !== undefined ? v.Total : (v.total || 0),
+                Personas: v.Personas !== undefined ? v.Personas : (v.numPersonas || 0),
+                Vendedor: v.Vendedor || v.vendedor || "Admin",
+                Productos: prodStr
+            };
+        });
+        // --- FIN DEL ADAPTADOR ---
+
         const resInv = await fetch("/api/inventario/ver");
         const inventario = await resInv.json();
         inventarioGlobal = inventario;

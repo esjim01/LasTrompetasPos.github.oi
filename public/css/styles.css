@@ -372,6 +372,22 @@ nav {
 /* ==========================================================================
    6. MÓDULO: INVENTARIO
    ========================================================================== */
+
+/* Corrección para botones de tabla */
+.acciones-fila {
+    display: flex !important;       /* Activa el modo 'caja flexible' */
+    gap: 10px;                      /* Espacio EXACTO entre botones (adiós &nbsp;) */
+    justify-content: flex-start;    /* Alinea a la izquierda (o usa 'center' para centrar) */
+    align-items: center;            /* Alineación vertical perfecta */
+    flex-wrap: nowrap;              /* PROHIBIDO bajar de línea (esto evita que se monten) */
+}
+
+/* Opcional: Asegura que los botones no tengan márgenes extraños */
+.acciones-fila .btn-small {
+    margin: 0 !important;
+}
+
+/* Tabla de Historial de Ventas */
 .table-container {
   background: var(--white);
   border-radius: 15px;

@@ -6,17 +6,22 @@ let todosLosProductos = [];
 const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whisky", "Gaseosas","Hidratantes", "Otros"];
 
 // --- VERIFICACIÓN DE SESIÓN ---
+// --- VERIFICACIÓN DE SESIÓN Y SEGURIDAD ---
 (function () {
     const rol = localStorage.getItem("usuarioRol");
     if (!rol) window.location.replace("/");
 
     document.addEventListener("DOMContentLoaded", () => {
-        const liInventario = document.getElementById("li-inventario");
-        // Solo ADMIN puede ver el botón de inventario en el nav
-        if (liInventario && rol !== "ADMIN") {
-            liInventario.style.display = "none";
+        // CORRECCIÓN: Usamos el ID correcto "btn-admin"
+        const btnAdmin = document.getElementById("btn-admin");
+        
+        // REGLA DE ORO: Si el botón existe Y el rol NO es ADMIN...
+        if (btnAdmin && rol !== "ADMIN" && rol !== "ADMINISTRADOR") {
+            // ...lo borramos del mapa a la fuerza.
+            btnAdmin.style.display = "none !important"; 
+            btnAdmin.remove(); // Opción nuclear: Lo elimina del HTML
         }
-    }); // CORREGIDO: Aquí tenías una "ñ" perdida que rompía el código
+    }); 
 })();
 
 function cerrarSesion() {

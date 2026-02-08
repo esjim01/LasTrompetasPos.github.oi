@@ -1,126 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Punto de Venta - Las Trompetas</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
     <link rel="stylesheet" href="/public/css/styles.css" />
-</head>
-<body class="grey lighten-4"> <nav class="indigo darken-4 z-depth-2">
-        <div class="nav-wrapper container">
-            <a href="#" class="brand-logo left hide-on-small-only"><i class="material-icons left">point_of_sale</i>Caja</a>
-            <span class="brand-logo center show-on-small hide-on-med-and-up" style="font-size: 1.2rem">Ventas</span>
+  </head>
+  <body class="grey lighten-4">
+    <nav class="indigo darken-4 z-depth-2">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo left hide-on-small-only"
+          ><i class="material-icons left">point_of_sale</i>Caja</a
+        >
+        <span
+          class="brand-logo center show-on-small hide-on-med-and-up"
+          style="font-size: 1.2rem"
+          >Ventas</span
+        >
 
-            <ul class="right">
-                <li id="li-inventario">
-                    <a href="inventario.html" class="tooltipped" data-position="bottom" data-tooltip="Ir a Inventario">
-                        <i class="material-icons">inventory_2</i>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" onclick="cerrarSesion()" class="tooltipped" data-position="bottom" data-tooltip="Salir">
-                        <i class="material-icons">logout</i>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <ul class="right">
+          <li id="btn-admin" style="display: none">
+            <a
+              href="/inventario"
+              class="waves-effect waves-light btn red darken-1"
+            >
+              <i class="material-icons left">inventory</i>Inventario
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onclick="cerrarSesion()"
+              class="tooltipped"
+              data-position="bottom"
+              data-tooltip="Salir"
+            >
+              <i class="material-icons">logout</i>
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
-    <div class="container-fluid" style="width: 95%; margin: 20px auto;">
-        <div class="row">
-            
-            <div class="col hide-on-small-only m3 l2">
-                <div id="menu-categorias" class="category-menu z-depth-1">
-                    </div>
-            </div>
-
-            <div class="col s12 show-on-small hide-on-med-and-up" style="margin-bottom: 15px; overflow-x: auto; white-space: nowrap; padding-bottom: 10px;">
-                <div id="menu-categorias-movil" style="display: inline-flex; gap: 10px;">
-                    </div>
-            </div>
-
-            <div class="col s12 m9 l10">
-                <div class="card" style="border-radius: 12px; margin-top:0;">
-                    <div class="input-field" style="margin: 5px 20px;">
-                        <i class="material-icons prefix indigo-text">search</i>
-                        <input type="text" id="busqueda-venta" placeholder="Buscar producto (ej: Cerveza...)" onkeyup="buscarProductoVenta()">
-                    </div>
-                </div>
-
-                <div id="catalogo-productos" class="row">
-                    </div>
-            </div>
+    <div class="container-fluid" style="width: 95%; margin: 20px auto">
+      <div class="row">
+        <div class="col hide-on-small-only m3 l2">
+          <div id="menu-categorias" class="category-menu z-depth-1"></div>
         </div>
+
+        <div
+          class="col s12 show-on-small hide-on-med-and-up"
+          style="
+            margin-bottom: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 10px;
+          "
+        >
+          <div
+            id="menu-categorias-movil"
+            style="display: inline-flex; gap: 10px"
+          ></div>
+        </div>
+
+        <div class="col s12 m9 l10">
+          <div class="card" style="border-radius: 12px; margin-top: 0">
+            <div class="input-field" style="margin: 5px 20px">
+              <i class="material-icons prefix indigo-text">search</i>
+              <input
+                type="text"
+                id="busqueda-venta"
+                placeholder="Buscar producto (ej: Cerveza...)"
+                onkeyup="buscarProductoVenta()"
+              />
+            </div>
+          </div>
+
+          <div id="catalogo-productos" class="row"></div>
+        </div>
+      </div>
     </div>
 
     <div id="modal-pedido" class="modal bottom-sheet">
-        <div class="modal-content container">
-            <div class="row valign-wrapper" style="margin-bottom: 10px;">
-                <div class="col s10">
-                    <h5 class="indigo-text text-darken-4" style="margin:0"><b>Resumen del Pedido</b></h5>
-                </div>
-                <div class="col s2 right-align">
-                    <button class="modal-close btn-flat"><i class="material-icons">close</i></button>
-                </div>
-            </div>
-            
-            <div class="divider"></div>
-
-            <ul class="collection" id="lista-carrito" style="border: none; max-height: 40vh; overflow-y: auto"></ul>
-
-            <div class="card-panel grey lighten-5 z-depth-0" style="border: 1px solid #eee; border-radius: 10px;">
-                <div class="row" style="margin-bottom: 0;">
-                    <div class="col s6"><span style="font-size: 1.2rem">Total a Pagar:</span></div>
-                    <div class="col s6 right-align"><span style="font-size: 1.5rem" class="bold indigo-text">$<span id="total-venta">0</span></span></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col s12 m6">
-                    <div class="switch" style="margin-top: 10px;">
-                        <label>
-                            Sin Registro
-                            <input type="checkbox" id="check-personas" onchange="togglePersonas()">
-                            <span class="lever"></span>
-                            Registrar Personas
-                        </label>
-                    </div>
-                </div>
-                <div class="col s12 m6" id="contenedor-personas" style="display: none;">
-                    <div class="input-field inline">
-                        <i class="material-icons prefix">groups</i>
-                        <input type="number" id="num-personas" value="1" min="1" style="width: 100px;">
-                        <label class="active">N° Asistentes</label>
-                    </div>
-                </div>
-            </div>
-
-            <button class="btn-large indigo accent-4 waves-effect waves-light" onclick="confirmarVenta()" style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
-                COBRAR<i class="material-icons right">receipt</i>
+      <div class="modal-content container">
+        <div class="row valign-wrapper" style="margin-bottom: 10px">
+          <div class="col s10">
+            <h5 class="indigo-text text-darken-4" style="margin: 0">
+              <b>Resumen del Pedido</b>
+            </h5>
+          </div>
+          <div class="col s2 right-align">
+            <button class="modal-close btn-flat">
+              <i class="material-icons">close</i>
             </button>
+          </div>
         </div>
+
+        <div class="divider"></div>
+
+        <ul
+          class="collection"
+          id="lista-carrito"
+          style="border: none; max-height: 40vh; overflow-y: auto"
+        ></ul>
+
+        <div
+          class="card-panel grey lighten-5 z-depth-0"
+          style="border: 1px solid #eee; border-radius: 10px"
+        >
+          <div class="row" style="margin-bottom: 0">
+            <div class="col s6">
+              <span style="font-size: 1.2rem">Total a Pagar:</span>
+            </div>
+            <div class="col s6 right-align">
+              <span style="font-size: 1.5rem" class="bold indigo-text"
+                >$<span id="total-venta">0</span></span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12 m6">
+            <div class="switch" style="margin-top: 10px">
+              <label>
+                Sin Registro
+                <input
+                  type="checkbox"
+                  id="check-personas"
+                  onchange="togglePersonas()"
+                />
+                <span class="lever"></span>
+                Registrar Personas
+              </label>
+            </div>
+          </div>
+          <div
+            class="col s12 m6"
+            id="contenedor-personas"
+            style="display: none"
+          >
+            <div class="input-field inline">
+              <i class="material-icons prefix">groups</i>
+              <input
+                type="number"
+                id="num-personas"
+                value="1"
+                min="1"
+                style="width: 100px"
+              />
+              <label class="active">N° Asistentes</label>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn-large indigo accent-4 waves-effect waves-light"
+          onclick="confirmarVenta()"
+          style="width: 100%; border-radius: 12px; margin-bottom: 20px"
+        >
+          COBRAR<i class="material-icons right">receipt</i>
+        </button>
+      </div>
     </div>
 
     <div class="fixed-action-btn">
-        <a href="#modal-pedido" class="btn-floating btn-large pulse amber darken-3 modal-trigger z-depth-3 waves-effect waves-light">
-            <i class="material-icons black-text">shopping_cart</i>
-            <span id="badge-cart" class="new badge red darken-2" style="position: absolute; top: -5px; right: -5px; border-radius: 50%; padding: 0 6px;" data-badge-caption="">0</span>
-        </a>
+      <a
+        href="#modal-pedido"
+        class="btn-floating btn-large pulse amber darken-3 modal-trigger z-depth-3 waves-effect waves-light"
+      >
+        <i class="material-icons black-text">shopping_cart</i>
+        <span
+          id="badge-cart"
+          class="new badge red darken-2"
+          style="
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            border-radius: 50%;
+            padding: 0 6px;
+          "
+          data-badge-caption=""
+          >0</span
+        >
+      </a>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/ventas.js"></script>
-    <script>
-        // Inicialización básica
-        document.addEventListener("DOMContentLoaded", function () {
-            M.Modal.init(document.querySelectorAll(".modal"), {
-                preventScrolling: false, // Permite scroll dentro del modal
-                endingTop: '10%'
-            });
-            M.Tooltip.init(document.querySelectorAll(".tooltipped"));
+<script>
+      // Inicialización básica
+      document.addEventListener("DOMContentLoaded", function () {
+        
+        // --- ZONA DE DIAGNÓSTICO ---
+        const rolUsuario = localStorage.getItem("usuarioRol");
+        const btnAdmin = document.getElementById("btn-admin");
+
+        console.log("--- DEBUGGING ROL ---");
+        console.log("1. Rol crudo en memoria: (usuarioRol)", rolUsuario);
+        console.log("2. Botón encontrado en HTML:", btnAdmin);
+
+        // --- LÓGICA BLINDADA ---
+        if (rolUsuario && btnAdmin) {
+            // 1. Limpiamos espacios (ej: " admin " -> "admin") y pasamos a mayúsculas
+            const rolLimpio = rolUsuario.trim().toUpperCase();
+            console.log("3. Rol limpio:", rolLimpio);
+
+            // 2. Comparamos (Aceptamos "ADMIN" o "ADMINISTRADOR")
+            if (rolLimpio === "ADMIN" || rolLimpio === "ADMINISTRADOR") {
+                console.log("4. ¡ACCESO CONCEDIDO! Mostrando botón.");
+                
+                // Opción A: display block (estándar)
+                 btnAdmin.style.display = "block";
+                
+                // Opción B (Si se ve desalineado con block):
+                // btnAdmin.style.display = "inline-block"; 
+            } else {
+                console.log("4. Acceso denegado: El rol no coincide.");
+            }
+        } else {
+            console.warn("Falta el rol en localStorage o no se encontró el botón ID 'btn-admin'");
+        }
+        // -----------------------------
+
+        // Inicializar componentes de Materialize
+        M.Modal.init(document.querySelectorAll(".modal"), {
+          preventScrolling: false,
+          endingTop: "10%",
         });
+        M.Tooltip.init(document.querySelectorAll(".tooltipped"));
+      });
     </script>
-</body>
+  </body>
 </html>
