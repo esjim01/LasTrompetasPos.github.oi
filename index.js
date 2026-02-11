@@ -517,5 +517,40 @@ app.post("/api/ventas/estado", (req, res) => {
     }
 });
 
+// Ruta para obtener el reporte completo
+app.get('/api/reporte-completo', (req, res) => {
+    const { desde, hasta } = req.query; // Recibimos las fechas del filtro
+
+    // CONSULTA 1: Ventas Generales (Resumen)
+    const sqlResumen = `
+        SELECT id, fecha, total, metodo_pago, vendedor 
+        FROM ventas 
+        WHERE fecha BETWEEN ? AND ?
+        ORDER BY fecha DESC
+    `;
+
+    // CONSULTA 2: Detalle Uno a Uno (Productos)
+    // Unimos la tabla de productos/detalles con la venta
+    const sqlDetalle = `
+        SELECT v.id as ticket, v.fecha, d.producto, d.cantidad, d.precio_unitario, (d.cantidad * d.precio_unitario) as subtotal
+        FROM ventas v
+        JOIN detalles_venta d ON v.id = d.id_venta
+        WHERE v.fecha BETWEEN ? AND ?
+        ORDER BY v.id DESC
+    `;
+
+    // Ejecutamos las dos consultas (Usando db.all si es SQLite)
+    db.all(sqlResumen, [desde, hasta], (err, resumen) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        db.all(sqlDetalle, [desde, hasta], (err, detalle) => {
+            if (err) return res.status(500).json({ error: err.message });
+            
+            // Enviamos ambos paquetes de datos al frontend
+            res.json({ resumen, detalle });
+        });
+    });
+});
+
 // --- 10. INICIAR SERVIDOR ---
-app.listen(PORT, () => console.log(`🚀 Servidor en puerto ${PORT}`));
+app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Servidor en puerto ${PORT}`));

@@ -3,7 +3,7 @@
 // --- VARIABLES GLOBALES ---
 let carrito = [];
 let todosLosProductos = [];
-const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Aguardientes", "Whisky", "Gaseosas","Hidratantes", "Otros"];
+const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Brandy", "Aguardientes", "Whisky", "Gaseosas","Hidratantes", "Otros"];
 
 // --- VERIFICACIÓN DE SESIÓN ---
 // --- VERIFICACIÓN DE SESIÓN Y SEGURIDAD ---
@@ -66,41 +66,54 @@ async function cargarDatos() {
 }
 
 // --- GENERACIÓN DE MENÚS (Escritorio y Móvil) ---
+// En js/ventas.js - Busca la función generarMenuCategorias
+
 function generarMenuCategorias() {
     const menuDesktop = document.getElementById("menu-categorias");
     const menuMobile = document.getElementById("menu-categorias-movil");
-    
-    if (!menuDesktop) return;
 
+    // --- 👇 ESTA ERA LA PARTE QUE FALTABA 👇 ---
     const iconos = {
-        Todas: "grid_view", Cervezas: "sports_bar", Rones: "liquor",
-        Aguardientes: "local_bar", Whisky: "wine_bar", Gaseosas: "opacity", Hidratantes: "local_drink", Otros: "more_horiz"
+        "Todas": "grid_view",
+        "Cervezas": "sports_bar",
+        "Rones": "liquor",
+        "Brandy": "local_bar",
+        "Aguardientes": "whatshot",
+        "Whisky": "wine_bar",
+        "Gaseosas": "opacity",
+        "Hidratantes": "local_drink",
+        "Otros": "more_horiz"
     };
+    // -------------------------------------------
 
-    // HTML para escritorio (Lista vertical)
     let htmlDesktop = `<div class="indigo lighten-5" style="padding:15px; font-weight:bold; color:#1a237e">CATEGORÍAS</div>`;
-    
-    // HTML para móvil (Chips horizontales)
     let htmlMobile = ``;
 
     CATEGORIAS_DEFINIDAS.forEach(cat => {
+        // Si no encuentra el icono, usa 'label' por defecto
         const icon = iconos[cat] || "label";
+        
+        // Estado inicial (Desktop)
         const isActive = cat === "Todas" ? "active" : "";
         
-        // Desktop
+        // Estado inicial (Móvil)
+        const isMobileActive = cat === "Todas" ? "indigo white-text" : "";
+
+        // Desktop HTML (Lista lateral)
         htmlDesktop += `
-            <div class="cat-item ${isActive}" onclick="filtrarPorCategoria('${cat}', this)">
+            <div class="cat-item ${isActive}" onclick="filtrarPorCategoria('${cat}', this, false)">
                 <i class="material-icons">${icon}</i> ${cat}
             </div>`;
 
-        // Mobile
+        // Mobile HTML (Chips horizontales)
+        // NOTA: Aquí pasamos 'this' y 'true' para que sepa que es móvil
         htmlMobile += `
-            <div class="chip ${isActive ? 'indigo white-text' : ''}" onclick="filtrarPorCategoria('${cat}', null, true)">
+            <div class="chip ${isMobileActive}" onclick="filtrarPorCategoria('${cat}', this, true)">
                 ${cat}
             </div>`;
     });
 
-    menuDesktop.innerHTML = htmlDesktop;
+    if (menuDesktop) menuDesktop.innerHTML = htmlDesktop;
     if (menuMobile) menuMobile.innerHTML = htmlMobile;
 }
 
@@ -158,13 +171,31 @@ function renderizarCatalogo(lista, categoria = "Todas") {
 }
 
 // --- FILTROS Y BÚSQUEDA ---
+// En js/ventas.js - Reemplaza toda la función filtrarPorCategoria por esta:
+
 function filtrarPorCategoria(categoria, elementoDOM, esMovil = false) {
-    // Actualizar visualmente la selección
-    if (!esMovil) {
+    
+    // LÓGICA VISUAL (Colores)
+    if (esMovil) {
+        // 1. Limpiar todos los chips móviles (quitar azul)
+        const contenedorMovil = document.getElementById("menu-categorias-movil");
+        if (contenedorMovil) {
+            contenedorMovil.querySelectorAll('.chip').forEach(chip => {
+                chip.classList.remove('indigo', 'white-text');
+            });
+        }
+
+        // 2. Pintar el chip actual (poner azul)
+        if (elementoDOM) {
+            elementoDOM.classList.add('indigo', 'white-text');
+        }
+    } else {
+        // Lógica Desktop (la que ya tenías)
         document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
         if(elementoDOM) elementoDOM.classList.add('active');
     }
 
+    // LÓGICA DE DATOS (Filtrar productos)
     const filtrados = categoria === "Todas" 
         ? todosLosProductos 
         : todosLosProductos.filter(p => p.categoria === categoria);

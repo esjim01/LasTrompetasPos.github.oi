@@ -17,11 +17,15 @@ const COLORS = {
     chart: ['#1a237e', '#43a047', '#fb8c00', '#e53935', '#8e24aa', '#00acc1', '#3949ab']
 };
 
+// Inicialización al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
     const hoy = new Date();
+    const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+    // Establecer los valores de los filtros de fecha
     document.getElementById("filtro-hasta").valueAsDate = hoy;
-    hoy.setDate(hoy.getDate() - 30);
-    document.getElementById("filtro-desde").valueAsDate = hoy;
+    document.getElementById("filtro-desde").valueAsDate = primerDia;
+
+    M.updateTextFields();// Actualiza los labels de Materialize
 
     cargarDashboard();
 });
@@ -239,6 +243,51 @@ function renderizarGraficoCategorias() {
             }
         }
     });
+}
+
+async function generarReporteExcel() {
+    // 1. Obtener las fechas del filtro que ya tienes
+    const desde = document.getElementById('filtro-desde').value;
+    const hasta = document.getElementById('filtro-hasta').value;
+
+    if(!desde || !hasta) return M.toast({html: 'Selecciona un rango de fechas', classes: 'orange'});
+
+    M.toast({html: 'Generando reporte...', classes: 'blue'});
+
+    try {
+        // 2. Pedir los datos al servidor
+        const response = await fetch(`/api/reporte-completo?desde=${desde}&hasta=${hasta}`);
+        const data = await response.json();
+
+        if (!data.resumen || data.resumen.length === 0) {
+            return M.toast({html: 'No hay ventas en esas fechas', classes: 'orange'});
+        }
+
+        // 3. Crear el Libro de Excel
+        const wb = XLSX.utils.book_new();
+
+        // --- HOJA 1: RESUMEN GENERAL ---
+        // Convertimos el JSON a Hoja de Excel
+        const wsResumen = XLSX.utils.json_to_sheet(data.resumen);
+        // Ajustamos anchos de columna (Opcional, para que se vea bonito)
+        wsResumen['!cols'] = [{wch:10}, {wch:20}, {wch:15}, {wch:15}, {wch:20}];
+        // Añadimos la hoja al libro
+        XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen General");
+
+        // --- HOJA 2: DETALLE UNO A UNO ---
+        const wsDetalle = XLSX.utils.json_to_sheet(data.detalle);
+        wsDetalle['!cols'] = [{wch:10}, {wch:20}, {wch:30}, {wch:10}, {wch:15}, {wch:15}];
+        XLSX.utils.book_append_sheet(wb, wsDetalle, "Detalle Productos");
+
+        // 4. Descargar el archivo
+        XLSX.writeFile(wb, `Reporte_Ventas_${desde}_al_${hasta}.xlsx`);
+        
+        M.toast({html: '¡Reporte descargado!', classes: 'green'});
+
+    } catch (error) {
+        console.error(error);
+        M.toast({html: 'Error al generar Excel', classes: 'red'});
+    }
 }
 
 function parsearFecha(fechaStr) {

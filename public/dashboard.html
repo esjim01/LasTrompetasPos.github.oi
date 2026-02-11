@@ -32,18 +32,21 @@
                     <div class="card-content">
                         <span class="card-title-small">📅 Rango de Análisis</span>
                         <div class="filter-wrapper">
-                            <div class="input-field">
+                            <div class="input-field col s6">
                                 <i class="material-icons prefix">today</i>
                                 <input type="date" id="filtro-desde">
-                                <label class="active">Desde</label>
+                                <label class="active" id="rango-desde">Desde</label>
                             </div>
                             <div class="input-field">
                                 <i class="material-icons prefix">event</i>
                                 <input type="date" id="filtro-hasta">
-                                <label class="active">Hasta</label>
+                                <label class="active" id="rango-hasta">Hasta</label>
                             </div>
                             <button class="btn-filter waves-effect waves-light" onclick="cargarDashboard()">
                                 <i class="material-icons left">refresh</i>Actualizar
+                            </button>
+                            <button class="btn green darken-3 waves-effect waves-light" onclick="generarReporteExcel()">
+                                <i class="material-icons left">description</i>Descargar reporte
                             </button>
                         </div>
                     </div>
@@ -156,5 +159,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="/public/js/dashboard.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
 </body>
 </html>
