@@ -13,13 +13,13 @@
 
     <nav class="dashboard-nav z-depth-0">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo">
-                <i class="material-icons left">analytics</i>Las Trompetas
-            </a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="/public/ventas.html" class="nav-link"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
-                <li><a href="/public/inventario.html" class="nav-link"><i class="material-icons left">inventory_2</i>Inventario</a></li>
-                <li><a href="/index.html" class="nav-link red-text"><i class="material-icons">logout</i></a></li>
+            <a href="#" class="brand-logo"><i class="material-icons left">store</i>Las Trompetas - Dashboard</a>
+            <ul class="right hide-on-med-and-down">               
+            <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
+            <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
+            <li><a href="/public/inventario.html" class="nav-link"><i class="material-icons left">inventory_2</i>Inventario</a></li>
+            <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
+            <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
             </ul>
         </div>
     </nav>
@@ -73,15 +73,15 @@
                     </div>
                 </div>
             </div>
-            <div class="col s12 m6 l3">
-                <div class="kpi-card kpi-info">
-                    <div class="kpi-icon"><i class="material-icons">star</i></div>
-                    <div class="kpi-content">
-                        <p>Producto Estrella</p>
-                        <h5 id="txt-producto-top" class="truncate">Cargando...</h5>
-                    </div>
-                </div>
-            </div>
+<div class="col s12 m6 l3">
+    <div class="kpi-card kpi-danger" style="border-left: 5px solid #c62828;">
+        <div class="kpi-icon"><i class="material-icons red-text">money_off</i></div>
+        <div class="kpi-content">
+            <p>Gastos Operativos</p>
+            <h4 id="txt-gastos-totales">$0</h4>
+        </div>
+    </div>
+</div>
             <div class="col s12 m6 l3">
                 <div class="kpi-card kpi-warning">
                     <div class="kpi-icon"><i class="material-icons">emoji_events</i></div>

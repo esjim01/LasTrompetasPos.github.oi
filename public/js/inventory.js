@@ -19,6 +19,31 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarHistorial();
 });
 
+// --- SEGURIDAD: VERIFICACIÓN DE ROL ---
+(function protegerVista() {
+    // 1. Recuperar la sesión guardada
+    const sesionGuardada = localStorage.getItem('usuarioNombre'); // Ojo: Revisa si usas 'usuario', 'user' o 'session'
+
+    // 2. Si no hay sesión, mandar al Login
+    if (!sesionGuardada) {
+        alert("Debes iniciar sesión primero.");
+        window.location.href = '/index.html'; 
+        return;
+    }
+
+    const usuario = JSON.parse(sesionGuardada);
+
+    // 3. REGLA DE ORO: Si no es Admin, ¡FUERA!
+    // Cambia 'admin' por como tengas escrito el rol en tu base de datos (ej: 'administrador', 'jefe', etc.)
+    if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador' && usuario.rol !== 'admin') {
+        alert("⛔ Acceso Restringido: Solo personal autorizado.");
+        
+        // Lo redirigimos a donde SÍ puede estar (Ventas)
+        window.location.href = '/public/ventas.html'; 
+    }
+})();
+// --- FIN SEGURIDAD ---
+
 // --- VISTA PREVIA DE IMAGEN ---
 const inputImg = document.getElementById("input-imagen");
 if (inputImg) {

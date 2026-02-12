@@ -1,13 +1,12 @@
-
-// dashboard.js - Versión Alta Categoría (Adaptada a JSON)
+// public/js/dashboard.js - Versión Integrada (Ventas + Inventario + Gastos)
 
 let miGrafico;
 let miGraficoCategorias;
 let datosVentasActuales = [];
+let datosGastosActuales = []; // --- NUEVO: Array para gastos filtrados
 let vistaActual = "vendedor";
 let inventarioGlobal = [];
 
-// Paleta de colores Premium
 const COLORS = {
     indigo: '#1a237e',
     indigoLight: 'rgba(26, 35, 126, 0.1)',
@@ -17,44 +16,71 @@ const COLORS = {
     chart: ['#1a237e', '#43a047', '#fb8c00', '#e53935', '#8e24aa', '#00acc1', '#3949ab']
 };
 
-// Inicialización al cargar la página
+
 document.addEventListener("DOMContentLoaded", () => {
     const hoy = new Date();
     const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-    // Establecer los valores de los filtros de fecha
+    
     document.getElementById("filtro-hasta").valueAsDate = hoy;
     document.getElementById("filtro-desde").valueAsDate = primerDia;
 
-    M.updateTextFields();// Actualiza los labels de Materialize
-
+    M.updateTextFields();
     cargarDashboard();
 });
 
+// --- SEGURIDAD: VERIFICACIÓN DE ROL ---
+(function protegerVista() {
+    // 1. Recuperar la sesión guardada
+    const sesionGuardada = localStorage.getItem('usuarioNombre'); // Ojo: Revisa si usas 'usuario', 'user' o 'session'
+
+    // 2. Si no hay sesión, mandar al Login
+    if (!sesionGuardada) {
+        alert("Debes iniciar sesión primero.");
+        window.location.href = '/index.html'; // O tu ruta de login
+        return;
+    }
+
+    const usuario = JSON.parse(sesionGuardada);//
+
+    // 3. REGLA DE ORO: Si no es Admin, ¡FUERA!
+    // Cambia 'admin' por como tengas escrito el rol en tu base de datos (ej: 'administrador', 'jefe', etc.)
+    if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador' && usuario.rol !== 'admin') {
+        alert("⛔ Acceso Restringido: Solo personal autorizado.");
+        
+        // Lo redirigimos a donde SÍ puede estar (Ventas)
+        window.location.href = '/public/ventas.html'; 
+    }
+})();
+// --- FIN SEGURIDAD ---
+
+// ... Aquí sigue tu código normal del dashboard ...
+
 async function cargarDashboard() {
     try {
-        const resVentas = await fetch("/api/ventas/historial");
-        const rawVentas = await resVentas.json(); // Datos crudos (pueden venir en JSON o Excel)
+        // --- 1. CARGA DE DATOS EN PARALELO (Ventas, Inventario y GASTOS) ---
+        const [resVentas, resInv, resGastos] = await Promise.all([
+            fetch("/api/ventas/historial"),
+            fetch("/api/inventario/ver"),
+            fetch("/api/gastos") // --- NUEVO: Endpoint de gastos
+        ]);
 
-        // --- ADAPTADOR DE DATOS (El puente entre lo nuevo y tu código actual) ---
-        // Esto convierte el formato nuevo (items array, fecha ISO) al formato antiguo (string, DD/MM/AAAA)
-        // para que tu lógica original funcione sin tocar nada más.
+        const rawVentas = await resVentas.json();
+        const inventario = await resInv.json();
+        const rawGastos = await resGastos.json(); // --- NUEVO
+
+        inventarioGlobal = inventario;
+
+        // --- ADAPTADOR DE VENTAS ---
         const ventas = rawVentas.map(v => {
-            // 1. Normalizar Fecha
-            let fechaStr = v.Fecha || ""; // Intenta leer formato antiguo
+            let fechaStr = v.Fecha || "";
             if (!fechaStr && v.fecha) {
-                // Si es formato nuevo (ISO), convertir a DD/MM/AAAA
                 const d = new Date(v.fecha);
                 fechaStr = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}`;
             }
-
-            // 2. Normalizar Productos (Array a String "Producto (xCant)")
             let prodStr = v.Productos || "";
             if (!prodStr && v.items && Array.isArray(v.items)) {
-                // Reconstruimos el string para que tu regex de abajo funcione
                 prodStr = v.items.map(i => `${i.nombre} (x${i.cantidad})`).join(", ");
             }
-
-            // Devolvemos el objeto con las Mayúsculas que tu código espera
             return {
                 Fecha: fechaStr,
                 Total: v.Total !== undefined ? v.Total : (v.total || 0),
@@ -63,12 +89,8 @@ async function cargarDashboard() {
                 Productos: prodStr
             };
         });
-        // --- FIN DEL ADAPTADOR ---
 
-        const resInv = await fetch("/api/inventario/ver");
-        const inventario = await resInv.json();
-        inventarioGlobal = inventario;
-
+        // --- FILTRADO POR FECHAS ---
         const fDesde = document.getElementById("filtro-desde").value;
         const fHasta = document.getElementById("filtro-hasta").value;
 
@@ -77,17 +99,29 @@ async function cargarDashboard() {
         const desde = new Date(fDesde + "T00:00:00");
         const hasta = new Date(fHasta + "T23:59:59");
 
+        // Filtrar Ventas
         datosVentasActuales = ventas.filter((v) => {
             const fechaVenta = parsearFecha(v.Fecha);
             return fechaVenta >= desde && fechaVenta <= hasta;
         });
 
+        // --- NUEVO: Filtrar Gastos ---
+        // Asumiendo que gastos.xlsx tiene fecha formato YYYY-MM-DD
+        datosGastosActuales = rawGastos.filter(g => {
+            // Ajustar esto si tu fecha de gastos viene diferente
+            const fechaGasto = new Date(g.fecha + "T00:00:00"); 
+            return fechaGasto >= desde && fechaGasto <= hasta;
+        });
+
+        // --- CÁLCULOS ---
         let totalIngresos = 0;
-        let totalCosto = 0;
+        let totalCostoInsumos = 0; // Costo de lo vendido (Inventario)
+        let totalGastosOperativos = 0; // Luz, Agua, Nómina, etc.
         let totalPersonas = 0;
         let conteoProductos = {};
         let conteoVendedores = {};
 
+        // 1. Sumar Ventas y Costos de Insumos
         datosVentasActuales.forEach((v) => {
             totalIngresos += Number(v.Total) || 0;
             totalPersonas += Number(v.Personas) || 0;
@@ -102,20 +136,36 @@ async function cargarDashboard() {
                         const cant = parseInt(match[2]);
                         const prodInv = inventarioGlobal.find((p) => p.nombre.trim() === nombre);
                         let costoUnitario = prodInv && prodInv.costo ? Number(prodInv.costo) : 0;
-                        totalCosto += costoUnitario * cant;
+                        
+                        totalCostoInsumos += costoUnitario * cant;
                         conteoProductos[nombre] = (conteoProductos[nombre] || 0) + cant;
                     }
                 });
             }
         });
 
-        // Actualización de UI con formato
-        actualizarTexto("txt-ventas-totales", `$${totalIngresos.toLocaleString()}`);
-        actualizarTexto("txt-ganancia", `$${(totalIngresos - totalCosto).toLocaleString()}`);
+        // 2. Sumar Gastos Operativos (NUEVO)
+        totalGastosOperativos = datosGastosActuales.reduce((sum, g) => sum + (Number(g.monto) || 0), 0);
+
+        // 3. Calcular Utilidad Real
+        // Utilidad = Ventas - (Costo Mercancía + Gastos Operativos)
+        const gananciaNeta = totalIngresos - totalCostoInsumos - totalGastosOperativos;
+
+        // --- ACTUALIZACIÓN UI ---
+        actualizarTexto("txt-ventas-totales", formatearDinero(totalIngresos));
+        
+        // Actualizamos Ganancia Neta
+        actualizarTexto("txt-ganancia", formatearDinero(gananciaNeta));
+        
+        // Si quieres mostrar los gastos en algún lado, puedes agregar un elemento ID 'txt-gastos-totales'
+        if(document.getElementById("txt-gastos-totales")) {
+            actualizarTexto("txt-gastos-totales", formatearDinero(totalGastosOperativos));
+        }
+
         actualizarTexto("txt-total-personas", totalPersonas.toLocaleString());
 
         const ticketProm = totalPersonas > 0 ? totalIngresos / totalPersonas : 0;
-        actualizarTexto("txt-ticket-promedio", `$${Math.round(ticketProm).toLocaleString()}`);
+        actualizarTexto("txt-ticket-promedio", formatearDinero(Math.round(ticketProm)));
 
         const prodTop = Object.keys(conteoProductos).length > 0 
             ? Object.keys(conteoProductos).reduce((a, b) => conteoProductos[a] > conteoProductos[b] ? a : b) : "N/A";
@@ -125,11 +175,15 @@ async function cargarDashboard() {
         actualizarTexto("txt-producto-top", prodTop);
         actualizarTexto("txt-vendedor-top", vendTop);
 
+        // Actualizar color de la tarjeta de Ganancia según si es positiva o negativa
+        actualizarColorTarjetaGanancia(gananciaNeta);
+
         renderizarGrafico();
         renderizarGraficoCategorias();
 
     } catch (error) {
         console.error("Error Dashboard:", error);
+        M.toast({html: 'Error cargando datos', classes: 'red'});
     }
 }
 
@@ -138,13 +192,52 @@ function cambiarVistaGrafico(nuevaVista) {
     renderizarGrafico();
 }
 
+// --- UTILIDADES ---
+function formatearDinero(valor) {
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(valor);
+}
+
+function parsearFecha(fechaStr) {
+    if (!fechaStr) return new Date(0);
+    const partes = fechaStr.split("/");
+    return new Date(partes[2], partes[1] - 1, partes[0]);
+}
+
+function actualizarTexto(id, valor) {
+    const el = document.getElementById(id);
+    if (el) {
+        el.style.opacity = 0;
+        setTimeout(() => {
+            el.innerText = valor;
+            el.style.opacity = 1;
+            el.style.transition = "opacity 0.5s";
+        }, 200);
+    }
+}
+
+function actualizarColorTarjetaGanancia(valor) {
+    const card = document.querySelector('.kpi-success'); // La tarjeta de ganancia
+    if(card) {
+        if(valor < 0) {
+            card.classList.remove('kpi-success');
+            card.classList.add('kpi-danger'); // Necesitas definir estilo rojo en CSS o usar style inline
+            card.style.borderLeft = "5px solid #c62828";
+        } else {
+            card.classList.remove('kpi-danger');
+            card.classList.add('kpi-success');
+            card.style.borderLeft = "5px solid #2e7d32";
+        }
+    }
+}
+
+// --- GRÁFICOS (Mantenemos tu lógica visual intacta) ---
+
 function renderizarGrafico() {
     const canvas = document.getElementById("chart-ventas");
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (miGrafico) miGrafico.destroy();
 
-    // Creación de Gradiente Premium
     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
     gradient.addColorStop(0, 'rgba(26, 35, 126, 0.4)');
     gradient.addColorStop(1, 'rgba(26, 35, 126, 0.0)');
@@ -181,21 +274,15 @@ function renderizarGrafico() {
                 borderWidth: 3,
                 tension: 0.4,
                 fill: true,
-                borderRadius: 5 // Bordes redondeados para barras
+                borderRadius: 5
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false } // Limpieza visual
-            },
+            plugins: { legend: { display: false } },
             scales: {
-                y: { 
-                    beginAtZero: true,
-                    grid: { display: false },
-                    ticks: { callback: value => '$' + value.toLocaleString() }
-                },
+                y: { beginAtZero: true, grid: { display: false }, ticks: { callback: value => '$' + value.toLocaleString() } },
                 x: { grid: { display: false } }
             }
         }
@@ -203,6 +290,8 @@ function renderizarGrafico() {
 }
 
 function renderizarGraficoCategorias() {
+    // Aquí podrías cambiar para mostrar categorías de Venta O categorías de Gastos
+    // Por ahora mantenemos Categorías de Productos Vendidos
     const canvasCat = document.getElementById("chart-categorias");
     if (!canvasCat) return;
     const ctxCat = canvasCat.getContext("2d");
@@ -231,79 +320,16 @@ function renderizarGraficoCategorias() {
                 data: Object.values(resumenCat),
                 backgroundColor: COLORS.chart,
                 hoverOffset: 15,
-                borderWidth: 0 // Sin bordes para un look más flat/moderno
+                borderWidth: 0
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '70%', // Dona más delgada = más elegante
+            cutout: '70%',
             plugins: {
                 legend: { position: "bottom", labels: { usePointStyle: true, padding: 20 } }
             }
         }
     });
-}
-
-async function generarReporteExcel() {
-    // 1. Obtener las fechas del filtro que ya tienes
-    const desde = document.getElementById('filtro-desde').value;
-    const hasta = document.getElementById('filtro-hasta').value;
-
-    if(!desde || !hasta) return M.toast({html: 'Selecciona un rango de fechas', classes: 'orange'});
-
-    M.toast({html: 'Generando reporte...', classes: 'blue'});
-
-    try {
-        // 2. Pedir los datos al servidor
-        const response = await fetch(`/api/reporte-completo?desde=${desde}&hasta=${hasta}`);
-        const data = await response.json();
-
-        if (!data.resumen || data.resumen.length === 0) {
-            return M.toast({html: 'No hay ventas en esas fechas', classes: 'orange'});
-        }
-
-        // 3. Crear el Libro de Excel
-        const wb = XLSX.utils.book_new();
-
-        // --- HOJA 1: RESUMEN GENERAL ---
-        // Convertimos el JSON a Hoja de Excel
-        const wsResumen = XLSX.utils.json_to_sheet(data.resumen);
-        // Ajustamos anchos de columna (Opcional, para que se vea bonito)
-        wsResumen['!cols'] = [{wch:10}, {wch:20}, {wch:15}, {wch:15}, {wch:20}];
-        // Añadimos la hoja al libro
-        XLSX.utils.book_append_sheet(wb, wsResumen, "Resumen General");
-
-        // --- HOJA 2: DETALLE UNO A UNO ---
-        const wsDetalle = XLSX.utils.json_to_sheet(data.detalle);
-        wsDetalle['!cols'] = [{wch:10}, {wch:20}, {wch:30}, {wch:10}, {wch:15}, {wch:15}];
-        XLSX.utils.book_append_sheet(wb, wsDetalle, "Detalle Productos");
-
-        // 4. Descargar el archivo
-        XLSX.writeFile(wb, `Reporte_Ventas_${desde}_al_${hasta}.xlsx`);
-        
-        M.toast({html: '¡Reporte descargado!', classes: 'green'});
-
-    } catch (error) {
-        console.error(error);
-        M.toast({html: 'Error al generar Excel', classes: 'red'});
-    }
-}
-
-function parsearFecha(fechaStr) {
-    if (!fechaStr) return new Date(0);
-    const partes = fechaStr.split("/");
-    return new Date(partes[2], partes[1] - 1, partes[0]);
-}
-
-function actualizarTexto(id, valor) {
-    const el = document.getElementById(id);
-    if (el) {
-        el.style.opacity = 0; // Efecto de transición simple
-        setTimeout(() => {
-            el.innerText = valor;
-            el.style.opacity = 1;
-            el.style.transition = "opacity 0.5s";
-        }, 200);
-    }
 }

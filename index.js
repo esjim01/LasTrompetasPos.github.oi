@@ -517,6 +517,80 @@ app.post("/api/ventas/estado", (req, res) => {
     }
 });
 
+// --- MÓDULO DE GASTOS (Pegar en index.js) ---
+
+const RUTA_GASTOS = path.join(__dirname, 'data', 'gastos.xlsx');
+
+// 1. Inicializar archivo de gastos si no existe
+if (!fs.existsSync(RUTA_GASTOS)) {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet([]); // Hoja vacía
+    XLSX.utils.book_append_sheet(wb, ws, "Gastos");
+    XLSX.writeFile(wb, RUTA_GASTOS);
+    console.log("Archivo de gastos creado.");
+}
+
+// 2. Ruta para OBTENER todos los gastos
+app.get('/api/gastos', (req, res) => {
+    try {
+        const wb = XLSX.readFile(RUTA_GASTOS);
+        const sheet = wb.Sheets["Gastos"];
+        const datos = XLSX.utils.sheet_to_json(sheet);
+        res.json(datos);
+    } catch (error) {
+        res.status(500).json({ error: "Error al leer gastos" });
+    }
+});
+
+// 3. Ruta para REGISTRAR un nuevo gasto
+app.post('/api/gastos', (req, res) => {
+    try {
+        const { descripcion, monto, categoria, fecha, responsable } = req.body;
+        const nuevoGasto = {
+            id: Date.now(), // ID único basado en el tiempo
+            fecha,
+            descripcion,
+            categoria,
+            monto: Number(monto),
+            responsable
+        };
+
+        const wb = XLSX.readFile(RUTA_GASTOS);
+        const sheet = wb.Sheets["Gastos"];
+        const datos = XLSX.utils.sheet_to_json(sheet);
+        
+        datos.push(nuevoGasto); // Agregamos el nuevo
+        
+        const nuevaHoja = XLSX.utils.json_to_sheet(datos);
+        wb.Sheets["Gastos"] = nuevaHoja;
+        XLSX.writeFile(wb, RUTA_GASTOS);
+        
+        res.json({ mensaje: "Gasto registrado", gasto: nuevoGasto });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al guardar gasto" });
+    }
+});
+
+// 4. Ruta para ELIMINAR un gasto
+app.delete('/api/gastos/:id', (req, res) => {
+    try {
+        const idGasto = Number(req.params.id);
+        const wb = XLSX.readFile(RUTA_GASTOS);
+        const datos = XLSX.utils.sheet_to_json(wb.Sheets["Gastos"]);
+
+        const nuevosDatos = datos.filter(g => g.id !== idGasto); // Filtramos el que se va
+
+        const nuevaHoja = XLSX.utils.json_to_sheet(nuevosDatos);
+        wb.Sheets["Gastos"] = nuevaHoja;
+        XLSX.writeFile(wb, RUTA_GASTOS);
+
+        res.json({ mensaje: "Gasto eliminado" });
+    } catch (error) {
+        res.status(500).json({ error: "Error al eliminar" });
+    }
+});
+
 // Ruta para obtener el reporte completo
 app.get('/api/reporte-completo', (req, res) => {
     const { desde, hasta } = req.query; // Recibimos las fechas del filtro

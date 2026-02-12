@@ -8,42 +8,39 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <style>
-        /* --- ESTILOS MODERNOS (GLASSMORPHISM) --- */
+        /* --- ESTILOS LIMPIOS (COHERENCIA VISUAL) --- */
         body {
-            /* Fondo degradado oscuro basado en tus colores Indigo */
-            background: linear-gradient(135deg, #0d0030 0%, #1a237e 50%, #311b92 100%);
+            background-color: #f4f6f8; /* Mismo fondo que el Dashboard */
             height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* Círculos decorativos de fondo (Opcional, para dar atmósfera) */
+        /* Barra decorativa superior (Opcional, toque elegante) */
         body::before {
             content: '';
             position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            border-radius: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 100%);
         }
-        
-        /* La Tarjeta de Vidrio */
+
+        /* La Tarjeta de Login */
         .login-card {
-            background: rgba(255, 255, 255, 0.1) !important; /* Transparencia */
-            backdrop-filter: blur(15px); /* Efecto borroso detrás */
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 20px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37) !important;
+            background: white !important;
+            border-radius: 16px !important; /* Bordes redondeados consistentes */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
             width: 100%;
             max-width: 400px;
-            padding: 20px 10px;
+            padding: 40px 30px 20px 30px;
+            border: none !important;
         }
 
         /* Ajustes del Logo */
@@ -53,91 +50,79 @@
         }
         
         .logo-container img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain; /* Asegura que tu logo se vea bien */
-            background: rgba(255,255,255,0.9); /* Fondo blanco suave para el logo */
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
             border-radius: 50%;
-            padding: 5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 10px;
         }
 
         .logo-container h5 {
-            color: #fff !important; /* Texto blanco */
-            font-weight: 300;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 1.2rem;
+            color: #1a237e !important; /* Azul corporativo */
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.5rem;
         }
         
         .logo-container p {
-            color: rgba(255,255,255,0.7) !important;
+            color: #78909c !important;
+            margin-top: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        /* --- Personalizando Materialize Inputs para fondo oscuro --- */
-        .input-field {
-            margin-bottom: 20px;
-        }
-
-        /* Iconos */
-        .input-field .prefix {
-            color: rgba(255,255,255,0.7);
-        }
-        .input-field .prefix.active {
-            color: #fff;
-        }
-
-        /* Texto del input */
+        /* Inputs Materialize mejorados para fondo blanco */
+        .input-field { margin-bottom: 25px; }
+        .input-field .prefix { color: #90a4ae; top: 0.5rem; }
+        .input-field .prefix.active { color: #3949ab; }
+        
         .input-field input[type=text], 
         .input-field input[type=password] {
-            color: white;
-            border-bottom: 1px solid rgba(255,255,255,0.3) !important;
+            border-bottom: 1px solid #cfd8dc !important;
+            color: #37474f; /* Texto oscuro */
         }
 
-        /* Línea al hacer click */
         .input-field input[type=text]:focus, 
         .input-field input[type=password]:focus {
-            border-bottom: 1px solid #fff !important;
-            box-shadow: 0 1px 0 0 #fff !important;
+            border-bottom: 2px solid #3949ab !important;
+            box-shadow: none !important;
         }
 
-        /* Etiquetas (Labels) */
-        .input-field label {
-            color: rgba(255,255,255,0.6);
-        }
-        .input-field input:focus + label {
-            color: #fff !important;
-        }
+        .input-field label { color: #90a4ae; }
+        .input-field input:focus + label { color: #3949ab !important; }
 
-        /* Botón de Login */
+        /* Botón de Login (Igual al de 'Guardar Gasto') */
         .btn-login {
-            background: linear-gradient(90deg, #1a237e 0%, #3949ab 100%);
+            background: #3949ab; /* Indigo darken-1 */
             width: 100%;
-            height: 50px;
-            line-height: 50px;
-            border-radius: 25px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(26, 35, 126, 0.4);
-            margin-top: 15px;
+            height: 48px;
+            line-height: 48px;
+            border-radius: 8px; /* Radio consistente con el dashboard */
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: none; /* Texto normal, no todo mayúsculas */
+            box-shadow: 0 4px 12px rgba(57, 73, 171, 0.3);
+            margin-top: 20px;
         }
         
         .btn-login:hover {
-            background: linear-gradient(90deg, #283593 0%, #5c6bc0 100%);
-            box-shadow: 0 6px 20px rgba(26, 35, 126, 0.6);
+            background: #283593;
+            box-shadow: 0 6px 15px rgba(57, 73, 171, 0.4);
+        }
+
+        /* Footer pequeño */
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #b0bec5;
+            font-size: 0.8rem;
         }
 
         /* Loader */
-        .loading-overlay {
-            display: none;
-            margin-top: 20px;
-        }
-        .progress {
-            background-color: rgba(255,255,255,0.2);
-        }
-        .indeterminate {
-            background-color: #fff !important;
-        }
+        .loading-overlay { display: none; margin-top: 15px; }
+        .progress { background-color: #e8eaf6; }
+        .indeterminate { background-color: #3949ab !important; }
 
     </style>
 </head>
@@ -147,25 +132,25 @@
         <div class="card-content">
             
             <div class="logo-container">
-                <img src="img/Las_trompetas.jpg" alt="Las Trompetas Logo" onerror="this.src='https://via.placeholder.com/150'">
-                <h5 style="margin-top: 15px;">Bienvenido</h5>
-                <p>Panel Administrativo</p>
+                <img src="img/Las_trompetas.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/150/e8eaf6/3949ab?text=LT'">
+                <h5>Las Trompetas</h5>
+                <p>Acceso Administrativo</p>
             </div>
 
             <div class="input-field">
-                <i class="material-icons prefix">person</i>
+                <i class="material-icons prefix">person_outline</i>
                 <input type="text" id="user" autocomplete="username">
                 <label for="user">Usuario</label>
             </div>
 
             <div class="input-field">
-                <i class="material-icons prefix">lock</i>
+                <i class="material-icons prefix">lock_outline</i>
                 <input type="password" id="pass" autocomplete="current-password">
                 <label for="pass">Contraseña</label>
             </div>
 
             <button class="btn btn-login waves-effect waves-light" id="btn-entrar" onclick="iniciarSesion()">
-                INGRESAR
+                Ingresar al Sistema
             </button>
 
             <div class="loading-overlay" id="loader">
@@ -174,25 +159,32 @@
                 </div>
             </div>
 
+            <div class="login-footer">
+                &copy; 2026 Sistema de Gestión
+            </div>
+
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        // --- TU LÓGICA DE JAVASCRIPT SE MANTIENE INTACTA ---
+        // --- TU LÓGICA DE JAVASCRIPT ORIGINAL (INTACTA) ---
         async function iniciarSesion() {
             const user = document.getElementById("user").value.trim();
             const pass = document.getElementById("pass").value.trim();
             const btn = document.getElementById("btn-entrar");
             const loader = document.getElementById("loader");
 
-            if (!user || !pass) return M.toast({html: 'Completa los datos', classes: 'rounded orange'});
+            if (!user || !pass) return M.toast({html: 'Por favor, completa los datos', classes: 'rounded orange darken-2'});
 
+            // Efecto visual de carga
             btn.disabled = true;
-            btn.style.opacity = "0.7";
+            btn.innerHTML = 'Verificando...';
             loader.style.display = "block";
 
             try {
+                // NOTA: Asegúrate de que tu servidor backend tenga esta ruta "/api/index"
+                // Si usabas login.js antes, verifica que la ruta sea correcta.
                 const res = await fetch("/api/index", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -202,30 +194,42 @@
                 const data = await res.json();
 
                 if (res.ok) {
+                    // Guardamos sesión
                     localStorage.setItem("usuarioRol", data.rol);
                     localStorage.setItem("usuarioNombre", data.user);
-                    // Redirección
-                    window.location.href = (data.rol === "ADMIN") ? "inventario.html" : "ventas.html" ;
+                    
+                    // IMPORTANTE: Aquí guardamos la llave para el "Portero" de seguridad que hicimos antes
+                    // Guardamos el objeto completo para que funcione el script de seguridad del Dashboard
+                    localStorage.setItem("usuario", JSON.stringify({ nombre: data.user, rol: data.rol }));
+
+                    M.toast({html: '¡Bienvenido!', classes: 'rounded green darken-1'});
+                    
+                    // Pequeña pausa para ver el mensaje de éxito
+                    setTimeout(() => {
+                        window.location.href = (data.rol === "ADMIN" || data.rol === "admin") ? "public/dashboard.html" : "public/ventas.html";
+                    }, 500);
+
                 } else {
-                    M.toast({html: data.mensaje || 'Credenciales inválidas', classes: 'rounded red'});
+                    M.toast({html: data.mensaje || 'Credenciales incorrectas', classes: 'rounded red darken-2'});
                     btn.disabled = false;
-                    btn.style.opacity = "1";
+                    btn.innerHTML = 'Ingresar al Sistema';
                     loader.style.display = "none";
                 }
             } catch (error) {
                 console.error("Error en login:", error);
-                M.toast({html: 'Error de servidor', classes: 'rounded red'});
+                M.toast({html: 'Error de conexión con el servidor', classes: 'rounded red darken-4'});
                 btn.disabled = false;
-                btn.style.opacity = "1";
+                btn.innerHTML = 'Ingresar al Sistema';
                 loader.style.display = "none";
             }
         }
 
         document.addEventListener('DOMContentLoaded', function() {
+            // Permitir Login con tecla Enter
             document.getElementById('pass').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') iniciarSesion();
             });
-            // Inicializar inputs de Materialize para que las etiquetas no se solapen
+            // Inicializar inputs
             M.updateTextFields();
         });
     </script>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Gastos - Las Trompetas</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <style>
+        body { background-color: #f4f6f8; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; }
+        
+        /* Navbar personalizado */
+        .dashboard-nav { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); height: 70px; line-height: 70px; }
+        .dashboard-nav .brand-logo { color: #1a237e; font-weight: bold; font-size: 1.5rem; display: flex; align-items: center; }
+        .dashboard-nav ul a { color: #546e7a; font-weight: 500; }
+        .dashboard-nav ul a:hover { color: #1a237e; background-color: transparent; }
+        
+        /* Tarjetas de Estadísticas (Lo que marcaste en amarillo) */
+        .kpi-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+            height: 100px; /* Altura fija para alineación */
+        }
+        .kpi-card:hover { transform: translateY(-3px); }
+        
+        .icon-box {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 15px;
+        }
+        .kpi-title { font-size: 0.9rem; color: #78909c; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .kpi-value { font-size: 1.8rem; font-weight: bold; margin: 0; color: #263238; }
+
+        /* Tarjeta del Formulario */
+        .form-card { border-radius: 16px; overflow: hidden; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .form-header { background: #3949ab; padding: 15px 20px; color: white; }
+        .form-header h5 { margin: 0; font-size: 1.1rem; display: flex; align-items: center; }
+        .form-body { padding: 25px; }
+        
+        /* Botón Guardar */
+        .btn-save {
+            border-radius: 8px;
+            height: 45px;
+            line-height: 45px;
+            box-shadow: 0 4px 12px rgba(57, 73, 171, 0.3);
+            text-transform: none;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Tabla */
+        .table-card { border-radius: 16px; border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 20px; }
+        .table-scroll-container { height: 450px; overflow-y: auto; }
+        table.highlight tbody tr:hover { background-color: #f5f5f5; }
+        th { color: #78909c; font-weight: 600; border-bottom: 2px solid #eceff1; }
+        td { padding: 15px 5px; color: #37474f; font-weight: 500; }
+
+        /* Badges para categorías (Opcional visual) */
+        .cat-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        .cat-insumos { background: #e3f2fd; color: #1565c0; }
+        .cat-servicios { background: #fff3e0; color: #ef6c00; }
+        .cat-nomina { background: #e8f5e9; color: #2e7d32; }
+    </style>
+</head>
+<body>
+
+    <nav class="dashboard-nav">
+        <div class="nav-wrapper container">
+            <a href="#" class="brand-logo"><i class="material-icons left" style="color: #3949ab;">store</i>Las Trompetas - Gastos</a>
+            <ul class="right hide-on-med-and-down">               
+                <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
+                <li><a href="/public/dashboard.html"><i class="material-icons left">analytics</i>Dashboard</a></li>
+                <li><a href="/public/inventario.html"><i class="material-icons left">inventory_2</i>Inventario</a></li>
+                <li><a href="/public/usuarios.html"><i class="material-icons left">group</i>Usuarios</a></li>
+                <li><a href="/index.html" class="red-text"><i class="material-icons left">logout</i>Salir</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 30px;">
+        
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="kpi-card">
+                    <div class="icon-box red lighten-5">
+                        <i class="material-icons red-text text-darken-1">trending_down</i>
+                    </div>
+                    <div>
+                        <p class="kpi-title">Total Gastos (Mes)</p>
+                        <h4 class="kpi-value red-text" id="total-mes">$0</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m6">
+                <div class="kpi-card">
+                    <div class="icon-box orange lighten-5">
+                        <i class="material-icons orange-text text-darken-2">pie_chart</i>
+                    </div>
+                    <div>
+                        <p class="kpi-title">Mayor Categoría</p>
+                        <h4 class="kpi-value grey-text text-darken-3" id="cat-mayor" style="font-size: 1.5rem;">...</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="card form-card">
+                    <div class="form-header indigo darken-1">
+                        <h5><i class="material-icons" style="margin-right: 10px;">add_circle</i> Registrar Gasto</h5>
+                    </div>
+                    <div class="form-body white">
+                        
+                        <div class="input-field">
+                            <i class="material-icons prefix grey-text">calendar_today</i>
+                            <input type="date" id="fecha-gasto">
+                            <label class="active">Fecha</label>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="material-icons prefix grey-text">category</i>
+                            <select id="categoria-gasto">
+                                <option value="" disabled selected>Elija una opción</option>
+                                <option value="Insumos">🛒 Insumos / Compra</option>
+                                <option value="Servicios">💡 Servicios (Luz/Agua)</option>
+                                <option value="Nomina">👷 Nómina / Turnos</option>
+                                <option value="Mantenimiento">🔧 Mantenimiento</option>
+                                <option value="Arriendo">🏠 Arriendo</option>
+                                <option value="Otros">📦 Otros</option>
+                            </select>
+                            <label>Categoría</label>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="material-icons prefix grey-text">description</i>
+                            <input type="text" id="desc-gasto">
+                            <label for="desc-gasto">Detalle (Ej: Tomates)</label>
+                        </div>
+
+                        <div class="input-field">
+                            <i class="material-icons prefix grey-text">attach_money</i>
+                            <input type="number" id="monto-gasto">
+                            <label for="monto-gasto">Valor ($)</label>
+                        </div>
+
+                        <br>
+                        <button class="btn btn-save indigo darken-3 waves-effect waves-light w-100" style="width:100%" onclick="guardarGasto()">
+                            Guardar Gasto
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m8">
+                <div class="card table-card white">
+                    <span class="card-title grey-text text-darken-4" style="font-size: 1.2rem; font-weight:600; display:block; margin-bottom: 15px;">
+                        <i class="material-icons left indigo-text">history</i> Historial Reciente
+                    </span>
+                    
+                    <div class="table-scroll-container">
+                        <table class="highlight">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Fecha</th>
+                                    <th width="35%">Detalle</th>
+                                    <th width="20%">Categoría</th>
+                                    <th width="20%" class="right-align">Monto</th>
+                                    <th width="5%"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-gastos">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/gastos.js"></script>
+    
+    <script>
+        // Inicializar selects de Materialize
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
+</body>
+</html>
