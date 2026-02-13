@@ -103,7 +103,7 @@ nav {
 
 /* Navbar Dashboard */
 .dashboard-nav {
-  background: #fff;
+  background: #f6f1f1;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
   height: 70px;
   line-height: 70px;
@@ -701,16 +701,23 @@ table thead th {
   background-color: #fafafa; /* Fondo ligero para separar texto de imagen */
 }
 
+/* Busca esto y déjalo ASÍ (Modificado): */
 .product-card .card-title {
-  font-size: 1rem !important;
-  height: 2.4rem;
-  overflow: hidden;
-  margin-bottom: 5px !important;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-size: 1.1rem !important; /* Letra un poco más grande */
   color: #333;
+  margin-bottom: 10px !important;
+  
+  /* --- ESTAS SON LAS LÍNEAS MÁGICAS --- */
+  height: auto !important;          /* Permite que crezca hacia abajo */
+  white-space: normal !important;   /* Obliga al texto a bajar de renglón */
+  overflow: visible !important;     /* Muestra todo el texto */
+  display: block !important;        /* Desactiva el modo de recorte "caja" */
+  line-height: 1.2 !important;      /* Separación entre renglones */
+  
+  /* Aseguramos anular cualquier rastro de los 3 puntos (...) */
+  text-overflow: clip !important;   
+  -webkit-line-clamp: unset !important;  
+  -webkit-box-orient: unset !important;
 }
 
 .product-price {
