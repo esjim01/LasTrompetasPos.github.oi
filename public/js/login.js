@@ -1,53 +1,60 @@
-// login.js - Proyecto Las Trompetas
+// login.js - CORREGIDO Y DEFINITIVO
 
 document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById("login-form");//
+    const loginForm = document.getElementById("login-form");
 
     if (loginForm) {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            // Capturamos los valores de los inputs
+            // 1. Capturamos lo que escribió el usuario
             const usuarioVal = document.getElementById("usuario").value;
             const claveVal = document.getElementById("clave").value;
 
             try {
-                const response = await fetch("/api/index", { //
+                // 2. Preguntamos al servidor (que lee el Excel)
+                const response = await fetch("/api/index", { 
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    // ENVIAMOS LAS LLAVES EXACTAS: usuario y clave
-                    body: JSON.stringify({ 
-                        usuario: usuarioVal, 
-                        clave: claveVal 
-                    }),
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ usuario: usuarioVal, clave: claveVal }),
                 });
 
                 const data = await response.json();
 
                 if (response.ok && data.exito) {
-                    // GUARDADO DE SESIÓN
-                    // Es vital guardar el rol para que inventory.js y ventas.js den acceso
+                    
+                    // --- AQUÍ ESTÁ LA MAGIA ---
+                    // Creamos el "Carnet" digital completo
+                    const objetoSesion = {
+                        nombre: data.user,  // Nombre que vino del Excel
+                        rol: data.rol       // Rol que vino del Excel (ej: 'ADMIN')
+                    };
+
+                    // Lo guardamos correctamente como JSON string
+                    localStorage.setItem("usuarioNombre", JSON.stringify(objetoSesion));
+                    
+                    // (Opcional) Guardamos el rol suelto por seguridad extra
                     localStorage.setItem("usuarioRol", data.rol);
-                    localStorage.setItem("usuarioNombre", data.user);
 
-                    M.toast({ html: "✅ Bienvenido, " + data.user, classes: "green" });
+                    M.toast({ html: "✅ Bienvenido, " + data.user, classes: "green rounded" });
 
-                    // Redirección según el rol
+                    // 3. Redirección inteligente
                     setTimeout(() => {
-                        if (data.rol === "ADMIN") {
-                            window.location.href = "inventario.html"; // Panel de Inventario
+                        // Verificamos si es ADMIN (asegurándonos de las mayúsculas)
+                        if (data.rol === "ADMIN" || data.rol === "ADMINISTRADOR") {
+                            window.location.href = "inventario.html"; 
                         } else {
-                            window.location.href = "ventas.html"; // Panel de POS
+                            window.location.href = "ventas.html";
                         }
                     }, 1000);
+
                 } else {
-                    M.toast({ html: "❌ Usuario o clave incorrectos", classes: "red" });
+                    M.toast({ html: "❌ Datos incorrectos", classes: "red rounded" });
                 }
+
             } catch (error) {
-                console.error("Error en login:", error);
-                M.toast({ html: "Error de conexión con el servidor", classes: "red" });
+                console.error("Error:", error);
+                M.toast({ html: "Error de conexión", classes: "red rounded" });
             }
         });
     }

@@ -8,21 +8,65 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/public/css/styles.css">
+    
+    <style>
+        /* Ajustes de legibilidad para móviles */
+        .brand-logo { 
+            white-space: nowrap; 
+        }
+        @media only screen and (max-width: 600px) {
+            .brand-logo { font-size: 1.1rem !important; }
+            .summary-card { display: block !important; height: auto !important; }
+            .divider-vertical { display: none; }
+            .summary-item { 
+                margin-bottom: 20px; 
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+            }
+            .main-container { padding-top: 10px; }
+            .kpi-card { margin-bottom: 10px; }
+        }
+        
+        /* Contenedor de filtros responsive */
+        .filter-section-custom {
+            padding: 15px 0;
+        }
+    </style>
 </head>
 <body class="dashboard-body">
 
     <nav class="dashboard-nav z-depth-0">
         <div class="nav-wrapper container">
-            <a href="#" class="brand-logo"><i class="material-icons left">store</i>Las Trompetas - Dashboard</a>
+            <a href="#" data-target="mobile-menu" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            
+            <a href="#" class="brand-logo">
+                <i class="material-icons left hide-on-small-only">store</i>Las Trompetas
+            </a>
+            
             <ul class="right hide-on-med-and-down">               
-            <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
-            <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
-            <li><a href="/public/inventario.html" class="nav-link"><i class="material-icons left">inventory_2</i>Inventario</a></li>
-            <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
-            <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
+                <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 black-text waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
+                <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
+                <li><a href="/public/inventario.html" class="nav-link"><i class="material-icons left">inventory_2</i>Inventario</a></li>
+                <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
+                <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
             </ul>
         </div>
     </nav>
+
+    <ul class="sidenav" id="mobile-menu">
+        <li>
+            <div class="user-view">
+                <div class="background deep-purple darken-4"></div>
+                <span class="white-text name" style="font-weight: bold;">Menú Las Trompetas</span>
+            </div>
+        </li>
+        <li><a href="/public/ventas.html"><i class="material-icons">point_of_sale</i>Ventas</a></li>
+        <li><a href="/public/gastos.html"><i class="material-icons">money_off</i>Gastos</a></li>
+        <li><a href="/public/inventario.html"><i class="material-icons">inventory_2</i>Inventario</a></li>
+        <li><a href="/public/usuarios.html"><i class="material-icons">group</i>Usuarios</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="/index.html" class="red-text"><i class="material-icons red-text">logout</i>Salir</a></li>
+    </ul>
 
     <div class="container main-container">
         
@@ -31,23 +75,25 @@
                 <div class="card filter-card">
                     <div class="card-content">
                         <span class="card-title-small">📅 Rango de Análisis</span>
-                        <div class="filter-wrapper">
-                            <div class="input-field col s6">
+                        <div class="row" style="margin-bottom: 0;">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">today</i>
                                 <input type="date" id="filtro-desde">
-                                <label class="active" id="rango-desde">Desde</label>
+                                <label class="active">Desde</label>
                             </div>
-                            <div class="input-field">
+                            <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">event</i>
                                 <input type="date" id="filtro-hasta">
-                                <label class="active" id="rango-hasta">Hasta</label>
+                                <label class="active">Hasta</label>
                             </div>
-                            <button class="btn-filter waves-effect waves-light" onclick="cargarDashboard()">
-                                <i class="material-icons left">refresh</i>Actualizar
-                            </button>
-                            <button class="btn green darken-3 waves-effect waves-light" onclick="generarReporteExcel()">
-                                <i class="material-icons left">description</i>Descargar reporte
-                            </button>
+                            <div class="col s12 m4" style="padding-top: 15px; display: flex; gap: 5px;">
+                                <button class="btn-filter waves-effect waves-light btn indigo darken-4 flex-1" onclick="cargarDashboard()">
+                                    <i class="material-icons">refresh</i>
+                                </button>
+                                <button class="btn green darken-3 waves-effect waves-light flex-1" onclick="generarReporteExcel()">
+                                    <i class="material-icons left">description</i>Excel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -73,15 +119,15 @@
                     </div>
                 </div>
             </div>
-<div class="col s12 m6 l3">
-    <div class="kpi-card kpi-danger" style="border-left: 5px solid #c62828;">
-        <div class="kpi-icon"><i class="material-icons red-text">money_off</i></div>
-        <div class="kpi-content">
-            <p>Gastos Operativos</p>
-            <h4 id="txt-gastos-totales">$0</h4>
-        </div>
-    </div>
-</div>
+            <div class="col s12 m6 l3">
+                <div class="kpi-card kpi-danger" style="border-left: 5px solid #c62828;">
+                    <div class="kpi-icon"><i class="material-icons red-text">money_off</i></div>
+                    <div class="kpi-content">
+                        <p>Gastos Operativos</p>
+                        <h4 id="txt-gastos-totales">$0</h4>
+                    </div>
+                </div>
+            </div>
             <div class="col s12 m6 l3">
                 <div class="kpi-card kpi-warning">
                     <div class="kpi-icon"><i class="material-icons">emoji_events</i></div>
@@ -104,7 +150,7 @@
                         </div>
                     </div>
                     <div class="card-content">
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" style="position: relative; height:300px;">
                             <canvas id="chart-ventas"></canvas>
                         </div>
                     </div>
@@ -117,7 +163,7 @@
                         <span class="card-title">Categorías</span>
                     </div>
                     <div class="card-content">
-                        <div class="chart-wrapper">
+                        <div class="chart-wrapper" style="position: relative; height:300px;">
                             <canvas id="chart-categorias"></canvas>
                         </div>
                     </div>
@@ -135,7 +181,7 @@
                             <h4 id="txt-total-personas">0</h4>
                         </div>
                     </div>
-                    <div class="divider-vertical"></div>
+                    <div class="divider-vertical hide-on-small-only"></div>
                     <div class="summary-item">
                         <i class="material-icons grey-text">receipt</i>
                         <div>
@@ -143,7 +189,7 @@
                             <h4 id="txt-ticket-promedio">$0</h4>
                         </div>
                     </div>
-                    <div class="divider-vertical"></div>
+                    <div class="divider-vertical hide-on-small-only"></div>
                     <div class="summary-item">
                         <i class="material-icons grey-text">health_and_safety</i>
                         <div>
@@ -154,11 +200,17 @@
                 </div>
             </div>
         </div>
-
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicialización del menú móvil
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems, {
+                edge: 'left'
+            });
+        });
+    </script>
     <script src="/public/js/dashboard.js"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>

@@ -15,8 +15,8 @@
    1. VARIABLES Y CONFIGURACIÓN BASE
    ========================================================================== */
 :root {
-  --primary-color: #1a237e;  /* Indigo oscuro */
-  --accent-color: #ffab40;   /* Naranja suave */
+  --primary-color: #1a237e; /* Indigo oscuro */
+  --accent-color: #ffab40; /* Naranja suave */
   --text-soft: #c5cae9;
   --bg-light: #f4f7f9;
   --white: #ffffff;
@@ -54,7 +54,7 @@ body {
 }
 
 .card-panel h3 {
-  font-size: 2rem; 
+  font-size: 2rem;
 }
 
 /* Modales */
@@ -104,7 +104,7 @@ nav {
 /* Navbar Dashboard */
 .dashboard-nav {
   background: #fff;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.05) !important;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05) !important;
   height: 70px;
   line-height: 70px;
 }
@@ -121,7 +121,7 @@ nav {
 }
 
 .dashboard-nav ul a:hover {
-  background-color: rgba(0,0,0,0.02);
+  background-color: rgba(0, 0, 0, 0.02);
   color: var(--primary-color);
 }
 
@@ -192,36 +192,75 @@ nav {
 /* ==========================================================================
    4. MÓDULO: LOGIN
    ========================================================================== */
-.login-card {
-  width: 380px;
-  border-radius: 20px !important;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3) !important;
-  padding: 20px;
+/* 1. Fondo General y Centrado */
+.login-body {
+  background-color: #f4f6f8; /* Tu gris suave original */
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Necesario para la franja azul */
+  font-family: "Roboto", sans-serif;
 }
 
+/* 2. La Franja Azul Diagonal (Tu diseño original) */
+.login-body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300px; /* Altura de la franja */
+  background: linear-gradient(135deg, var(--primary-color) 0%, #3949ab 100%);
+  z-index: -1; /* Para que quede detrás de la tarjeta */
+  clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 100%); /* El corte diagonal */
+}
+
+/* 3. La Tarjeta de Login (Ajustada para Móvil) */
+.login-card {
+  background: #ffffff !important; /* Blanco sólido, sin transparencia */
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important; /* Tu sombra original */
+  border: none !important;
+  padding: 40px 30px;
+
+  /* RESPONSIVIDAD (Mi corrección) */
+  width: 90%; /* En celular ocupa el 90% */
+  max-width: 400px; /* En PC no pasa de 400px */
+}
 .logo-container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 20px;
 }
-
+/* 4. Estilos del Logo */
 .logo-container img {
-  width: 130px;
-  height: 130px;
+  width: 160px;
+  height: 160px;
   object-fit: cover;
   border-radius: 50%;
-  border: 4px solid var(--primary-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 4px solid rgb(64, 62, 60); /* Quitamos el borde grueso si prefieres el estilo limpio */
+  margin-bottom: 10px;
 }
 
+/* 5. Botón y Textos */
 .btn-login {
-  width: 100%;
-  height: 50px;
-  border-radius: 10px !important;
   background: var(--primary-color) !important;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 8px !important;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
+  width: 100%;
 }
 
+.btn-login:hover {
+  background: #283593 !important;
+  transform: translateY(-1px);
+}
 /* ==========================================================================
    5. MÓDULO: DASHBOARD
    ========================================================================== */
@@ -229,7 +268,7 @@ nav {
 .filter-card {
   border-radius: 16px !important;
   border: none;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
 }
 
 .filter-wrapper {
@@ -243,39 +282,39 @@ nav {
 
 /* 1. Empujar el texto de la fecha a la derecha para que no toque el icono */
 .input-field input[type="date"] {
-    padding-left: 3rem !important; /* Espacio para el icono */
-    box-sizing: border-box; /* Para que respete los bordes */
+  padding-left: 3rem !important; /* Espacio para el icono */
+  box-sizing: border-box; /* Para que respete los bordes */
 }
 
 /* 2. Acomodar el icono del calendario para que quede centrado verticalmente */
 .input-field .prefix {
-    top: 0.5rem; /* Ajusta esto si el icono se ve muy arriba o abajo */
-    font-size: 2rem; /* Tamaño del icono */
+  top: 0.5rem; /* Ajusta esto si el icono se ve muy arriba o abajo */
+  font-size: 2rem; /* Tamaño del icono */
 }
 
 /* 3. Forzar que la etiqueta (Label) se quede siempre arriba */
 /* Esto arregla que el texto "Desde" se monte sobre la fecha */
 .input-field input[type="date"] + label {
-    transform: translateY(-14px) scale(0.8);
-    transform-origin: 0 0;
-    color: #9e9e9e; /* Color gris suave */
+  transform: translateY(-14px) scale(0.8);
+  transform-origin: 0 0;
+  color: #9e9e9e; /* Color gris suave */
 }
 
 /* --- ARREGLO DEL TÍTULO DEL FILTRO --- */
 .card-title-small {
-    display: block;         /* IMPORTANTE: Hace que ocupe todo el ancho */
-    margin-bottom: 25px;    /* Empuja los calendarios hacia abajo (crea el espacio) */
-    font-size: 1.1rem;      /* Un poquito más grande */
-    font-weight: bold;      /* Negrita para que destaque */
-    color: #1a237e;         /* Tu color Indigo corporativo */
+  display: block; /* IMPORTANTE: Hace que ocupe todo el ancho */
+  margin-bottom: 25px; /* Empuja los calendarios hacia abajo (crea el espacio) */
+  font-size: 1.1rem; /* Un poquito más grande */
+  font-weight: bold; /* Negrita para que destaque */
+  color: #1a237e; /* Tu color Indigo corporativo */
 }
 
 /* Opcional: Para que los inputs y el botón se alineen mejor */
 .filter-wrapper {
-    display: flex;          /* Los pone en fila india */
-    align-items: center;    /* Los centra verticalmente */
-    gap: 15px;              /* Espacio entre ellos */
-    flex-wrap: wrap;        /* Si es celular, que bajen ordenados */
+  display: flex; /* Los pone en fila india */
+  align-items: center; /* Los centra verticalmente */
+  gap: 15px; /* Espacio entre ellos */
+  flex-wrap: wrap; /* Si es celular, que bajen ordenados */
 }
 
 .filter-wrapper .input-field {
@@ -296,7 +335,9 @@ nav {
   box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3);
   transition: transform 0.2s;
 }
-.btn-filter:hover { transform: translateY(-2px); }
+.btn-filter:hover {
+  transform: translateY(-2px);
+}
 
 /* KPI Cards */
 .kpi-card {
@@ -305,7 +346,7 @@ nav {
   padding: 25px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
   margin-bottom: 20px;
   height: 160px;
@@ -316,14 +357,22 @@ nav {
 
 .kpi-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 /* Colores KPI */
-.kpi-primary { border-left: 6px solid var(--primary-color); }
-.kpi-success { border-left: 6px solid var(--success); }
-.kpi-info    { border-left: 6px solid #29b6f6; }
-.kpi-warning { border-left: 6px solid var(--accent-color); }
+.kpi-primary {
+  border-left: 6px solid var(--primary-color);
+}
+.kpi-success {
+  border-left: 6px solid var(--success);
+}
+.kpi-info {
+  border-left: 6px solid #29b6f6;
+}
+.kpi-warning {
+  border-left: 6px solid var(--accent-color);
+}
 
 .kpi-content p {
   color: #888;
@@ -333,7 +382,8 @@ nav {
   font-weight: 600;
 }
 
-.kpi-content h4, .kpi-content h5 {
+.kpi-content h4,
+.kpi-content h5 {
   margin: 10px 0 0 0;
   font-weight: 700;
   color: #333;
@@ -353,15 +403,27 @@ nav {
   color: white;
 }
 
-.kpi-primary .kpi-icon { background: var(--primary-color); box-shadow: 0 5px 15px rgba(26,35,126,0.4); }
-.kpi-success .kpi-icon { background: var(--success); box-shadow: 0 5px 15px rgba(46,125,50,0.4); }
-.kpi-info .kpi-icon    { background: #29b6f6; box-shadow: 0 5px 15px rgba(41,182,246,0.4); }
-.kpi-warning .kpi-icon { background: var(--accent-color); box-shadow: 0 5px 15px rgba(255,171,64,0.4); }
+.kpi-primary .kpi-icon {
+  background: var(--primary-color);
+  box-shadow: 0 5px 15px rgba(26, 35, 126, 0.4);
+}
+.kpi-success .kpi-icon {
+  background: var(--success);
+  box-shadow: 0 5px 15px rgba(46, 125, 50, 0.4);
+}
+.kpi-info .kpi-icon {
+  background: #29b6f6;
+  box-shadow: 0 5px 15px rgba(41, 182, 246, 0.4);
+}
+.kpi-warning .kpi-icon {
+  background: var(--accent-color);
+  box-shadow: 0 5px 15px rgba(255, 171, 64, 0.4);
+}
 
 /* Gráficos */
 .chart-card {
   border-radius: 20px !important;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03) !important;
   border: none;
 }
 
@@ -385,7 +447,7 @@ nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.03) !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03) !important;
 }
 
 .summary-item {
@@ -414,65 +476,60 @@ nav {
 
 /* --- CONTENEDOR DE TABLA CON SCROLL --- */
 .table-scroll-container {
-    /* Altura máxima: Aquí controlas qué tan alto quieres que sea */
-    /* Ajusta este valor (ej: 450px o 60vh) para que coincida con tu formulario de al lado */
-    height: 490px; 
-    
-    /* Esto activa la barra de scroll si el contenido es muy largo */
-    overflow-y: auto; 
-    
-    /* Un borde suave para delimitar el área (opcional) */
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    
-    /* Sombra interna para dar profundidad */
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+  /* CAMBIO: Usamos altura dinámica (65% de la altura de la ventana) */
+  height: 65vh;
+  min-height: 300px; /* Para que no sea enana */
+  max-height: 600px; /* Para que no sea gigante */
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
 }
 
 /* --- TRUCO: CABECERA FIJA (STICKY HEADER) --- */
 .table-scroll-container table thead th {
-    position: sticky;
-    top: 0;
-    background-color: #fff; /* O el color de fondo de tu tarjeta */
-    z-index: 1; /* Para que quede por encima del contenido */
-    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Sombrita debajo de los títulos */
+  position: sticky;
+  top: 0;
+  background-color: #fff; /* O el color de fondo de tu tarjeta */
+  z-index: 1; /* Para que quede por encima del contenido */
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.1); /* Sombrita debajo de los títulos */
 }
 
 /* --- PERSONALIZAR LA BARRA DE SCROLL (Para que se vea moderna) --- */
 /* Ancho de la barra */
 .table-scroll-container::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 /* El carril (fondo de la barra) */
 .table-scroll-container::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-    border-radius: 4px;
+  background: #f1f1f1;
+  border-radius: 4px;
 }
 
 /* La barra que se mueve (Thumb) */
 .table-scroll-container::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 4px;
+  background: #888;
+  border-radius: 4px;
 }
 
 /* Al pasar el mouse por la barra */
 .table-scroll-container::-webkit-scrollbar-thumb:hover {
-    background: #555; 
+  background: #555;
 }
 
 /* Corrección para botones de tabla */
 .acciones-fila {
-    display: flex !important;       /* Activa el modo 'caja flexible' */
-    gap: 10px;                      /* Espacio EXACTO entre botones (adiós &nbsp;) */
-    justify-content: flex-start;    /* Alinea a la izquierda (o usa 'center' para centrar) */
-    align-items: center;            /* Alineación vertical perfecta */
-    flex-wrap: nowrap;              /* PROHIBIDO bajar de línea (esto evita que se monten) */
+  display: flex !important; /* Activa el modo 'caja flexible' */
+  gap: 10px; /* Espacio EXACTO entre botones (adiós &nbsp;) */
+  justify-content: flex-start; /* Alinea a la izquierda (o usa 'center' para centrar) */
+  align-items: center; /* Alineación vertical perfecta */
+  flex-wrap: nowrap; /* PROHIBIDO bajar de línea (esto evita que se monten) */
 }
 
 /* Opcional: Asegura que los botones no tengan márgenes extraños */
 .acciones-fila .btn-small {
-    margin: 0 !important;
+  margin: 0 !important;
 }
 
 /* Tabla de Historial de Ventas */
@@ -500,11 +557,69 @@ nav {
   color: var(--success);
 }
 
+/* --- NUEVOS ESTILOS RESPONSIVE --- */
+/* Contenedor para que las tablas tengan scroll horizontal en celular */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iPhone */
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media only screen and (max-width: 600px) {
+  /* Reducir tamaño de letra en tablas */
+  table.highlight td,
+  table.highlight th {
+    padding: 8px 5px;
+    font-size: 0.85rem;
+  }
+  /* Ocultar columnas menos importantes en historial móvil si es necesario */
+  .hide-on-mobile {
+    display: none;
+  }
+  /* Botones de acción más grandes para tocar con el dedo */
+  .btn-small {
+    padding: 0 10px;
+  }
+  /* Ajustar el filtro de fechas para que no se vea apretado */
+  .filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .btn-filter {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Estilo del botón de filtrar */
+.btn-filter {
+  background-color: #1a237e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0 15px;
+  height: 36px;
+  line-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%; /* Ocupa ancho disponible en su columna */
+}
+.btn-filter:hover {
+  background-color: #283593;
+}
+
 /* ==========================================================================
    7. MÓDULO: PUNTO DE VENTA (PRODUCTOS)
    ========================================================================== */
-.pos-container { 
-  padding-top: 20px; 
+.pos-container {
+  padding-top: 20px;
 }
 
 .search-bar-container {
@@ -559,7 +674,7 @@ nav {
   padding: 15px !important;
   text-align: center;
   flex-grow: 1;
-  background-color: #FAFAFA; /* Fondo ligero para separar texto de imagen */
+  background-color: #fafafa; /* Fondo ligero para separar texto de imagen */
 }
 
 .product-card .card-title {
@@ -585,10 +700,10 @@ nav {
    8. MÓDULO: CARRITO DE COMPRAS
    ========================================================================== */
 .floating-cart {
-  position: fixed !important; 
+  position: fixed !important;
   bottom: 30px !important;
   right: 25px !important;
-  z-index: 2100 !important; 
+  z-index: 2100 !important;
 }
 
 #badge-cart {
@@ -637,7 +752,9 @@ nav {
   border: 1px solid #ddd !important;
   box-shadow: none !important;
 }
-.btn-cant:hover { background-color: #e0e0e0 !important; }
+.btn-cant:hover {
+  background-color: #e0e0e0 !important;
+}
 
 .btn-cant i {
   color: var(--primary-color) !important;
@@ -663,7 +780,9 @@ nav {
 /* Tablets y Escritorios Pequeños (Hasta 992px) */
 @media (max-width: 992px) {
   /* Login */
-  .login-card { width: 90%; }
+  .login-card {
+    width: 90%;
+  }
 
   /* Layout POS */
   .main-wrapper {
@@ -675,7 +794,7 @@ nav {
   .content-area {
     height: auto !important;
     overflow: visible !important;
-    padding-bottom: 80px; 
+    padding-bottom: 80px;
   }
 
   /* Sidebar Horizontal */
@@ -693,7 +812,9 @@ nav {
     border-bottom: 1px solid #eee;
   }
 
-  .sidebar-title { display: none; }
+  .sidebar-title {
+    display: none;
+  }
 
   .cat-item {
     display: inline-flex !important;
@@ -732,8 +853,10 @@ nav {
     height: 1px;
   }
   .kpi-card {
-    height: auto;
-    padding: 20px;
+    /* ... resto de tus estilos ... */
+    min-height: 160px; /* CAMBIO: Altura mínima, puede crecer si lo necesita */
+    height: auto; /* Deja que crezca */
+    /* ... resto de tus estilos ... */
   }
   .kpi-icon {
     position: relative;
@@ -772,5 +895,23 @@ nav {
   /* Tablas */
   #tabla-reporte td {
     border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+/* Pantallas MUY pequeñas (Menos de 360px) */
+@media (max-width: 359px) {
+  .products-grid {
+    grid-template-columns: 1fr !important; /* 1 sola columna para que se vea bien */
+  }
+
+  .container-botones {
+    flex-wrap: wrap; /* Que los botones bajen si no caben */
+    height: auto !important;
+    gap: 10px;
+  }
+
+  .btn-modal {
+    width: 100%; /* Botones anchos para dedos grandes */
+    margin-bottom: 5px;
   }
 }

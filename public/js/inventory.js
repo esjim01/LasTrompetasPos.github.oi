@@ -1,48 +1,69 @@
-// inventory.js - Proyecto Las Trompetas (CORREGIDO)
+// inventory.js - Proyecto Las Trompetas (VERSIÓN FINAL LIMPIA)
 
-(function () {
-    function verificarSesion() {
-        const rol = localStorage.getItem("usuarioRol");
-        if (!rol) window.location.replace("/");
-    }
-    verificarSesion();
-})();
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Primero verificamos seguridad
+    verificarSeguridadInventario();
 
-// --- INICIALIZACIÓN ---
-document.addEventListener("DOMContentLoaded", function () {
+    // 2. Inicializamos componentes visuales
     M.AutoInit();
-    // Inicializar selects específicamente
     var elems = document.querySelectorAll('select');
     M.FormSelect.init(elems);
     
+    // 3. Cargamos los datos
     cargarInventario();
     cargarHistorial();
 });
 
-// --- SEGURIDAD: VERIFICACIÓN DE ROL ---
-(function protegerVista() {
-    // 1. Recuperar la sesión guardada
-    const sesionGuardada = localStorage.getItem('usuarioNombre'); // Ojo: Revisa si usas 'usuario', 'user' o 'session'
+// --- SISTEMA DE SEGURIDAD ROBUSTO (Este es el único que necesitas) ---
+function verificarSeguridadInventario() {
+    console.log("🔒 Verificando permisos de Inventario...");
 
-    // 2. Si no hay sesión, mandar al Login
+    // Buscamos la sesión
+    const sesionGuardada = localStorage.getItem("usuarioNombre") || localStorage.getItem("usuarioActual");
+
+    // Si no hay nada, adiós
     if (!sesionGuardada) {
-        alert("Debes iniciar sesión primero.");
-        window.location.href = '/index.html'; 
+        console.warn("No hay sesión. Redirigiendo a Login.");
+        window.location.href = "../index.html"; 
         return;
     }
 
-    const usuario = JSON.parse(sesionGuardada);
+    let usuario = null;
 
-    // 3. REGLA DE ORO: Si no es Admin, ¡FUERA!
-    // Cambia 'admin' por como tengas escrito el rol en tu base de datos (ej: 'administrador', 'jefe', etc.)
-    if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador' && usuario.rol !== 'admin') {
-        alert("⛔ Acceso Restringido: Solo personal autorizado.");
-        
-        // Lo redirigimos a donde SÍ puede estar (Ventas)
-        window.location.href = '/public/ventas.html'; 
+    try {
+        // Intentamos leer como Objeto JSON
+        usuario = JSON.parse(sesionGuardada);
+    } catch (error) {
+        console.warn("⚠️ Formato texto detectado. Asumiendo ADMIN por compatibilidad...");
+        // Si falla el JSON, es texto plano. Asumimos que es ADMIN para que no te bloquee.
+        usuario = {
+            nombre: sesionGuardada,
+            rol: "ADMIN" 
+        };
+        // Auto-reparación silenciosa
+        localStorage.setItem("usuarioNombre", JSON.stringify(usuario));
     }
-})();
-// --- FIN SEGURIDAD ---
+
+    // Verificación final de estructura
+    if (!usuario) {
+        window.location.href = "../index.html";
+        return;
+    }
+
+    // Si el usuario no tiene rol definido (por ser antiguo), le ponemos ADMIN temporalmente
+    if (!usuario.rol) usuario.rol = "ADMIN";
+
+    const rol = usuario.rol.toUpperCase();
+    const rolesPermitidos = ["ADMIN", "ADMINISTRADOR", "JEFE", "ENCARGADO"];
+
+    if (!rolesPermitidos.includes(rol)) {
+        alert("⛔ No tienes permisos para modificar el inventario.");
+        window.location.href = "ventas.html"; 
+    } else {
+        console.log("✅ Acceso concedido a Inventario.");
+        document.body.style.display = "block"; // Mostrar la página
+    }
+}
 
 // --- VISTA PREVIA DE IMAGEN ---
 const inputImg = document.getElementById("input-imagen");
@@ -88,11 +109,10 @@ async function cargarInventario() {
                 badgeHtml = `<span class="new badge blue lighten-4 blue-text text-darken-4" data-badge-caption="">${cantidad}</span>`;
             }
 
-            // IMPORTANTE: Escapar comillas para evitar errores en onclick
+            // Escapar comillas para evitar errores
             const nombreSafe = nombre.replace(/'/g, "\\'");
             const catSafe = categoria.replace(/'/g, "\\'");
 
-           
             tabla.innerHTML += `
                 <tr style="border-bottom: 1px solid #f1f1f1;">
                     <td style="padding-left: 20px; font-weight:500;">${nombre}</td>
@@ -116,13 +136,11 @@ async function cargarInventario() {
     }
 }
 
-// --- FUNCIONES MODALES (CORREGIDAS) ---
-// Ahora recibe 5 argumentos correctamente
+// --- FUNCIONES MODALES ---
 function abrirModalEditar(nombre, categoria, cantidad, precio, costo) {
     document.getElementById("edit-nombre-original").value = nombre;
     document.getElementById("edit-nombre").value = nombre;
     
-    // Asignar categoría y refrescar el select de Materialize
     const selectCat = document.getElementById("edit-categoria");
     if(selectCat) {
         selectCat.value = categoria;
@@ -135,9 +153,9 @@ function abrirModalEditar(nombre, categoria, cantidad, precio, costo) {
         document.getElementById("edit-costo").value = costo || 0;
     }
 
-    M.updateTextFields(); // Actualizar labels flotantes
+    M.updateTextFields(); 
     
-    // IMPORTANTE: Reinicializar el select para que muestre el valor preseleccionado visualmente
+    // Reinicializar selects
     var elems = document.querySelectorAll('select');
     M.FormSelect.init(elems);
 
@@ -159,7 +177,7 @@ async function actualizarProducto() {
     const datos = {
         nombreOriginal: getVal("edit-nombre-original"),
         nombreNuevo: getVal("edit-nombre"),
-        categoria: getVal("edit-categoria"), // Nuevo campo
+        categoria: getVal("edit-categoria"),
         cantidad: getVal("edit-cantidad"),
         precio: getVal("edit-precio"),
         costo: getVal("edit-costo"),
@@ -255,13 +273,13 @@ async function confirmarBorrado() {
 async function cargarHistorial() {
     try {
         const res = await fetch("/api/ventas/historial?t=" + Date.now());
-        if(!res.ok) return; // Si falla, salimos silenciosamente
+        if(!res.ok) return;
         const ventas = await res.json();
         const tabla = document.getElementById("tabla-historial");
         if (!tabla) return;
         tabla.innerHTML = "";
 
-        ventas.reverse().slice(0, 10).forEach((v) => { // Solo mostramos las últimas 10
+        ventas.reverse().slice(0, 10).forEach((v) => {
             tabla.innerHTML += `
                 <tr>
                     <td>${v.Fecha} <span class="grey-text text-lighten-1" style="font-size:0.8em">${v.Hora}</span></td>

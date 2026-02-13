@@ -1,58 +1,79 @@
 <!doctype html>
+
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Administración - Las Trompetas</title>
+
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+
     <link rel="stylesheet" href="/public/css/styles.css" />
 
     <style>
       .badge-estado {
         padding: 5px 10px;
+
         border-radius: 4px;
+
         color: white;
+
         font-weight: bold;
+
         font-size: 0.8rem;
       }
+
       .pendiente {
         background-color: #ff9800;
+
         animation: parpadeo 2s infinite;
       }
+
       .despachado {
         background-color: #4caf50;
       }
+
       @keyframes parpadeo {
         0% {
           opacity: 1;
         }
+
         50% {
           opacity: 0.6;
         }
+
         100% {
           opacity: 1;
         }
       }
+
       .tabs .tab a {
         color: #1a237e;
       } /* Color de las pestañas */
+
       .tabs .tab a:hover,
       .tabs .tab a.active {
         color: #283593;
+
         background-color: #e8eaf6;
       }
+
       .indicator {
         background-color: #1a237e;
       }
     </style>
   </head>
+
   <body class="dashboard-body">
     <audio id="audio-notificacion" preload="auto">
       <source
@@ -62,16 +83,47 @@
     </audio>
 
     <nav class="dashboard-nav z-depth-0">
-        <div class="nav-wrapper container">
-            <a href="#" class="brand-logo"><i class="material-icons left">store</i>Las Trompetas - Administración</a>
-            <ul class="right hide-on-med-and-down">
-            <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
-            <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
-            <li><a href="/public/dashboard.html" class="nav-link"><i class="material-icons left">analytics</i>Dashboard</a></li>
-            <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
-            <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
-            </ul>
-        </div>
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo"
+          ><i class="material-icons left">store</i>Las Trompetas -
+          Administración</a
+        >
+
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a
+              href="/public/ventas.html"
+              class="btn deep-purple lighten-5 waves-effect waves-light"
+              style="border-radius: 8px"
+              ><i class="material-icons left">point_of_sale</i>Ventas</a
+            >
+          </li>
+
+          <li>
+            <a href="/public/gastos.html" class="nav-link"
+              ><i class="material-icons left">money_off</i>Gastos</a
+            >
+          </li>
+
+          <li>
+            <a href="/public/dashboard.html" class="nav-link"
+              ><i class="material-icons left">analytics</i>Dashboard</a
+            >
+          </li>
+
+          <li>
+            <a href="/public/usuarios.html" class="nav-link"
+              ><i class="material-icons left">group</i>Usuarios</a
+            >
+          </li>
+
+          <li>
+            <a href="/index.html" class="nav-link red-text"
+              ><i class="material-icons left">logout</i>Salir</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <div class="container main-container">
@@ -86,6 +138,7 @@
                 ><i class="material-icons tiny">liquor</i> PEDIDOS EN VIVO</a
               >
             </li>
+
             <li class="tab col s6">
               <a href="#tab-inventario"
                 ><i class="material-icons tiny">inventory</i> GESTIONAR STOCK</a
@@ -101,6 +154,7 @@
             <span class="card-title indigo-text text-darken-4"
               ><b>Cola de Pedidos</b></span
             >
+
             <p class="grey-text">
               Los pedidos de los meseros aparecerán aquí automáticamente.
             </p>
@@ -112,13 +166,19 @@
               <thead class="indigo lighten-5">
                 <tr>
                   <th>Hora</th>
+
                   <th>Mesero</th>
-                  <th>Mesa / Pers.</th>
+
+                  <th>Detalle de pedido</th>
+
                   <th>Total</th>
+
                   <th>Estado</th>
+
                   <th>Acciones</th>
                 </tr>
               </thead>
+
               <tbody id="tabla-pedidos"></tbody>
             </table>
           </div>
@@ -136,16 +196,17 @@
 
                 <div class="input-field">
                   <i class="material-icons prefix indigo-text">label</i>
+
                   <input type="text" id="nombre" />
+
                   <label for="nombre">Nombre del Producto</label>
                 </div>
 
                 <div class="input-field">
                   <i class="material-icons prefix indigo-text">category</i>
+
                   <select id="categoria">
-                    <option value="" disabled selected>
-                      Selecciona Categoría
-                    </option>
+                    <option value="" disabled selected>Selecciona Categoría</option>
                     <option value="Aguardientes">Aguardientes</option>
                     <option value="Cervezas">Cervezas</option>
                     <option value="Rones">Rones</option>
@@ -160,17 +221,22 @@
                 <div class="row" style="margin-bottom: 0">
                   <div class="input-field col s6">
                     <input type="number" id="cantidad" />
+
                     <label for="cantidad">Stock Inicial</label>
                   </div>
+
                   <div class="input-field col s6">
                     <input type="number" id="precio" />
+
                     <label for="precio">P. Venta</label>
                   </div>
                 </div>
 
                 <div class="input-field">
                   <i class="material-icons prefix green-text">attach_money</i>
+
                   <input type="number" id="costo" />
+
                   <label for="costo">Costo (Inversión)</label>
                 </div>
 
@@ -179,8 +245,11 @@
                     class="btn-small indigo lighten-5 indigo-text text-darken-4"
                     style="
                       border: 1px solid #c5cae9;
+
                       box-shadow: none;
+
                       border-radius: 8px;
+
                       width: 100%;
                     "
                   >
@@ -188,8 +257,10 @@
                       ><i class="material-icons left">cloud_upload</i>Subir
                       Foto</span
                     >
+
                     <input type="file" id="input-imagen" accept="image/*" />
                   </div>
+
                   <div class="file-path-wrapper">
                     <input
                       class="file-path validate"
@@ -205,11 +276,17 @@
                   alt="Foto del producto"
                   style="
                     display: none;
+
                     width: 100%;
+
                     max-height: 150px;
+
                     object-fit: contain;
+
                     margin: 10px 0;
+
                     border-radius: 10px;
+
                     border: 2px dashed #ddd;
                   "
                 />
@@ -218,8 +295,11 @@
                   class="btn-large indigo darken-4 waves-effect waves-light w100"
                   style="
                     width: 100%;
+
                     border-radius: 10px;
+
                     margin-top: 15px;
+
                     box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
                   "
                   onclick="guardarProducto()"
@@ -234,6 +314,7 @@
             <div class="card search-bar-container" style="border-radius: 12px">
               <div class="input-field" style="margin: 0">
                 <i class="material-icons prefix indigo-text">search</i>
+
                 <input
                   type="text"
                   id="busqueda-venta"
@@ -253,68 +334,84 @@
                     <thead style="background-color: #f5f5f5">
                       <tr>
                         <th style="padding-left: 20px">Producto</th>
+
                         <th>Categoría</th>
+
                         <th class="center">Stock</th>
+
                         <th>Precio</th>
+
                         <th>Costo</th>
+
                         <th class="center">Acciones</th>
                       </tr>
                     </thead>
+
                     <tbody id="tabla-cuerpo"></tbody>
                   </table>
                 </div>
               </div>
             </div>
 
-            <div class="card chart-card" style="margin-top: 20px">
+          <div class="card chart-card" style="margin-top: 20px">
               <div class="card-header">
-                <span class="card-title-small"
-                  ><i class="material-icons left">history</i>Movimientos
-                  Recientes</span
-                >
+                <span class="card-title-small">
+                  <i class="material-icons left">history</i>Movimientos Recientes
+                </span>
               </div>
 
               <div class="row section-filters">
                 <div class="col s12">
-                  <div class="card filter-card">
-                    <div class="card-content">
-                      <div class="filter-wrapper">
-                        <div class="input-field col s6">
+                  <div class="card filter-card" style="background-color: #f5f5f5; padding: 10px;">
+                    <div class="card-content" style="padding: 10px;">
+                      <div class="row" style="margin-bottom: 0;">
+                        <div class="input-field col s12 m4">
                           <i class="material-icons prefix">today</i>
                           <input type="date" id="filtro-desde" />
-                          <label class="active" id="rango-desde">Desde</label>
+                          <label class="active" for="filtro-desde">Desde</label>
                         </div>
-                        <div class="input-field">
+                        <div class="input-field col s12 m4">
                           <i class="material-icons prefix">event</i>
                           <input type="date" id="filtro-hasta" />
-                          <label class="active" id="rango-hasta">Hasta</label>
+                          <label class="active" for="filtro-hasta">Hasta</label>
                         </div>
-                        <button
-                          class="btn-filter waves-effect waves-light"
-                          onclick="cargarHistorial()"
-                        >
-                          <i class="material-icons left">refresh</i>Actualizar
-                        </button>
+                        <div class="input-field col s12 m4 center-align">
+                          <button
+                            class="btn-filter waves-effect waves-light"
+                            onclick="aplicarFiltroFechas()"
+                          >
+                            <i class="material-icons left">filter_list</i>Filtrar
+                          </button>
+                        </div>
+                      </div>
+                      <div class="row" style="margin-bottom: 0; display: none;" id="btn-limpiar-filtro">
+                         <div class="col s12 center-align">
+                            <a href="#!" onclick="limpiarFiltros()" class="red-text" style="font-size: 0.9rem;">Limpiar filtros y ver todo</a>
+                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="card-content">
-                <table class="highlight">
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Usuario</th>
-                      <th>Detalle</th>
-                      <th>Total</th>
-                      <th>Acción</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tabla-historial"></tbody>
-                </table>
+                <div class="table-responsive-wrapper">
+                  <table class="highlight">
+                    <thead>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Detalle</th>
+                        <th>Total</th>
+                        <th class="center">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabla-historial">
+                      </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            </div>  
           </div>
         </div>
       </div>
@@ -323,19 +420,24 @@
     <div id="modal-detalle-pedido" class="modal" style="border-radius: 12px">
       <div class="modal-content">
         <h4 class="indigo-text">Detalle del Pedido</h4>
+
         <ul class="collection" id="lista-detalle-pedido"></ul>
+
         <h5 class="right-align">
           Total:
+
           <span
             id="total-detalle"
             class="indigo-text text-darken-4 bold"
           ></span>
         </h5>
       </div>
+
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect waves-grey btn-flat"
           >Cerrar</a
         >
+
         <button
           id="btn-despachar-modal"
           class="waves-effect waves-light btn green"
@@ -348,43 +450,63 @@
     <div id="modal-editar" class="modal" style="border-radius: 20px">
       <div class="modal-content">
         <h5 class="indigo-text text-darken-4"><b>Editar Producto</b></h5>
+
         <div class="row">
           <input type="hidden" id="edit-nombre-original" />
+
           <div class="input-field col s12 m6">
             <input type="text" id="edit-nombre" />
+
             <label class="active" for="edit-nombre">Nombre</label>
           </div>
+
           <div class="input-field col s12 m6">
             <select id="edit-categoria">
               <option value="Aguardientes">Aguardientes</option>
+
               <option value="Cervezas">Cervezas</option>
+
               <option value="Rones">Rones</option>
+
               <option value="Whisky">Whisky</option>
+
               <option value="Brandy">Brandy</option>
+
               <option value="Hidratantes">Hidratantes</option>
+
               <option value="Gaseosas">Gaseosas</option>
+
               <option value="Otros">Otros</option>
             </select>
+
             <label>Categoría</label>
           </div>
+
           <div class="input-field col s4">
             <input type="number" id="edit-cantidad" />
+
             <label class="active" for="edit-cantidad">Stock</label>
           </div>
+
           <div class="input-field col s4">
             <input type="number" id="edit-precio" />
+
             <label class="active" for="edit-precio">Venta</label>
           </div>
+
           <div class="input-field col s4">
             <input type="number" id="edit-costo" />
+
             <label class="active" for="edit-costo">Costo</label>
           </div>
         </div>
       </div>
+
       <div class="modal-footer container-botones">
         <button class="modal-close btn-flat grey lighten-3 btn-modal">
           Cancelar
         </button>
+
         <button
           class="btn green darken-1 btn-modal"
           onclick="actualizarProducto()"
@@ -401,14 +523,19 @@
     >
       <div class="modal-content center-align">
         <i class="material-icons large red-text text-lighten-2">warning</i>
+
         <h5>¿Eliminar Producto?</h5>
+
         <p id="nombre-eliminar-display" class="bold indigo-text"></p>
+
         <input type="hidden" id="nombre-eliminar-hidden" />
       </div>
+
       <div class="modal-footer container-botones">
         <button class="modal-close btn-flat grey lighten-3 btn-modal">
           Cancelar
         </button>
+
         <button class="btn red accent-4 btn-modal" onclick="confirmarBorrado()">
           Eliminar
         </button>
@@ -416,53 +543,73 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="/public/js/inventory.js"></script>
 
     <script>
       // --- VARIABLES GLOBALES ---
+
       let pedidosCargados = [];
+
       let ultimoConteo = 0;
+
       let primeraCarga = true;
 
       // --- INICIALIZACIÓN ---
+
       document.addEventListener("DOMContentLoaded", function () {
         // Inicializar componentes de Materialize
+
         M.Tabs.init(document.querySelectorAll(".tabs"));
+
         M.Modal.init(document.querySelectorAll(".modal"));
+
         M.FormSelect.init(document.querySelectorAll("select"));
+
         M.Tooltip.init(document.querySelectorAll(".tooltipped"));
 
         // Iniciar ciclo de actualización
+
         cargarPedidos();
+
         setInterval(cargarPedidos, 5000); // Actualizar cada 5 segundos
       });
 
       // --- FUNCIÓN PRINCIPAL DE CARGA (POLLING) ---
+
       async function cargarPedidos() {
         try {
           const res = await fetch("/api/ventas/historial");
           if (!res.ok) return;
           const ventas = await res.json();
-
           // Ordenar: Más recientes primero
+
           // Validamos que fecha exista para evitar errores de ordenamiento
+
           ventas.sort((a, b) => {
             const fA = new Date(a.fecha || 0);
+
             const fB = new Date(b.fecha || 0);
+
             return fB - fA;
           });
 
           pedidosCargados = ventas;
 
           // 1. Renderizar Tabla "PEDIDOS EN VIVO"
+
           renderizarTablaPedidos(ventas);
 
           // 2. Renderizar Tabla "MOVIMIENTOS RECIENTES" (La que estaba fallando)
-          renderizarHistorialStock(ventas);
+
+          if (!filtroActivo) { 
+            renderizarHistorialStock(ventas); 
+          }
 
           // 3. Verificar si hay que sonar la campana
+
           verificarAlerta(ventas.length);
         } catch (error) {
           console.error("Error polling pedidos:", error);
@@ -470,73 +617,115 @@
       }
 
       // --- RENDERIZAR TABLA 1: PEDIDOS EN VIVO ---
+
       function renderizarTablaPedidos(ventas) {
         const tbody = document.getElementById("tabla-pedidos");
+
         if (!tbody) return;
+
         tbody.innerHTML = "";
 
         ventas.forEach((v) => {
           // Formatos
+
           const fechaObj = new Date(v.fecha);
+
           const hora = isNaN(fechaObj.getTime())
             ? "..."
             : fechaObj.toLocaleTimeString("es-CO", {
                 hour: "2-digit",
+
                 minute: "2-digit",
               });
+
           const items = v.items || [];
+
           const total = Number(v.total || 0).toLocaleString("es-CO", {
             style: "currency",
+
             currency: "COP",
           });
+
           const vendedor = v.vendedor || "Mesero";
+
           const personas = v.numPersonas || 0;
 
           // Estado
+
           const estadoActual = v.estado || "despachado";
+
           let badgeColor = "green";
+
           let textoEstado = "DESPACHADO";
+
           let accionBtn = `<i class="material-icons grey-text">done_all</i>`;
 
           if (estadoActual === "pendiente") {
             badgeColor = "orange darken-4";
+
             textoEstado = "PENDIENTE";
+
             accionBtn = `<button class="btn-small green tooltipped" data-tooltip="Marcar Despachado" onclick="cambiarEstadoPedido('${v.id}', 'despachado')"><i class="material-icons">check</i></button>`;
           }
 
           // Crear fila
+
           const tr = document.createElement("tr");
+
           tr.innerHTML = `
+
                 <td style="font-weight: bold;">${hora}</td>
+
                 <td>${vendedor}</td>
+
                 <td>${items.map((item) => `${item.nombre} (x${item.cantidad})`).join(", ")}</td>
+
                 <td>${total}</td>
+
                 <td><span class="new badge ${badgeColor}" data-badge-caption="">${textoEstado}</span></td>
-                
+
+               
+
                 <td class="acciones-fila">
+
                     <button class="btn-small waves-effect waves-light blue" onclick='verDetallePedido("${v.id}")' title="Ver detalles">
+
                         <i class="material-icons">visibility</i>
+
                     </button>
+
                     ${accionBtn}
+
                 </td>
+
             `;
+
           tbody.appendChild(tr);
         });
 
         // Reiniciar tooltips para los nuevos elementos
+
         M.Tooltip.init(document.querySelectorAll(".tooltipped"));
       }
 
       // --- RENDERIZAR TABLA 2: MOVIMIENTOS RECIENTES (CORREGIDA) ---
-      function renderizarHistorialStock(ventas) {
+
+      // --- RENDERIZAR TABLA 2: MOVIMIENTOS RECIENTES (MEJORADA) ---
+      function renderizarHistorialStock(ventasParaMostrar) {
         const tbody = document.getElementById("tabla-historial");
         if (!tbody) return;
         tbody.innerHTML = "";
 
-        // Tomamos solo los últimos 10 movimientos para no saturar
-        const ultimosMovimientos = ventas.slice(0, 15);
+        // Si no hay ventas tras el filtro
+        if (ventasParaMostrar.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text">No hay movimientos en este rango de fechas.</td></tr>`;
+            return;
+        }
 
-        ultimosMovimientos.forEach((v) => {
+        // Tomamos máximo 50 para no trabar el navegador si filtramos un rango grande
+        const limiteVisual = ventasParaMostrar.slice(0, 50);
+
+        limiteVisual.forEach((v) => {
           // 1. Fecha completa
           const fechaObj = new Date(v.fecha);
           const fechaLegible = isNaN(fechaObj.getTime())
@@ -548,8 +737,7 @@
                 minute: "2-digit",
               });
 
-          // 2. Detalle de productos (Concatenar nombres)
-          // Si v.items es un array, mapeamos los nombres. Si no, ponemos "Sin detalle"
+          // 2. Detalle
           let detalleTexto = "Sin detalle";
           if (Array.isArray(v.items) && v.items.length > 0) {
             detalleTexto = v.items
@@ -564,17 +752,16 @@
             minimumFractionDigits: 0,
           });
 
-          // 4. Usuario
           const usuario = v.vendedor || "Sistema";
 
           const tr = document.createElement("tr");
           tr.innerHTML = `
                 <td><small>${fechaLegible}</small></td>
                 <td>${usuario}</td>
-                <td class="truncate" style="max-width: 200px;" title="${detalleTexto}">${detalleTexto}</td>
+                <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
                 <td style="font-weight: bold;">${total}</td>
-                <td>
-                    <button class="btn-flat btn-small red-text waves-effect" onclick="eliminarVenta('${v.id}')" title="Eliminar Venta">
+                <td class="center">
+                    <button class="btn-flat btn-small red-text waves-effect" onclick="eliminarVenta('${v.id}')">
                         <i class="material-icons">delete</i>
                     </button>
                 </td>
@@ -584,27 +771,42 @@
       }
 
       // --- LÓGICA DE DETALLE (MODAL) ---
+
       function verDetallePedido(idVenta) {
         // Buscamos en el array en memoria, no hace falta ir al servidor
+
         const venta = pedidosCargados.find((v) => v.id === idVenta);
+
         if (!venta) return;
 
         const lista = document.getElementById("lista-detalle-pedido");
+
         lista.innerHTML = "";
 
         // Renderizar lista de productos en el modal
+
         if (venta.items && Array.isArray(venta.items)) {
           venta.items.forEach((item) => {
             const subtotal = (item.precio * item.cantidad).toLocaleString();
+
             lista.innerHTML += `
+
                     <li class="collection-item avatar">
+
                         <i class="material-icons circle indigo lighten-4 indigo-text">local_bar</i>
+
                         <span class="title" style="font-weight: bold;">${item.nombre}</span>
+
                         <p class="grey-text">
+
                            Cantidad: ${item.cantidad} <br>
+
                            Subtotal: $${subtotal}
+
                         </p>
+
                     </li>
+
                 `;
           });
         }
@@ -613,14 +815,19 @@
           "$" + parseInt(venta.total || 0).toLocaleString();
 
         // Configurar botón "Despachar" dentro del modal
+
         const btn = document.getElementById("btn-despachar-modal");
+
         const modalElem = document.getElementById("modal-detalle-pedido");
+
         const instance = M.Modal.getInstance(modalElem);
 
         if (venta.estado === "pendiente") {
           btn.style.display = "inline-block";
+
           btn.onclick = () => {
             cambiarEstadoPedido(idVenta, "despachado");
+
             instance.close();
           };
         } else {
@@ -631,25 +838,31 @@
       }
 
       // --- ACCIONES (CAMBIAR ESTADO Y ELIMINAR) ---
+
       async function cambiarEstadoPedido(idVenta, nuevoEstado) {
         try {
           const res = await fetch("/api/ventas/estado", {
             method: "POST",
+
             headers: { "Content-Type": "application/json" },
+
             body: JSON.stringify({ idVenta, nuevoEstado }),
           });
 
           if (res.ok) {
             M.toast({
               html: "✅ Pedido actualizado",
+
               classes: "green rounded",
             });
+
             cargarPedidos(); // Recargar tablas inmediatamente
           } else {
             M.toast({ html: "❌ Error al actualizar", classes: "red rounded" });
           }
         } catch (e) {
           console.error(e);
+
           M.toast({ html: "Error de conexión", classes: "red" });
         }
       }
@@ -657,68 +870,146 @@
       async function eliminarVenta(idVenta) {
         const confirmacion = await Swal.fire({
           title: "¿Eliminar venta?",
+
           text: "Esto devolverá los productos al stock (si tu servidor lo maneja) y borrará el registro.",
+
           icon: "warning",
+
           showCancelButton: true,
+
           confirmButtonColor: "#d33",
+
           cancelButtonColor: "#3085d6",
+
           confirmButtonText: "Sí, eliminar",
+
           cancelButtonText: "Cancelar",
         });
 
         if (confirmacion.isConfirmed) {
           try {
             // NOTA: Asegúrate de tener esta ruta en tu index.js (app.delete('/api/ventas/:id') o similar)
+
             // Si usabas otra ruta antes, ajústala aquí.
+
             const res = await fetch(`/api/ventas/${idVenta}`, {
               method: "DELETE",
             });
 
             if (res.ok) {
               Swal.fire("Eliminado", "La venta ha sido eliminada.", "success");
+
               cargarPedidos();
             } else {
               Swal.fire("Error", "No se pudo eliminar la venta.", "error");
             }
           } catch (e) {
             console.error(e);
+
             Swal.fire("Error", "Fallo de conexión.", "error");
           }
         }
       }
 
       // --- UTILIDADES ---
+
       function verificarAlerta(cantidadActual) {
         if (cantidadActual > ultimoConteo && !primeraCarga) {
           M.toast({
             html: "🔔 ¡NUEVO PEDIDO!",
+
             classes: "orange darken-4 rounded",
+
             displayLength: 4000,
           });
+
           const audio = document.getElementById("audio-notificacion");
+
           if (audio) {
             audio
+
               .play()
+
               .catch(() => console.log("Navegador bloqueó audio auto"));
           }
         }
+
         ultimoConteo = cantidadActual;
+
         primeraCarga = false;
       }
 
       function cerrarSesion() {
         Swal.fire({
           title: "¿Cerrar sesión?",
+
           icon: "question",
+
           showCancelButton: true,
+
           confirmButtonText: "Sí, salir",
         }).then((result) => {
           if (result.isConfirmed) {
             localStorage.clear();
+
             window.location.href = "/";
           }
         });
       }
+
+      // --- NUEVAS FUNCIONES DE FILTRO ---
+      
+      let filtroActivo = false; // Para saber si estamos filtrando o viendo en vivo
+
+      function aplicarFiltroFechas() {
+        const inputDesde = document.getElementById('filtro-desde').value;
+        const inputHasta = document.getElementById('filtro-hasta').value;
+
+        if (!inputDesde || !inputHasta) {
+            Swal.fire("Atención", "Selecciona ambas fechas (Desde y Hasta)", "warning");
+            return;
+        }
+
+        // Convertir strings a objetos Date (Inicio del día vs Fin del día)
+        // Agregamos "T00:00:00" para evitar problemas de zona horaria local
+        const fechaDesde = new Date(inputDesde + "T00:00:00"); 
+        const fechaHasta = new Date(inputHasta + "T23:59:59");
+
+        // Filtramos sobre la variable GLOBAL 'pedidosCargados' que ya tiene los datos
+        const ventasFiltradas = pedidosCargados.filter(venta => {
+            const fechaVenta = new Date(venta.fecha);
+            return fechaVenta >= fechaDesde && fechaVenta <= fechaHasta;
+        });
+
+        filtroActivo = true; // Pausamos la actualización automática de esta tabla
+        document.getElementById('btn-limpiar-filtro').style.display = 'block';
+        
+        renderizarHistorialStock(ventasFiltradas);
+        M.toast({html: `Se encontraron ${ventasFiltradas.length} movimientos`, classes: 'rounded'});
+      }
+
+      function limpiarFiltros() {
+        document.getElementById('filtro-desde').value = "";
+        document.getElementById('filtro-hasta').value = "";
+        filtroActivo = false;
+        document.getElementById('btn-limpiar-filtro').style.display = 'none';
+        
+        // Volvemos a mostrar todo lo que hay en memoria
+        renderizarHistorialStock(pedidosCargados); 
+      }
+
+      // --- PEQUEÑO AJUSTE EN LA FUNCIÓN POLLING EXISTENTE ---
+      // Busca tu función "cargarPedidos" y localiza la línea donde dice:
+      // renderizarHistorialStock(ventas);
+      // CAMBIALA por esto:
+      
+      /* if (!filtroActivo) { 
+             renderizarHistorialStock(ventas); 
+         }
+      */
+      
+      // EXPLICACIÓN: Si el usuario está filtrando fechas, NO queremos que la recarga automática
+      // de cada 5 segundos le borre su filtro.
     </script>
   </body>
 </html>

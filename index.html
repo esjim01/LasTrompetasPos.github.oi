@@ -6,135 +6,18 @@
     <title>Acceso - Las Trompetas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <style>
-        /* --- ESTILOS LIMPIOS (COHERENCIA VISUAL) --- */
-        body {
-            background-color: #f4f6f8; /* Mismo fondo que el Dashboard */
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        /* Barra decorativa superior (Opcional, toque elegante) */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 300px;
-            background: linear-gradient(135deg, #1a237e 0%, #3949ab 100%);
-            z-index: -1;
-            clip-path: polygon(0 0, 100% 0, 100% 40%, 0% 100%);
-        }
-
-        /* La Tarjeta de Login */
-        .login-card {
-            background: white !important;
-            border-radius: 16px !important; /* Bordes redondeados consistentes */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
-            width: 100%;
-            max-width: 400px;
-            padding: 40px 30px 20px 30px;
-            border: none !important;
-        }
-
-        /* Ajustes del Logo */
-        .logo-container {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .logo-container img {
-            width: 90px;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
-        }
-
-        .logo-container h5 {
-            color: #1a237e !important; /* Azul corporativo */
-            font-weight: 700;
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        
-        .logo-container p {
-            color: #78909c !important;
-            margin-top: 5px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Inputs Materialize mejorados para fondo blanco */
-        .input-field { margin-bottom: 25px; }
-        .input-field .prefix { color: #90a4ae; top: 0.5rem; }
-        .input-field .prefix.active { color: #3949ab; }
-        
-        .input-field input[type=text], 
-        .input-field input[type=password] {
-            border-bottom: 1px solid #cfd8dc !important;
-            color: #37474f; /* Texto oscuro */
-        }
-
-        .input-field input[type=text]:focus, 
-        .input-field input[type=password]:focus {
-            border-bottom: 2px solid #3949ab !important;
-            box-shadow: none !important;
-        }
-
-        .input-field label { color: #90a4ae; }
-        .input-field input:focus + label { color: #3949ab !important; }
-
-        /* Botón de Login (Igual al de 'Guardar Gasto') */
-        .btn-login {
-            background: #3949ab; /* Indigo darken-1 */
-            width: 100%;
-            height: 48px;
-            line-height: 48px;
-            border-radius: 8px; /* Radio consistente con el dashboard */
-            font-weight: 600;
-            font-size: 1rem;
-            text-transform: none; /* Texto normal, no todo mayúsculas */
-            box-shadow: 0 4px 12px rgba(57, 73, 171, 0.3);
-            margin-top: 20px;
-        }
-        
-        .btn-login:hover {
-            background: #283593;
-            box-shadow: 0 6px 15px rgba(57, 73, 171, 0.4);
-        }
-
-        /* Footer pequeño */
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #b0bec5;
-            font-size: 0.8rem;
-        }
-
-        /* Loader */
-        .loading-overlay { display: none; margin-top: 15px; }
-        .progress { background-color: #e8eaf6; }
-        .indeterminate { background-color: #3949ab !important; }
-
-    </style>
+    <link rel="stylesheet" href="public/css/styles.css"> 
 </head>
-<body>
+
+<body class="login-body">
 
     <div class="card login-card">
         <div class="card-content">
             
             <div class="logo-container">
                 <img src="img/Las_trompetas.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/150/e8eaf6/3949ab?text=LT'">
-                <h5>Las Trompetas</h5>
-                <p>Acceso Administrativo</p>
+                <h5 style="color:var(--primary-color); font-weight:700;">Las Trompetas</h5>
+                <p style="color:#90a4ae;">Acceso Administrativo</p>
             </div>
 
             <div class="input-field">
@@ -153,13 +36,13 @@
                 Ingresar al Sistema
             </button>
 
-            <div class="loading-overlay" id="loader">
+            <div class="loading-overlay" id="loader" style="display:none; margin-top:15px;">
                 <div class="progress">
                     <div class="indeterminate"></div>
                 </div>
             </div>
 
-            <div class="login-footer">
+            <div class="login-footer" style="text-align:center; margin-top:20px; color:#ccc; font-size:0.8rem;">
                 &copy; 2026 Sistema de Gestión
             </div>
 
@@ -168,7 +51,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        // --- TU LÓGICA DE JAVASCRIPT ORIGINAL (INTACTA) ---
+        // --- LÓGICA DE LOGIN ---
         async function iniciarSesion() {
             const user = document.getElementById("user").value.trim();
             const pass = document.getElementById("pass").value.trim();
@@ -177,15 +60,14 @@
 
             if (!user || !pass) return M.toast({html: 'Por favor, completa los datos', classes: 'rounded orange darken-2'});
 
-            // Efecto visual de carga
+            // Bloquear botón y mostrar carga
             btn.disabled = true;
-            btn.innerHTML = 'Verificando...';
+            btn.innerText = 'Verificando...';
             loader.style.display = "block";
 
             try {
-                // NOTA: Asegúrate de que tu servidor backend tenga esta ruta "/api/index"
-                // Si usabas login.js antes, verifica que la ruta sea correcta.
-                const res = await fetch("/api/index", {
+                // Petición al Backend
+                const res = await fetch("/api/index", { // Verificamos que esta ruta sea la correcta en tu servidor
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ user, pass }),
@@ -194,32 +76,44 @@
                 const data = await res.json();
 
                 if (res.ok) {
-                    // Guardamos sesión
-                    localStorage.setItem("usuarioRol", data.rol);
-                    localStorage.setItem("usuarioNombre", data.user);
+                    // --- GUARDADO DE SESIÓN SEGURO (CRÍTICO) ---
+                    // Creamos un objeto limpio con los datos
+                    const usuarioData = { 
+                        nombre: data.user, 
+                        rol: data.rol 
+                    };
+
+                    // Guardamos en formato JSON string para que dashboard.js lo pueda leer bien
+                    localStorage.setItem("usuarioNombre", JSON.stringify(usuarioData));
                     
-                    // IMPORTANTE: Aquí guardamos la llave para el "Portero" de seguridad que hicimos antes
-                    // Guardamos el objeto completo para que funcione el script de seguridad del Dashboard
-                    localStorage.setItem("usuario", JSON.stringify({ nombre: data.user, rol: data.rol }));
+                    // Guardamos una copia extra por seguridad
+                    localStorage.setItem("usuarioActual", JSON.stringify(usuarioData));
 
                     M.toast({html: '¡Bienvenido!', classes: 'rounded green darken-1'});
                     
-                    // Pequeña pausa para ver el mensaje de éxito
+                    // Redirección basada en rol
                     setTimeout(() => {
-                        window.location.href = (data.rol === "ADMIN" || data.rol === "admin") ? "public/dashboard.html" : "public/ventas.html";
-                    }, 500);
+                        const rol = (data.rol || "").toUpperCase();
+                        if (rol === "ADMIN" || rol === "ADMINISTRADOR" || rol === "JEFE") {
+                            window.location.href = "public/dashboard.html"; // Asegúrate que la carpeta public esté en la URL
+                        } else {
+                            window.location.href = "public/ventas.html";
+                        }
+                    }, 800);
 
                 } else {
                     M.toast({html: data.mensaje || 'Credenciales incorrectas', classes: 'rounded red darken-2'});
-                    btn.disabled = false;
-                    btn.innerHTML = 'Ingresar al Sistema';
-                    loader.style.display = "none";
+                    resetBtn();
                 }
             } catch (error) {
                 console.error("Error en login:", error);
                 M.toast({html: 'Error de conexión con el servidor', classes: 'rounded red darken-4'});
+                resetBtn();
+            }
+
+            function resetBtn() {
                 btn.disabled = false;
-                btn.innerHTML = 'Ingresar al Sistema';
+                btn.innerText = 'Ingresar al Sistema';
                 loader.style.display = "none";
             }
         }
@@ -229,7 +123,7 @@
             document.getElementById('pass').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') iniciarSesion();
             });
-            // Inicializar inputs
+            // Inicializar inputs de Materialize
             M.updateTextFields();
         });
     </script>

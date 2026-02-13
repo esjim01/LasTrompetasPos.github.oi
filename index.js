@@ -7,7 +7,14 @@ const XLSX = require("xlsx"); // Importante: usaremos "XLSX" en mayúscula en to
 const bodyParser = require('body-parser'); // Para parsear JSON en solicitudes POST
 
 const app = express();// Crear instancia de Express
-const PORT = 3000;// Puerto donde correrá el servidor
+
+
+// Usar el puerto que te da Hostinger O el 3000 si estás en local
+const PORT = process.env.PORT || 3000; 
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en puerto ${PORT}`);
+});
 
 // --- 1. CONFIGURACIÓN DE RUTAS Y CARPETAS ---
 const RUTA_DATA = path.join(__dirname, "data");

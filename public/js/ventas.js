@@ -1,29 +1,81 @@
-// ventas.js - Proyecto Las Trompetas (CORREGIDO Y DEFINITIVO)
+// ventas.js - Proyecto Las Trompetas (VERSIÓN FINAL LIMPIA)
 
 // --- VARIABLES GLOBALES ---
 let carrito = [];
 let todosLosProductos = [];
 const CATEGORIAS_DEFINIDAS = ["Todas", "Cervezas", "Rones", "Brandy", "Aguardientes", "Whisky", "Gaseosas","Hidratantes", "Otros"];
 
-// --- VERIFICACIÓN DE SESIÓN ---
-// --- VERIFICACIÓN DE SESIÓN Y SEGURIDAD ---
-(function () {
-    const rol = localStorage.getItem("usuarioRol");
-    if (!rol) window.location.replace("/");
+// --- INICIALIZACIÓN PRINCIPAL ---
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Verificar quién es el usuario antes de nada
+    verificarSesionVentas();
 
-    document.addEventListener("DOMContentLoaded", () => {
-        // CORRECCIÓN: Usamos el ID correcto "btn-admin"
-        const btnAdmin = document.getElementById("btn-admin");
-        
-        // REGLA DE ORO: Si el botón existe Y el rol NO es ADMIN...
-        if (btnAdmin && rol !== "ADMIN" && rol !== "ADMINISTRADOR") {
-            // ...lo borramos del mapa a la fuerza.
-            btnAdmin.style.display = "none !important"; 
-            btnAdmin.remove(); // Opción nuclear: Lo elimina del HTML
+    // 2. Iniciar Materialize
+    M.AutoInit();
+
+    // 3. Cargar productos
+    cargarDatos();
+});
+
+// --- SISTEMA DE SEGURIDAD Y ROLES (IGUAL QUE INVENTARIO) ---
+function verificarSesionVentas() {
+    console.log("🔒 Verificando permisos de Ventas...");
+
+    // 1. Buscar sesión (Soporta ambos nombres de variable)
+    const sesionGuardada = localStorage.getItem("usuarioNombre") || localStorage.getItem("usuarioActual");
+
+    // 2. Si no hay sesión, al Login
+    if (!sesionGuardada) {
+        console.warn("No hay sesión. Redirigiendo a Login.");
+        window.location.href = "../index.html"; 
+        return;
+    }
+
+    let usuario = null;
+
+    // 3. Intento de lectura inteligente (JSON vs Texto)
+    try {
+        usuario = JSON.parse(sesionGuardada);
+    } catch (error) {
+        // Si falla, es texto plano (Legacy). Creamos un objeto temporal.
+        // Asumimos rol VENDEDOR por seguridad si no se sabe, o ADMIN si el texto es "admin"
+        usuario = {
+            nombre: sesionGuardada,
+            rol: sesionGuardada.toLowerCase() === 'admin' ? 'ADMIN' : 'VENDEDOR'
+        };
+        // Auto-reparación
+        localStorage.setItem("usuarioNombre", JSON.stringify(usuario));
+    }
+
+    // 4. Validar objeto usuario
+    if (!usuario) {
+        window.location.href = "../index.html";
+        return;
+    }
+
+    // 5. GESTIÓN DEL BOTÓN DE ADMIN
+    // Buscamos el botón que lleva al Dashboard/Inventario
+    const btnAdmin = document.getElementById("btn-admin");
+    
+    // Normalizamos el rol a mayúsculas para comparar
+    const rol = (usuario.rol || "").toUpperCase();
+    const esAdmin = ["ADMIN", "ADMINISTRADOR", "JEFE", "ENCARGADO"].includes(rol);
+
+    if (btnAdmin) {
+        if (esAdmin) {
+            // Es Admin: Mostrar botón
+            btnAdmin.style.display = "inline-flex"; 
+        } else {
+            // Es Vendedor: Ocultar y eliminar botón para que no estorbe
+            btnAdmin.style.display = "none";
+            btnAdmin.remove();
         }
-    }); 
-})();
+    }
+    
+    console.log(`✅ Sesión iniciada como: ${usuario.nombre} (${rol})`);
+}
 
+// --- FUNCIONES DE UTILIDAD ---
 function cerrarSesion() {
     if(confirm("¿Cerrar sesión?")) {
         localStorage.clear();
@@ -31,22 +83,15 @@ function cerrarSesion() {
     }
 }
 
-// --- INICIO ---
-document.addEventListener("DOMContentLoaded", function () {
-    M.AutoInit();
-    cargarDatos();
-});
-
-// Función para limpiar el nombre (Igual que en el servidor)
 function formatearNombreImagen(nombre) {
     if (!nombre) return "temp.jpg";
     return nombre
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "") // Quita tildes y ñ
-        .replace(/[^a-z0-9]/g, "_")      // Caracteres raros a guion bajo
-        .replace(/_+/g, "_")             // Evita guiones dobles
-        .replace(/^_|_$/g, "")           // Quita guiones al inicio/final
+        .replace(/[\u0300-\u036f]/g, "") 
+        .replace(/[^a-z0-9]/g, "_")      
+        .replace(/_+/g, "_")             
+        .replace(/^_|_$/g, "")           
         + ".jpg";
 }
 
@@ -65,14 +110,11 @@ async function cargarDatos() {
     }
 }
 
-// --- GENERACIÓN DE MENÚS (Escritorio y Móvil) ---
-// En js/ventas.js - Busca la función generarMenuCategorias
-
+// --- GENERACIÓN DE MENÚS ---
 function generarMenuCategorias() {
     const menuDesktop = document.getElementById("menu-categorias");
     const menuMobile = document.getElementById("menu-categorias-movil");
 
-    // --- 👇 ESTA ERA LA PARTE QUE FALTABA 👇 ---
     const iconos = {
         "Todas": "grid_view",
         "Cervezas": "sports_bar",
@@ -84,29 +126,20 @@ function generarMenuCategorias() {
         "Hidratantes": "local_drink",
         "Otros": "more_horiz"
     };
-    // -------------------------------------------
 
     let htmlDesktop = `<div class="indigo lighten-5" style="padding:15px; font-weight:bold; color:#1a237e">CATEGORÍAS</div>`;
     let htmlMobile = ``;
 
     CATEGORIAS_DEFINIDAS.forEach(cat => {
-        // Si no encuentra el icono, usa 'label' por defecto
         const icon = iconos[cat] || "label";
-        
-        // Estado inicial (Desktop)
         const isActive = cat === "Todas" ? "active" : "";
-        
-        // Estado inicial (Móvil)
         const isMobileActive = cat === "Todas" ? "indigo white-text" : "";
 
-        // Desktop HTML (Lista lateral)
         htmlDesktop += `
             <div class="cat-item ${isActive}" onclick="filtrarPorCategoria('${cat}', this, false)">
                 <i class="material-icons">${icon}</i> ${cat}
             </div>`;
 
-        // Mobile HTML (Chips horizontales)
-        // NOTA: Aquí pasamos 'this' y 'true' para que sepa que es móvil
         htmlMobile += `
             <div class="chip ${isMobileActive}" onclick="filtrarPorCategoria('${cat}', this, true)">
                 ${cat}
@@ -133,9 +166,8 @@ function renderizarCatalogo(lista, categoria = "Todas") {
     lista.forEach(p => {
         const stock = Number(p.cantidad);
         const precio = Number(p.precio);
-        const nombreSafe = p.nombre.replace(/'/g, "\\'"); // Escapar comillas simples
+        const nombreSafe = p.nombre.replace(/'/g, "\\'"); 
         
-        // Lógica visual de Stock
         let badgeColor = "green";
         let disabled = "";
         
@@ -146,11 +178,8 @@ function renderizarCatalogo(lista, categoria = "Todas") {
             badgeColor = "red";
         }
 
-        // CORREGIDO: USAMOS LA FUNCIÓN formatearNombreImagen AQUÍ
-        // Esto soluciona el error 404 (ron_viejo_de_caldas_5_anos.jpg)
         const imgUrl = `img/${formatearNombreImagen(p.nombre)}`;
-        
-        // CORREGIDO: Imagen de respaldo con HTTPS completo
+        // Usamos una imagen transparente o placeholder local si prefieres
         const imagenError = "https://via.placeholder.com/150?text=Sin+Foto";
 
         contenedor.innerHTML += `
@@ -171,31 +200,22 @@ function renderizarCatalogo(lista, categoria = "Todas") {
 }
 
 // --- FILTROS Y BÚSQUEDA ---
-// En js/ventas.js - Reemplaza toda la función filtrarPorCategoria por esta:
-
 function filtrarPorCategoria(categoria, elementoDOM, esMovil = false) {
-    
-    // LÓGICA VISUAL (Colores)
     if (esMovil) {
-        // 1. Limpiar todos los chips móviles (quitar azul)
         const contenedorMovil = document.getElementById("menu-categorias-movil");
         if (contenedorMovil) {
             contenedorMovil.querySelectorAll('.chip').forEach(chip => {
                 chip.classList.remove('indigo', 'white-text');
             });
         }
-
-        // 2. Pintar el chip actual (poner azul)
         if (elementoDOM) {
             elementoDOM.classList.add('indigo', 'white-text');
         }
     } else {
-        // Lógica Desktop (la que ya tenías)
         document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
         if(elementoDOM) elementoDOM.classList.add('active');
     }
 
-    // LÓGICA DE DATOS (Filtrar productos)
     const filtrados = categoria === "Todas" 
         ? todosLosProductos 
         : todosLosProductos.filter(p => p.categoria === categoria);
@@ -267,8 +287,6 @@ function actualizarInterfazCarrito() {
 
     totalEl.innerText = total.toLocaleString();
     badge.innerText = itemsCount;
-    
-    // Ocultar badge si es 0
     badge.style.display = itemsCount > 0 ? 'block' : 'none';
 }
 
@@ -294,16 +312,28 @@ function modificarCantidad(index, delta) {
 async function confirmarVenta() {
     if (carrito.length === 0) return M.toast({ html: "El carrito está vacío" });
 
-    // Lógica de Personas
-    const checkPersonas = document.getElementById("check-personas").checked;
+    // Verificar si se seleccionó la opción de personas
+    const checkPersonas = document.getElementById("check-personas");
+    const personasInput = document.getElementById("num-personas");
     let numPersonas = 0;
-    if (checkPersonas) {
-        numPersonas = parseInt(document.getElementById("num-personas").value) || 0;
+    
+    // Solo leemos el valor si el checkbox existe y está marcado
+    if (checkPersonas && checkPersonas.checked) {
+        numPersonas = parseInt(personasInput.value) || 0;
+    }
+
+    // Obtenemos el nombre del usuario de la sesión (Seguro gracias a verificarSesionVentas)
+    let vendedorNombre = "Vendedor";
+    try {
+        const sesion = JSON.parse(localStorage.getItem("usuarioNombre"));
+        if(sesion && sesion.nombre) vendedorNombre = sesion.nombre;
+    } catch(e) {
+        vendedorNombre = localStorage.getItem("usuarioNombre") || "Vendedor";
     }
 
     const datosVenta = {
         carrito: carrito,
-        vendedor: localStorage.getItem("usuarioNombre") || "Vendedor",
+        vendedor: vendedorNombre,
         total: carrito.reduce((sum, i) => sum + (i.precio * i.cantidad), 0),
         idVenta: "V-" + Date.now(),
         numPersonas: numPersonas
@@ -322,14 +352,18 @@ async function confirmarVenta() {
             // Limpieza
             carrito = [];
             actualizarInterfazCarrito();
-            M.Modal.getInstance(document.getElementById("modal-pedido")).close();
             
-            // Refrescar inventario (Stocks han cambiado)
+            const modalPedido = document.getElementById("modal-pedido");
+            if(modalPedido) M.Modal.getInstance(modalPedido).close();
+            
+            // Refrescar inventario
             cargarDatos(); 
             
-            // Opcional: Resetear personas
-            document.getElementById("check-personas").checked = false;
-            togglePersonas();
+            // Resetear personas
+            if(checkPersonas) {
+                checkPersonas.checked = false;
+                togglePersonas();
+            }
 
         } else {
             M.toast({ html: "Error al registrar venta", classes: "red" });
@@ -343,5 +377,7 @@ async function confirmarVenta() {
 function togglePersonas() {
     const check = document.getElementById("check-personas");
     const div = document.getElementById("contenedor-personas");
-    div.style.display = check.checked ? "block" : "none";
+    if(check && div) {
+        div.style.display = check.checked ? "block" : "none";
+    }
 }
