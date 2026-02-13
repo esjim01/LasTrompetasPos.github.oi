@@ -568,6 +568,30 @@ nav {
   border-radius: 4px;
 }
 
+/*Ojo a este bloque*/
+table thead th {
+        vertical-align: middle !important; /* Centra el texto verticalmente */
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+        font-weight: bold;
+        background-color: #f5f5f5; /* Un gris suave para diferenciar el header */
+        border-bottom: 2px solid #ddd; /* Línea separadora clara */
+    }
+
+    /* 2. Alinear el cuerpo para que no choque */
+    table tbody td {
+        vertical-align: middle !important; /* Centra los botones al medio de su celda */
+    }
+
+    /* 3. Corrección específica para la columna de Acciones (la última) */
+    table th:last-child, 
+    table td:last-child {
+        text-align: center; /* Centra los botones horizontalmente */
+        min-width: 100px;   /* Asegura que quepan los dos botones */
+    }
+
+/*------------------------------*/
+
 /* Ajustes para pantallas pequeñas (móviles) */
 @media only screen and (max-width: 600px) {
   /* Reducir tamaño de letra en tablas */
