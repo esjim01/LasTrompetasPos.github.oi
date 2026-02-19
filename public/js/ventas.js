@@ -367,7 +367,7 @@ async function confirmarVenta() {
     carrito: carrito,
     vendedor: vendedorNombre,
     total: carrito.reduce((sum, i) => sum + i.precio * i.cantidad, 0),
-    idVenta: "V-" + Date.now(),
+    idVenta: "V-" + Date.now() + "-" + Math.random().toString(36).substr(2, 5),
     numPersonas: numPersonas,
   };
 

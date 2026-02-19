@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Administración - Las Trompetas</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
     <link rel="stylesheet" href="/public/css/styles.css" />
 
     <style>
@@ -55,33 +61,72 @@
         white-space: nowrap; /* No permite que los botones bajen de renglón */
         text-align: center;
       }
-      
+
       /* Ajuste fino para botones dentro de celdas */
-      .acciones-fila .btn, 
+      .acciones-fila .btn,
       .acciones-fila .btn-small,
       table td .btn-small {
-          margin: 0 4px; /* Separación pequeña entre botones */
-          vertical-align: middle;
+        margin: 0 4px; /* Separación pequeña entre botones */
+        vertical-align: middle;
       }
 
       /* --- ESTILOS VISUALES ADICIONALES --- */
-      
+
       /* Scrollbar moderna */
-      .table-scroll-container::-webkit-scrollbar { width: 8px; }
-      .table-scroll-container::-webkit-scrollbar-track { background: #f1f1f1; }
-      .table-scroll-container::-webkit-scrollbar-thumb { background: #bdbdbd; border-radius: 4px; }
-      .table-scroll-container::-webkit-scrollbar-thumb:hover { background: #9e9e9e; }
+      .table-scroll-container::-webkit-scrollbar {
+        width: 8px;
+      }
+      .table-scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      .table-scroll-container::-webkit-scrollbar-thumb {
+        background: #bdbdbd;
+        border-radius: 4px;
+      }
+      .table-scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #9e9e9e;
+      }
 
       /* Badges de estado */
-      .badge-estado { padding: 5px 10px; border-radius: 4px; color: white; font-weight: bold; font-size: 0.8rem; }
-      .pendiente { background-color: #ff9800; animation: parpadeo 2s infinite; }
-      .despachado { background-color: #4caf50; }
-      @keyframes parpadeo { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+      .badge-estado {
+        padding: 5px 10px;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+        font-size: 0.8rem;
+      }
+      .pendiente {
+        background-color: #ff9800;
+        animation: parpadeo 2s infinite;
+      }
+      .despachado {
+        background-color: #4caf50;
+      }
+      @keyframes parpadeo {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.6;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
 
       /* Tabs */
-      .tabs .tab a { color: #1a237e; font-weight: bold; }
-      .tabs .tab a:hover, .tabs .tab a.active { color: #283593; background-color: #e8eaf6; }
-      .indicator { background-color: #1a237e; }
+      .tabs .tab a {
+        color: #1a237e;
+        font-weight: bold;
+      }
+      .tabs .tab a:hover,
+      .tabs .tab a.active {
+        color: #283593;
+        background-color: #e8eaf6;
+      }
+      .indicator {
+        background-color: #1a237e;
+      }
 
       /* Botón Filtro */
       .btn-filter {
@@ -97,7 +142,9 @@
         cursor: pointer;
         width: 100%;
       }
-      .btn-filter:hover { background-color: #283593; }
+      .btn-filter:hover {
+        background-color: #283593;
+      }
 
       /* Responsive wrapper para móviles */
       .table-responsive-wrapper {
@@ -113,18 +160,46 @@
 
   <body class="dashboard-body">
     <audio id="audio-notificacion" preload="auto">
-      <source src="https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3" type="audio/mpeg" />
+      <source
+        src="https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3"
+        type="audio/mpeg"
+      />
     </audio>
 
     <nav class="dashboard-nav z-depth-0">
       <div class="nav-wrapper container">
-        <a href="#" class="brand-logo"><i class="material-icons left">store</i>Las Trompetas - Admin</a>
+        <a href="#" class="brand-logo"
+          ><i class="material-icons left">store</i>Las Trompetas - Admin</a
+        >
         <ul class="right hide-on-med-and-down">
-          <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
-          <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
-          <li><a href="/public/dashboard.html" class="nav-link"><i class="material-icons left">analytics</i>Dashboard</a></li>
-          <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
-          <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
+          <li>
+            <a
+              href="/public/ventas.html"
+              class="btn deep-purple lighten-5 waves-effect waves-light"
+              style="border-radius: 8px"
+              ><i class="material-icons left">point_of_sale</i>Ventas</a
+            >
+          </li>
+          <li>
+            <a href="/public/gastos.html" class="nav-link"
+              ><i class="material-icons left">money_off</i>Gastos</a
+            >
+          </li>
+          <li>
+            <a href="/public/dashboard.html" class="nav-link"
+              ><i class="material-icons left">analytics</i>Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="/public/usuarios.html" class="nav-link"
+              ><i class="material-icons left">group</i>Usuarios</a
+            >
+          </li>
+          <li>
+            <a href="/index.html" class="nav-link red-text"
+              ><i class="material-icons left">logout</i>Salir</a
+            >
+          </li>
         </ul>
       </div>
     </nav>
@@ -132,9 +207,20 @@
     <div class="container main-container">
       <div class="row">
         <div class="col s12">
-          <ul class="tabs z-depth-1" style="border-radius: 8px; margin-bottom: 20px">
-            <li class="tab col s6"><a class="active" href="#tab-pedidos"><i class="material-icons tiny">liquor</i> PEDIDOS EN VIVO</a></li>
-            <li class="tab col s6"><a href="#tab-inventario"><i class="material-icons tiny">inventory</i> GESTIONAR STOCK</a></li>
+          <ul
+            class="tabs z-depth-1"
+            style="border-radius: 8px; margin-bottom: 20px"
+          >
+            <li class="tab col s6">
+              <a class="active" href="#tab-pedidos"
+                ><i class="material-icons tiny">liquor</i> PEDIDOS EN VIVO</a
+              >
+            </li>
+            <li class="tab col s6">
+              <a href="#tab-inventario"
+                ><i class="material-icons tiny">inventory</i> GESTIONAR STOCK</a
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -142,23 +228,27 @@
       <div id="tab-pedidos" class="col s12">
         <div class="card">
           <div class="card-content">
-            <span class="card-title indigo-text text-darken-4"><b>Cola de Pedidos</b></span>
-            <p class="grey-text">Los pedidos de los meseros aparecerán aquí automáticamente.</p>
-            
-            <div class="table-responsive-wrapper" style="margin-top: 20px;">
-                <table class="highlight centered">
-                  <thead class="indigo lighten-5 sticky-header">
-                    <tr>
-                      <th>Hora</th>
-                      <th>Mesero</th>
-                      <th>Detalle de pedido</th>
-                      <th>Total</th>
-                      <th>Estado</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="tabla-pedidos"></tbody>
-                </table>
+            <span class="card-title indigo-text text-darken-4"
+              ><b>Cola de Pedidos</b></span
+            >
+            <p class="grey-text">
+              Los pedidos de los meseros aparecerán aquí automáticamente.
+            </p>
+
+            <div class="table-responsive-wrapper" style="margin-top: 20px">
+              <table class="highlight centered">
+                <thead class="indigo lighten-5 sticky-header">
+                  <tr>
+                    <th>Hora</th>
+                    <th>Mesero</th>
+                    <th>Detalle de pedido</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tabla-pedidos"></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -169,7 +259,9 @@
           <div class="col s12 l4">
             <div class="card filter-card">
               <div class="card-content">
-                <span class="card-title-small center-align">✨ Nuevo Producto</span>
+                <span class="card-title-small center-align"
+                  >✨ Nuevo Producto</span
+                >
                 <div class="input-field">
                   <i class="material-icons prefix indigo-text">label</i>
                   <input type="text" id="nombre" />
@@ -178,7 +270,9 @@
                 <div class="input-field">
                   <i class="material-icons prefix indigo-text">category</i>
                   <select id="categoria">
-                    <option value="" disabled selected>Selecciona Categoría</option>
+                    <option value="" disabled selected>
+                      Selecciona Categoría
+                    </option>
                     <option value="Aguardientes">Aguardientes</option>
                     <option value="Cervezas">Cervezas</option>
                     <option value="Rones">Rones</option>
@@ -205,16 +299,53 @@
                   <label for="costo">Costo (Inversión)</label>
                 </div>
                 <div class="file-field input-field">
-                  <div class="btn-small indigo lighten-5 indigo-text text-darken-4" style="border: 1px solid #c5cae9; box-shadow: none; border-radius: 8px; width: 100%;">
-                    <span><i class="material-icons left">cloud_upload</i>Subir Foto</span>
+                  <div
+                    class="btn-small indigo lighten-5 indigo-text text-darken-4"
+                    style="
+                      border: 1px solid #c5cae9;
+                      box-shadow: none;
+                      border-radius: 8px;
+                      width: 100%;
+                    "
+                  >
+                    <span
+                      ><i class="material-icons left">cloud_upload</i>Subir
+                      Foto</span
+                    >
                     <input type="file" id="input-imagen" accept="image/*" />
                   </div>
                   <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Ningún archivo seleccionado" />
+                    <input
+                      class="file-path validate"
+                      type="text"
+                      placeholder="Ningún archivo seleccionado"
+                    />
                   </div>
                 </div>
-                <img id="preview-img" src="https://via.placeholder.com/150?text=Cargando..." alt="Foto" style="display: none; width: 100%; max-height: 150px; object-fit: contain; margin: 10px 0; border-radius: 10px; border: 2px dashed #ddd;" />
-                <button class="btn-large indigo darken-4 waves-effect waves-light w100" style="width: 100%; border-radius: 10px; margin-top: 15px; box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);" onclick="guardarProducto()">
+                <img
+                  id="preview-img"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+                  alt="Vista previa"
+                  style="
+                    display: none;
+                    width: 100%;
+                    max-height: 150px;
+                    object-fit: contain;
+                    margin: 10px 0;
+                    border-radius: 10px;
+                    border: 2px dashed #ddd;
+                  "
+                />
+                <button
+                  class="btn-large indigo darken-4 waves-effect waves-light w100"
+                  style="
+                    width: 100%;
+                    border-radius: 10px;
+                    margin-top: 15px;
+                    box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+                  "
+                  onclick="guardarProducto()"
+                >
                   Guardar Producto
                 </button>
               </div>
@@ -225,14 +356,22 @@
             <div class="card search-bar-container" style="border-radius: 12px">
               <div class="input-field" style="margin: 0">
                 <i class="material-icons prefix indigo-text">search</i>
-                <input type="text" id="busqueda-venta" onkeyup="filtrarProductos()" placeholder="Buscar por nombre o categoría..." />
+                <input
+                  type="text"
+                  id="busqueda-venta"
+                  onkeyup="filtrarProductos()"
+                  placeholder="Buscar por nombre o categoría..."
+                />
               </div>
             </div>
 
             <div class="card chart-card">
               <div class="card-content" style="padding: 0">
                 <div class="table-scroll-container">
-                  <table class="highlight responsive-table" style="margin-top: 0">
+                  <table
+                    class="highlight responsive-table"
+                    style="margin-top: 0"
+                  >
                     <thead style="background-color: #f5f5f5">
                       <tr>
                         <th style="padding-left: 20px">Producto</th>
@@ -251,14 +390,20 @@
 
             <div class="card chart-card" style="margin-top: 20px">
               <div class="card-header">
-                <span class="card-title-small"><i class="material-icons left">history</i>Movimientos Recientes</span>
+                <span class="card-title-small"
+                  ><i class="material-icons left">history</i>Movimientos
+                  Recientes</span
+                >
               </div>
-              
+
               <div class="row section-filters">
                 <div class="col s12">
-                  <div class="card filter-card" style="background-color: #f5f5f5; padding: 10px;">
-                    <div class="card-content" style="padding: 10px;">
-                      <div class="row" style="margin-bottom: 0;">
+                  <div
+                    class="card filter-card"
+                    style="background-color: #f5f5f5; padding: 10px"
+                  >
+                    <div class="card-content" style="padding: 10px">
+                      <div class="row" style="margin-bottom: 0">
                         <div class="input-field col s12 m4">
                           <i class="material-icons prefix">today</i>
                           <input type="date" id="filtro-desde" />
@@ -270,15 +415,29 @@
                           <label class="active" for="filtro-hasta">Hasta</label>
                         </div>
                         <div class="input-field col s12 m4 center-align">
-                          <button class="btn-filter waves-effect waves-light" onclick="aplicarFiltroFechas()">
-                            <i class="material-icons left">filter_list</i>Filtrar
+                          <button
+                            class="btn-filter waves-effect waves-light"
+                            onclick="aplicarFiltroFechas()"
+                          >
+                            <i class="material-icons left">filter_list</i
+                            >Filtrar
                           </button>
                         </div>
                       </div>
-                      <div class="row" style="margin-bottom: 0; display: none;" id="btn-limpiar-filtro">
-                          <div class="col s12 center-align">
-                             <a href="#!" onclick="limpiarFiltros()" class="red-text" style="font-size: 0.9rem;">Limpiar filtros y ver todo</a>
-                          </div>
+                      <div
+                        class="row"
+                        style="margin-bottom: 0; display: none"
+                        id="btn-limpiar-filtro"
+                      >
+                        <div class="col s12 center-align">
+                          <a
+                            href="#!"
+                            onclick="limpiarFiltros()"
+                            class="red-text"
+                            style="font-size: 0.9rem"
+                            >Limpiar filtros y ver todo</a
+                          >
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -301,7 +460,7 @@
                   </table>
                 </div>
               </div>
-            </div>  
+            </div>
           </div>
         </div>
       </div>
@@ -311,11 +470,24 @@
       <div class="modal-content">
         <h4 class="indigo-text">Detalle del Pedido</h4>
         <ul class="collection" id="lista-detalle-pedido"></ul>
-        <h5 class="right-align">Total: <span id="total-detalle" class="indigo-text text-darken-4 bold"></span></h5>
+        <h5 class="right-align">
+          Total:
+          <span
+            id="total-detalle"
+            class="indigo-text text-darken-4 bold"
+          ></span>
+        </h5>
       </div>
       <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect waves-grey btn-flat">Cerrar</a>
-        <button id="btn-despachar-modal" class="waves-effect waves-light btn green">Marcar Despachado</button>
+        <a href="#!" class="modal-close waves-effect waves-grey btn-flat"
+          >Cerrar</a
+        >
+        <button
+          id="btn-despachar-modal"
+          class="waves-effect waves-light btn green"
+        >
+          Marcar Despachado
+        </button>
       </div>
     </div>
 
@@ -356,12 +528,23 @@
         </div>
       </div>
       <div class="modal-footer container-botones">
-        <button class="modal-close btn-flat grey lighten-3 btn-modal">Cancelar</button>
-        <button class="btn green darken-1 btn-modal" onclick="actualizarProducto()">Guardar</button>
+        <button class="modal-close btn-flat grey lighten-3 btn-modal">
+          Cancelar
+        </button>
+        <button
+          class="btn green darken-1 btn-modal"
+          onclick="actualizarProducto()"
+        >
+          Guardar
+        </button>
       </div>
     </div>
 
-    <div id="modal-eliminar" class="modal" style="width: 400px; border-radius: 20px">
+    <div
+      id="modal-eliminar"
+      class="modal"
+      style="width: 400px; border-radius: 20px"
+    >
       <div class="modal-content center-align">
         <i class="material-icons large red-text text-lighten-2">warning</i>
         <h5>¿Eliminar Producto?</h5>
@@ -369,8 +552,128 @@
         <input type="hidden" id="nombre-eliminar-hidden" />
       </div>
       <div class="modal-footer container-botones">
-        <button class="modal-close btn-flat grey lighten-3 btn-modal">Cancelar</button>
-        <button class="btn red accent-4 btn-modal" onclick="confirmarBorrado()">Eliminar</button>
+        <button class="modal-close btn-flat grey lighten-3 btn-modal">
+          Cancelar
+        </button>
+        <button class="btn red accent-4 btn-modal" onclick="confirmarBorrado()">
+          Eliminar
+        </button>
+      </div>
+    </div>
+
+    <!-- ====== MODAL EDITAR VENTA (COMPLETO) ====== -->
+    <div
+      id="modal-editar-venta"
+      class="modal"
+      style="border-radius: 16px; max-width: 680px; width: 95%"
+    >
+      <div class="modal-content" style="padding: 24px">
+        <h5 class="indigo-text text-darken-4" style="margin-bottom: 4px">
+          <i class="material-icons left">edit</i>Editar Venta
+        </h5>
+        <input type="hidden" id="edit-venta-id" />
+
+        <!-- Datos generales -->
+        <div class="row" style="margin-bottom: 0; margin-top: 16px">
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix indigo-text">person</i>
+            <input type="text" id="edit-venta-vendedor" />
+            <label class="active" for="edit-venta-vendedor">Vendedor</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix indigo-text">event</i>
+            <input type="datetime-local" id="edit-venta-fecha" />
+            <label class="active" for="edit-venta-fecha">Fecha y Hora</label>
+          </div>
+        </div>
+
+        <!-- Tabla de ítems -->
+        <div style="margin-top: 8px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 8px;
+            "
+          >
+            <span style="font-weight: 600; color: #1a237e; font-size: 0.95rem">
+              <i class="material-icons tiny">shopping_cart</i> Productos del
+              pedido
+            </span>
+            <button
+              class="btn-small indigo darken-4 waves-effect"
+              style="border-radius: 8px"
+              onclick="agregarFilaItem()"
+            >
+              <i class="material-icons left">add</i>Agregar ítem
+            </button>
+          </div>
+
+          <div
+            class="table-responsive-wrapper"
+            style="max-height: 280px; overflow-y: auto"
+          >
+            <table class="highlight" style="margin: 0">
+              <thead style="background: #e8eaf6">
+                <tr>
+                  <th style="padding: 8px 12px">Producto</th>
+                  <th style="padding: 8px; width: 90px" class="center">
+                    Cantidad
+                  </th>
+                  <th style="padding: 8px; width: 110px" class="center">
+                    Precio Unit.
+                  </th>
+                  <th style="padding: 8px; width: 100px" class="center">
+                    Subtotal
+                  </th>
+                  <th style="padding: 8px; width: 50px"></th>
+                </tr>
+              </thead>
+              <tbody id="edit-items-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Total recalculado -->
+        <div
+          style="
+            text-align: right;
+            margin-top: 16px;
+            padding: 12px 16px;
+            background: #e8f5e9;
+            border-radius: 8px;
+          "
+        >
+          <span style="font-size: 1rem; color: #555">Total calculado:</span>
+          <span
+            id="edit-venta-total-display"
+            style="
+              font-size: 1.4rem;
+              font-weight: bold;
+              color: #2e7d32;
+              margin-left: 12px;
+            "
+          >
+            $0
+          </span>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="padding: 12px 24px">
+        <button
+          class="modal-close btn-flat grey lighten-3 waves-effect"
+          style="border-radius: 8px; margin-right: 8px"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn indigo darken-4 waves-effect waves-light"
+          style="border-radius: 8px"
+          onclick="guardarEdicionVenta()"
+        >
+          <i class="material-icons left">save</i>Guardar Cambios
+        </button>
       </div>
     </div>
 
@@ -392,7 +695,7 @@
         M.FormSelect.init(document.querySelectorAll("select"));
         M.Tooltip.init(document.querySelectorAll(".tooltipped"));
         cargarPedidos();
-        setInterval(cargarPedidos, 5000); 
+        setInterval(cargarPedidos, 5000);
       });
 
       // --- FUNCIÓN PRINCIPAL DE CARGA (POLLING) ---
@@ -411,8 +714,8 @@
           renderizarTablaPedidos(ventas);
 
           // Si no hay filtro activo, actualizamos la tabla de historial
-          if (!filtroActivo) { 
-            renderizarHistorialStock(ventas); 
+          if (!filtroActivo) {
+            renderizarHistorialStock(ventas);
           }
           verificarAlerta(ventas.length);
         } catch (error) {
@@ -430,13 +733,19 @@
           const fechaObj = new Date(v.fecha);
           const hora = isNaN(fechaObj.getTime())
             ? "..."
-            : fechaObj.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
+            : fechaObj.toLocaleTimeString("es-CO", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
 
           const items = v.items || [];
-          const total = Number(v.total || 0).toLocaleString("es-CO", { style: "currency", currency: "COP" });
+          const total = Number(v.total || 0).toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+          });
           const vendedor = v.vendedor || "Mesero";
           const estadoActual = v.estado || "despachado";
-          
+
           let badgeColor = "green";
           let textoEstado = "DESPACHADO";
           let accionBtn = `<i class="material-icons grey-text">done_all</i>`;
@@ -473,39 +782,84 @@
         tbody.innerHTML = "";
 
         if (ventasParaMostrar.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text">No hay movimientos en este rango.</td></tr>`;
-            return;
+          tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text">No hay movimientos en este rango.</td></tr>`;
+          return;
         }
 
         const limiteVisual = ventasParaMostrar.slice(0, 50);
 
         limiteVisual.forEach((v) => {
           const fechaObj = new Date(v.fecha);
-          const fechaLegible = isNaN(fechaObj.getTime()) ? "Inválida" : fechaObj.toLocaleDateString("es-CO", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
-          
+          const fechaLegible = isNaN(fechaObj.getTime())
+            ? "Inválida"
+            : fechaObj.toLocaleDateString("es-CO", {
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
           let detalleTexto = "Sin detalle";
           if (Array.isArray(v.items) && v.items.length > 0) {
-            detalleTexto = v.items.map((item) => `${item.nombre} (x${item.cantidad})`).join(", ");
+            detalleTexto = v.items
+              .map((item) => `${item.nombre} (x${item.cantidad})`)
+              .join(", ");
           }
 
-          const total = Number(v.total || 0).toLocaleString("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 });
+          const total = Number(v.total || 0).toLocaleString("es-CO", {
+            style: "currency",
+            currency: "COP",
+            minimumFractionDigits: 0,
+          });
           const usuario = v.vendedor || "Sistema";
 
           const tr = document.createElement("tr");
           tr.innerHTML = `
-                <td><small>${fechaLegible}</small></td>
-                <td>${usuario}</td>
-                <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
-                <td style="font-weight: bold;">${total}</td>
-                <td class="center acciones-fila">
-                    <button class="btn-flat btn-small red-text waves-effect" onclick="eliminarVenta('${v.id}')">
-                        <i class="material-icons">delete</i>
-                    </button>
-                </td>
-            `;
+    <td><small>${fechaLegible}</small></td>
+    <td>${usuario}</td>
+    <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
+    <td style="font-weight: bold;">${total}</td>
+    <td class="center acciones-fila">
+        <button class="btn-flat btn-small blue-text waves-effect btn-editar-venta"
+                data-id="${v.id}"
+                title="Editar venta">
+            <i class="material-icons">edit</i>
+        </button>
+        <button class="btn-flat btn-small red-text waves-effect btn-eliminar-venta"
+                data-id="${v.id}"
+                title="Eliminar venta">
+            <i class="material-icons">delete</i>
+        </button>
+    </td>
+    `;
+          // Event listeners seguros — evitan el problema de IDs con caracteres especiales
+          document.querySelectorAll(".btn-editar-venta").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              abrirModalEditarVenta(btn.dataset.id);
+            });
+          });
+
+          document.querySelectorAll(".btn-eliminar-venta").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              eliminarVenta(btn.dataset.id);
+            });
+          });
           tbody.appendChild(tr);
         });
       }
+
+      // Event listeners seguros — evitan el problema de IDs con caracteres especiales
+      document.querySelectorAll(".btn-editar-venta").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          abrirModalEditarVenta(btn.dataset.id);
+        });
+      });
+
+      document.querySelectorAll(".btn-eliminar-venta").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          eliminarVenta(btn.dataset.id);
+        });
+      });
 
       function verDetallePedido(idVenta) {
         const venta = pedidosCargados.find((v) => v.id === idVenta);
@@ -528,8 +882,9 @@
                 `;
           });
         }
-        document.getElementById("total-detalle").innerText = "$" + parseInt(venta.total || 0).toLocaleString();
-        
+        document.getElementById("total-detalle").innerText =
+          "$" + parseInt(venta.total || 0).toLocaleString();
+
         const btn = document.getElementById("btn-despachar-modal");
         const modalElem = document.getElementById("modal-detalle-pedido");
         const instance = M.Modal.getInstance(modalElem);
@@ -554,7 +909,10 @@
             body: JSON.stringify({ idVenta, nuevoEstado }),
           });
           if (res.ok) {
-            M.toast({ html: "✅ Pedido actualizado", classes: "green rounded" });
+            M.toast({
+              html: "✅ Pedido actualizado",
+              classes: "green rounded",
+            });
             cargarPedidos();
           } else {
             M.toast({ html: "❌ Error al actualizar", classes: "red rounded" });
@@ -579,7 +937,9 @@
 
         if (confirmacion.isConfirmed) {
           try {
-            const res = await fetch(`/api/ventas/${idVenta}`, { method: "DELETE" });
+            const res = await fetch(`/api/ventas/${idVenta}`, {
+              method: "DELETE",
+            });
             if (res.ok) {
               Swal.fire("Eliminado", "La venta ha sido eliminada.", "success");
               cargarPedidos();
@@ -595,10 +955,16 @@
 
       function verificarAlerta(cantidadActual) {
         if (cantidadActual > ultimoConteo && !primeraCarga) {
-          M.toast({ html: "🔔 ¡NUEVO PEDIDO!", classes: "orange darken-4 rounded", displayLength: 4000 });
+          M.toast({
+            html: "🔔 ¡NUEVO PEDIDO!",
+            classes: "orange darken-4 rounded",
+            displayLength: 4000,
+          });
           const audio = document.getElementById("audio-notificacion");
           if (audio) {
-            audio.play().catch(() => console.log("Navegador bloqueó audio auto"));
+            audio
+              .play()
+              .catch(() => console.log("Navegador bloqueó audio auto"));
           }
         }
         ultimoConteo = cantidadActual;
@@ -620,34 +986,254 @@
       }
 
       function aplicarFiltroFechas() {
-        const inputDesde = document.getElementById('filtro-desde').value;
-        const inputHasta = document.getElementById('filtro-hasta').value;
+        const inputDesde = document.getElementById("filtro-desde").value;
+        const inputHasta = document.getElementById("filtro-hasta").value;
 
         if (!inputDesde || !inputHasta) {
-            Swal.fire("Atención", "Selecciona ambas fechas (Desde y Hasta)", "warning");
-            return;
+          Swal.fire(
+            "Atención",
+            "Selecciona ambas fechas (Desde y Hasta)",
+            "warning",
+          );
+          return;
         }
 
-        const fechaDesde = new Date(inputDesde + "T00:00:00"); 
+        const fechaDesde = new Date(inputDesde + "T00:00:00");
         const fechaHasta = new Date(inputHasta + "T23:59:59");
 
-        const ventasFiltradas = pedidosCargados.filter(venta => {
-            const fechaVenta = new Date(venta.fecha);
-            return fechaVenta >= fechaDesde && fechaVenta <= fechaHasta;
+        const ventasFiltradas = pedidosCargados.filter((venta) => {
+          const fechaVenta = new Date(venta.fecha);
+          return fechaVenta >= fechaDesde && fechaVenta <= fechaHasta;
         });
 
-        filtroActivo = true; 
-        document.getElementById('btn-limpiar-filtro').style.display = 'block';
+        filtroActivo = true;
+        document.getElementById("btn-limpiar-filtro").style.display = "block";
         renderizarHistorialStock(ventasFiltradas);
-        M.toast({html: `Se encontraron ${ventasFiltradas.length} movimientos`, classes: 'rounded'});
+        M.toast({
+          html: `Se encontraron ${ventasFiltradas.length} movimientos`,
+          classes: "rounded",
+        });
       }
 
       function limpiarFiltros() {
-        document.getElementById('filtro-desde').value = "";
-        document.getElementById('filtro-hasta').value = "";
+        document.getElementById("filtro-desde").value = "";
+        document.getElementById("filtro-hasta").value = "";
         filtroActivo = false;
-        document.getElementById('btn-limpiar-filtro').style.display = 'none';
-        renderizarHistorialStock(pedidosCargados); 
+        document.getElementById("btn-limpiar-filtro").style.display = "none";
+        renderizarHistorialStock(pedidosCargados);
+      }
+      // ============================================================
+      // EDITAR VENTA — Lógica completa con ítems editables
+      // ============================================================
+
+      function abrirModalEditarVenta(idVenta) {
+        const venta = pedidosCargados.find((v) => v.id === idVenta);
+        if (!venta) {
+          M.toast({ html: "No se encontró la venta", classes: "red rounded" });
+          return;
+        }
+
+        // Rellenar campos generales
+        document.getElementById("edit-venta-id").value = idVenta;
+        document.getElementById("edit-venta-vendedor").value =
+          venta.vendedor || "";
+
+        if (venta.fecha) {
+          // Convertir ISO a formato datetime-local (YYYY-MM-DDTHH:mm)
+          const fechaISO = new Date(venta.fecha).toISOString().slice(0, 16);
+          document.getElementById("edit-venta-fecha").value = fechaISO;
+        }
+
+        // Renderizar tabla de ítems
+        renderizarItemsEditables(venta.items || []);
+        recalcularTotalModal();
+        M.updateTextFields();
+
+        M.Modal.getInstance(
+          document.getElementById("modal-editar-venta"),
+        ).open();
+      }
+
+      // Construye las filas editables de la tabla
+      function renderizarItemsEditables(items) {
+        const tbody = document.getElementById("edit-items-tbody");
+        tbody.innerHTML = "";
+        items.forEach((item, i) => agregarFilaItem(item, i));
+      }
+
+      // Agrega una fila — si recibe item la rellena, si no crea una vacía
+      function agregarFilaItem(item = null, index = null) {
+        const tbody = document.getElementById("edit-items-tbody");
+        const idx = index !== null ? index : tbody.rows.length;
+
+        const nombre = item ? item.nombre : "";
+        const cantidad = item ? item.cantidad : 1;
+        const precio = item ? item.precio : 0;
+
+        const tr = document.createElement("tr");
+        tr.dataset.idx = idx;
+        tr.innerHTML = `
+        <td style="padding:6px 8px;">
+            <input type="text" 
+                   class="browser-default item-nombre" 
+                   value="${nombre}"
+                   placeholder="Nombre producto"
+                   style="border:1px solid #ddd; border-radius:6px; 
+                          padding:4px 8px; width:100%; font-size:0.9rem;">
+        </td>
+        <td style="padding:6px 4px;" class="center">
+            <input type="number" 
+                   class="browser-default item-cantidad" 
+                   value="${cantidad}" min="1"
+                   style="border:1px solid #ddd; border-radius:6px; 
+                          padding:4px 6px; width:70px; text-align:center; font-size:0.9rem;"
+                   oninput="recalcularTotalModal()">
+        </td>
+        <td style="padding:6px 4px;" class="center">
+            <input type="number" 
+                   class="browser-default item-precio" 
+                   value="${precio}" min="0"
+                   style="border:1px solid #ddd; border-radius:6px; 
+                          padding:4px 6px; width:90px; text-align:center; font-size:0.9rem;"
+                   oninput="recalcularTotalModal()">
+        </td>
+        <td style="padding:6px 4px;" class="center">
+            <span class="item-subtotal green-text text-darken-2" 
+                  style="font-weight:bold; font-size:0.9rem;">
+                $${(Number(cantidad) * Number(precio)).toLocaleString("es-CO")}
+            </span>
+        </td>
+        <td style="padding:6px 4px;" class="center">
+            <button class="btn-flat btn-small red-text waves-effect" 
+                    onclick="eliminarFilaItem(this)" 
+                    title="Eliminar ítem">
+                <i class="material-icons" style="font-size:18px;">delete</i>
+            </button>
+        </td>
+    `;
+        tbody.appendChild(tr);
+      }
+
+      // Elimina una fila de la tabla y recalcula
+      function eliminarFilaItem(btn) {
+        const fila = btn.closest("tr");
+        const nombre = fila.querySelector(".item-nombre").value;
+        if (!nombre) {
+          fila.remove();
+          recalcularTotalModal();
+          return;
+        }
+        if (confirm(`¿Eliminar "${nombre}" del pedido?`)) {
+          fila.remove();
+          recalcularTotalModal();
+        }
+      }
+
+      // Recalcula el total sumando cantidad × precio de cada fila
+      function recalcularTotalModal() {
+        const filas = document.querySelectorAll("#edit-items-tbody tr");
+        let total = 0;
+
+        filas.forEach((fila) => {
+          const cant = Number(fila.querySelector(".item-cantidad")?.value) || 0;
+          const precio = Number(fila.querySelector(".item-precio")?.value) || 0;
+          const sub = cant * precio;
+          total += sub;
+
+          const spanSub = fila.querySelector(".item-subtotal");
+          if (spanSub) spanSub.textContent = "$" + sub.toLocaleString("es-CO");
+        });
+
+        document.getElementById("edit-venta-total-display").textContent =
+          "$" + total.toLocaleString("es-CO");
+      }
+
+      // Recolecta los datos y llama al backend
+      async function guardarEdicionVenta() {
+        const id = document.getElementById("edit-venta-id").value;
+        const vendedor = document
+          .getElementById("edit-venta-vendedor")
+          .value.trim();
+        const fecha = document.getElementById("edit-venta-fecha").value;
+
+        // Construir array de ítems desde la tabla
+        const filas = document.querySelectorAll("#edit-items-tbody tr");
+        const itemsNuevos = [];
+
+        let hayError = false;
+        filas.forEach((fila) => {
+          const nombre = fila.querySelector(".item-nombre").value.trim();
+          const cantidad = Number(fila.querySelector(".item-cantidad").value);
+          const precio = Number(fila.querySelector(".item-precio").value);
+
+          if (!nombre || cantidad <= 0) {
+            hayError = true;
+            return;
+          }
+          itemsNuevos.push({ nombre, cantidad, precio });
+        });
+
+        if (hayError) {
+          M.toast({
+            html: "⚠️ Revisa que todos los ítems tengan nombre y cantidad válida",
+            classes: "orange rounded",
+          });
+          return;
+        }
+        if (!vendedor) {
+          M.toast({
+            html: "El vendedor es obligatorio",
+            classes: "red rounded",
+          });
+          return;
+        }
+        if (itemsNuevos.length === 0) {
+          M.toast({
+            html: "La venta debe tener al menos un ítem",
+            classes: "red rounded",
+          });
+          return;
+        }
+
+        try {
+          const res = await fetch(`/api/ventas/${encodeURIComponent(id)}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ vendedor, fecha, itemsNuevos }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            // Advertencia de stock insuficiente (no bloqueante)
+            if (data.stockInsuficiente && data.stockInsuficiente.length > 0) {
+              M.toast({
+                html: `⚠️ Stock bajo en: ${data.stockInsuficiente.join(", ")}`,
+                classes: "orange darken-2 rounded",
+                displayLength: 5000,
+              });
+            }
+            M.toast({
+              html: "✅ Venta actualizada correctamente",
+              classes: "green rounded",
+            });
+            M.Modal.getInstance(
+              document.getElementById("modal-editar-venta"),
+            ).close();
+            cargarPedidos(); // Refresca tabla
+          } else {
+            M.toast({
+              html: `❌ Error: ${data.message || "No se pudo actualizar"}`,
+              classes: "red rounded",
+            });
+          }
+        } catch (e) {
+          console.error(e);
+          M.toast({
+            html: "Error de conexión con el servidor",
+            classes: "red rounded",
+          });
+        }
       }
     </script>
   </body>

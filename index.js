@@ -12,10 +12,6 @@ const app = express();// Crear instancia de Express
 // Usar el puerto que te da Hostinger O el 3000 si estás en local
 const PORT = process.env.PORT || 3000; 
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en puerto ${PORT}`);
-});
-
 // --- 1. CONFIGURACIÓN DE RUTAS Y CARPETAS ---
 const RUTA_DATA = path.join(__dirname, "data");
 const RUTA_INVENTARIO = path.join(RUTA_DATA, "inventario.xlsx");
@@ -355,7 +351,7 @@ app.post("/api/ventas/confirmar", (req, res) => {
 
         // --- B. GESTIÓN JSON (Nuevo sistema de pedidos) ---
         const nuevaVentaJSON = {
-            id: idVenta || `V-${Date.now()}`,
+            id: idVenta || `V-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
             fecha: new Date().toISOString(),
             vendedor: vendedor || "Admin",
             items: carrito || [],
@@ -413,7 +409,7 @@ app.post("/api/ventas/anular", (req, res) => {
 // Esta ruta atiende al botón rojo de "Movimientos Recientes"
 // --- RUTA CORREGIDA: ELIMINAR VENTA Y DEVOLVER STOCK ---
 app.delete("/api/ventas/:id", (req, res) => {
-    const idParaBorrar = req.params.id;
+    const idParaBorrar = decodeURIComponent(req.params.id);
     console.log("Procesando anulación de venta:", idParaBorrar);
 
     try {
@@ -456,6 +452,84 @@ app.delete("/api/ventas/:id", (req, res) => {
     } catch (error) {
         console.error("Error crítico al anular venta:", error);
         res.status(500).json({ ok: false, error: "Error interno al devolver stock" });
+    }
+});
+
+// --- EDITAR VENTA CON AJUSTE DE STOCK ---
+app.put("/api/ventas/:id", (req, res) => {
+    const idVenta = decodeURIComponent(req.params.id);
+    const { vendedor, fecha, itemsNuevos } = req.body;
+    // itemsNuevos = array de { nombre, cantidad, precio } editado desde el frontend
+
+    try {
+        let ventas    = leerJSON(FILE_VENTAS);
+        let inventario = leerInventario();
+
+        const index = ventas.findIndex(v => v.id === idVenta);
+        if (index === -1) {
+            return res.status(404).json({ ok: false, message: "Venta no encontrada" });
+        }
+
+        const ventaOriginal = ventas[index];
+        const itemsOriginales = ventaOriginal.items || [];
+
+        // ── PASO 1: Devolver TODO el stock original al inventario ──
+        itemsOriginales.forEach(itemOrig => {
+            const prod = inventario.find(p => p.nombre.trim() === itemOrig.nombre.trim());
+            if (prod) {
+                prod.cantidad = (Number(prod.cantidad) || 0) + (Number(itemOrig.cantidad) || 0);
+                console.log(`↩️  Devuelto: ${itemOrig.cantidad} de ${itemOrig.nombre} → stock: ${prod.cantidad}`);
+            }
+        });
+
+        // ── PASO 2: Descontar el stock con los ítems NUEVOS ──
+        let stockInsuficiente = [];
+        itemsNuevos.forEach(itemNuevo => {
+            const prod = inventario.find(p => p.nombre.trim() === itemNuevo.nombre.trim());
+            if (prod) {
+                const cantNueva = Number(itemNuevo.cantidad) || 0;
+                if (prod.cantidad < cantNueva) {
+                    stockInsuficiente.push(`${itemNuevo.nombre} (disponible: ${prod.cantidad})`);
+                }
+                prod.cantidad = (Number(prod.cantidad) || 0) - cantNueva;
+                console.log(`📦 Descontado: ${cantNueva} de ${itemNuevo.nombre} → stock: ${prod.cantidad}`);
+            }
+        });
+
+        // ── PASO 3: Advertir si hay stock insuficiente (pero no bloquear) ──
+        if (stockInsuficiente.length > 0) {
+            console.warn("⚠️ Stock insuficiente para:", stockInsuficiente.join(", "));
+        }
+
+        // ── PASO 4: Recalcular total automáticamente ──
+        const nuevoTotal = itemsNuevos.reduce((sum, item) => {
+            return sum + (Number(item.precio) || 0) * (Number(item.cantidad) || 0);
+        }, 0);
+
+        // ── PASO 5: Guardar venta actualizada ──
+        ventas[index] = {
+            ...ventaOriginal,
+            vendedor: vendedor?.trim() || ventaOriginal.vendedor,
+            fecha: fecha ? new Date(fecha).toISOString() : ventaOriginal.fecha,
+            items: itemsNuevos,
+            total: nuevoTotal,
+        };
+
+        // ── PASO 6: Persistir cambios ──
+        escribirJSON(FILE_VENTAS, ventas);
+        guardarExcel(RUTA_INVENTARIO, inventario);
+
+        console.log(`✅ Venta ${idVenta} actualizada. Nuevo total: $${nuevoTotal}`);
+        res.json({ 
+            ok: true, 
+            message: "Venta actualizada y stock ajustado",
+            stockInsuficiente,
+            nuevoTotal
+        });
+
+    } catch (error) {
+        console.error("Error al editar venta:", error);
+        res.status(500).json({ ok: false, message: "Error interno: " + error.message });
     }
 });
 
