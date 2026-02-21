@@ -279,7 +279,7 @@ async function cargarHistorial() {
         if (!tabla) return;
         tabla.innerHTML = "";
 
-        ventas.reverse().slice(0, 10).forEach((v) => {
+        ventas.reverse().forEach((v) => {
             tabla.innerHTML += `
                 <tr>
                     <td>${v.Fecha} <span class="grey-text text-lighten-1" style="font-size:0.8em">${v.Hora}</span></td>

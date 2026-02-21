@@ -1,217 +1,384 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - Las Trompetas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/public/css/styles.css">
-    
-    <style>
-        /* Ajustes de legibilidad para móviles */
-        .brand-logo { 
-            white-space: nowrap; 
-        }
-        @media only screen and (max-width: 600px) {
-            .brand-logo { font-size: 1.1rem !important; }
-            .summary-card { display: block !important; height: auto !important; }
-            .divider-vertical { display: none; }
-            .summary-item { 
-                margin-bottom: 20px; 
-                padding: 10px;
-                border-bottom: 1px solid #eee;
-            }
-            .main-container { padding-top: 10px; }
-            .kpi-card { margin-bottom: 10px; }
-        }
-        
-        /* Contenedor de filtros responsive */
-        .filter-section-custom {
-            padding: 15px 0;
-        }
-    </style>
-</head>
-<body class="dashboard-body">
+    <link rel="stylesheet" href="/public/css/styles.css" />
 
+    <style>
+      /* Ajustes de legibilidad para móviles */
+      .brand-logo {
+        white-space: nowrap;
+      }
+      @media only screen and (max-width: 600px) {
+        .brand-logo {
+          font-size: 1.1rem !important;
+        }
+        .summary-card {
+          display: block !important;
+          height: auto !important;
+        }
+        .divider-vertical {
+          display: none;
+        }
+        .summary-item {
+          margin-bottom: 20px;
+          padding: 10px;
+          border-bottom: 1px solid #eee;
+        }
+        .main-container {
+          padding-top: 10px;
+        }
+        .kpi-card {
+          margin-bottom: 10px;
+        }
+      }
+
+      /* Contenedor de filtros responsive */
+      .filter-section-custom {
+        padding: 15px 0;
+      }
+    </style>
+  </head>
+  <body class="dashboard-body">
     <nav class="dashboard-nav z-depth-0">
-        <div class="nav-wrapper container">
-            <a href="#" data-target="mobile-menu" class="sidenav-trigger black-text"><i class="material-icons">menu</i></a>
-            
-            <a href="#" class="brand-logo">
-                <i class="material-icons left hide-on-small-only">store</i>Las Trompetas
-            </a>
-            
-            <ul class="right hide-on-med-and-down">               
-                <li><a href="/public/ventas.html" class="btn deep-purple lighten-5 black-text waves-effect waves-light" style="border-radius: 8px"><i class="material-icons left">point_of_sale</i>Ventas</a></li>
-                <li><a href="/public/gastos.html" class="nav-link"><i class="material-icons left">money_off</i>Gastos</a></li>
-                <li><a href="/public/inventario.html" class="nav-link"><i class="material-icons left">inventory_2</i>Inventario</a></li>
-                <li><a href="/public/usuarios.html" class="nav-link"><i class="material-icons left">group</i>Usuarios</a></li>
-                <li><a href="/index.html" class="nav-link red-text"><i class="material-icons left">logout</i>Salir</a></li>
-            </ul>
-        </div>
+      <div class="nav-wrapper container">
+        <a href="#" data-target="mobile-menu" class="sidenav-trigger black-text"
+          ><i class="material-icons">menu</i></a
+        >
+
+        <a href="#" class="brand-logo">
+          <i class="material-icons left hide-on-small-only">store</i>Las
+          Trompetas
+        </a>
+
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a
+              href="/public/ventas.html"
+              class="btn deep-purple lighten-5 black-text waves-effect waves-light"
+              style="border-radius: 8px"
+              ><i class="material-icons left">point_of_sale</i>Ventas</a
+            >
+          </li>
+          <li>
+            <a href="/public/gastos.html" class="nav-link"
+              ><i class="material-icons left">money_off</i>Gastos</a
+            >
+          </li>
+          <li>
+            <a href="/public/inventario.html" class="nav-link"
+              ><i class="material-icons left">inventory_2</i>Inventario</a
+            >
+          </li>
+          <li>
+            <a href="/public/usuarios.html" class="nav-link"
+              ><i class="material-icons left">group</i>Usuarios</a
+            >
+          </li>
+          <li>
+            <a href="/index.html" class="nav-link red-text"
+              ><i class="material-icons left">logout</i>Salir</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <ul class="sidenav" id="mobile-menu">
-        <li>
-            <div class="user-view">
-                <div class="background deep-purple darken-4"></div>
-                <span class="white-text name" style="font-weight: bold;">Las Trompetas</span>
-            </div>
-        </li>
-        <li><a href="/public/ventas.html"><i class="material-icons">point_of_sale</i>Ventas</a></li>
-        <li><a href="/public/gastos.html"><i class="material-icons">money_off</i>Gastos</a></li>
-        <li><a href="/public/inventario.html"><i class="material-icons">inventory_2</i>Inventario</a></li>
-        <li><a href="/public/usuarios.html"><i class="material-icons">group</i>Usuarios</a></li>
-        <li><div class="divider"></div></li>
-        <li><a href="/index.html" class="red-text"><i class="material-icons red-text">logout</i>Salir</a></li>
+      <li>
+        <div class="user-view">
+          <div class="background deep-purple darken-4"></div>
+          <span class="white-text name" style="font-weight: bold"
+            >Las Trompetas</span
+          >
+        </div>
+      </li>
+      <li>
+        <a href="/public/ventas.html"
+          ><i class="material-icons">point_of_sale</i>Ventas</a
+        >
+      </li>
+      <li>
+        <a href="/public/gastos.html"
+          ><i class="material-icons">money_off</i>Gastos</a
+        >
+      </li>
+      <li>
+        <a href="/public/inventario.html"
+          ><i class="material-icons">inventory_2</i>Inventario</a
+        >
+      </li>
+      <li>
+        <a href="/public/usuarios.html"
+          ><i class="material-icons">group</i>Usuarios</a
+        >
+      </li>
+      <li><div class="divider"></div></li>
+      <li>
+        <a href="/index.html" class="red-text"
+          ><i class="material-icons red-text">logout</i>Salir</a
+        >
+      </li>
     </ul>
 
     <div class="container main-container">
-        
-        <div class="row section-filters">
-            <div class="col s12">
-                <div class="card filter-card">
-                    <div class="card-content">
-                        <span class="card-title-small">📅 Rango de Análisis</span>
-                        <div class="row" style="margin-bottom: 0;">
-                            <div class="input-field col s12 m4">
-                                <i class="material-icons prefix">today</i>
-                                <input type="date" id="filtro-desde">
-                                <label class="active">Desde</label>
-                            </div>
-                            <div class="input-field col s12 m4">
-                                <i class="material-icons prefix">event</i>
-                                <input type="date" id="filtro-hasta">
-                                <label class="active">Hasta</label>
-                            </div>
-                            <div class="col s12 m4" style="padding-top: 15px; display: flex; gap: 5px;">
-                                <button class="btn-filter waves-effect waves-light btn indigo darken-4 flex-1" onclick="cargarDashboard()">
-                                    <i class="material-icons">refresh</i>Actualizar
-                                </button>
-                                <button class="btn green darken-3 waves-effect waves-light" onclick="generarReporteExcel()" style="width: auto; min-width: 160px;">
-                                    <i class="material-icons left">description</i>
-                                    <span style="color: white;">Descargar Reporte</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+      <div class="row section-filters">
+        <div class="col s12">
+          <div class="card filter-card">
+            <div class="card-content">
+              <span class="card-title-small">📅 Rango de Análisis</span>
+              <div class="row" style="margin-bottom: 0">
+                <!-- Fechas -->
+                <div class="input-field col s12 m3">
+                  <i class="material-icons prefix">today</i>
+                  <input type="date" id="filtro-desde" />
+                  <label class="active">Desde</label>
                 </div>
+                <div class="input-field col s12 m3">
+                  <i class="material-icons prefix">event</i>
+                  <input type="date" id="filtro-hasta" />
+                  <label class="active">Hasta</label>
+                </div>
+
+                <!-- Horas -->
+                <div class="input-field col s6 m2">
+                  <i class="material-icons prefix">schedule</i>
+                  <input type="time" id="filtro-hora-desde" value="00:00" />
+                  <label class="active">Hora inicio</label>
+                </div>
+                <div class="input-field col s6 m2">
+                  <i class="material-icons prefix">schedule</i>
+                  <input type="time" id="filtro-hora-hasta" value="23:59" />
+                  <label class="active">Hora fin</label>
+                </div>
+
+                <!-- Botones -->
+                <div
+                  class="col s12 m2"
+                  style="
+                    padding-top: 15px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                  "
+                >
+                  <button
+                    class="btn waves-effect waves-light indigo darken-4"
+                    style="width: 100%; border-radius: 6px"
+                    onclick="cargarDashboard()"
+                  >
+                    <i class="material-icons left">refresh</i>Actualizar
+                  </button>
+                  <button
+                    class="btn green darken-3 waves-effect waves-light"
+                    onclick="generarReporteExcel()"
+                    style="width: 100%; border-radius: 6px"
+                  >
+                    <i class="material-icons left">description</i>Reporte
+                  </button>
+                </div>
+              </div>
+
+              <!-- Accesos rápidos de turno -->
+              <div
+                style="
+                  margin-top: 8px;
+                  display: flex;
+                  gap: 8px;
+                  flex-wrap: wrap;
+                "
+              >
+                <span
+                  style="font-size: 0.85rem; color: #666; align-self: center"
+                  >Turno rápido:</span
+                >
+                <a class="chip waves-effect" onclick="aplicarTurno(6, 12)">
+                  <i class="material-icons tiny">wb_sunny</i> Mañana (6-12)
+                </a>
+                <a class="chip waves-effect" onclick="aplicarTurno(12, 18)">
+                  <i class="material-icons tiny">wb_cloudy</i> Tarde (12-18)
+                </a>
+                <a class="chip waves-effect" onclick="aplicarTurno(18, 23)">
+                  <i class="material-icons tiny">nights_stay</i> Noche (18-23)
+                </a>
+                <a
+                  class="chip waves-effect red lighten-4"
+                  onclick="limpiarFiltroHora()"
+                >
+                  <i class="material-icons tiny">clear</i> Todo el día
+                </a>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 m6 l3">
+          <div class="kpi-card kpi-primary">
+            <div class="kpi-icon">
+              <i class="material-icons">attach_money</i>
+            </div>
+            <div class="kpi-content">
+              <p>Ventas Totales</p>
+              <h4 id="txt-ventas-totales">$0</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l3">
+          <div class="kpi-card kpi-success">
+            <div class="kpi-icon">
+              <i class="material-icons">trending_up</i>
+            </div>
+            <div class="kpi-content">
+              <p>Ganancia Neta</p>
+              <h4 id="txt-ganancia">$0</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l3">
+          <div
+            class="kpi-card kpi-danger"
+            style="border-left: 5px solid #c62828"
+          >
+            <div class="kpi-icon">
+              <i class="material-icons red-text">money_off</i>
+            </div>
+            <div class="kpi-content">
+              <p>Gastos Operativos</p>
+              <h4 id="txt-gastos-totales">$0</h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6 l3">
+          <div class="kpi-card kpi-warning">
+            <div class="kpi-icon">
+              <i class="material-icons">emoji_events</i>
+            </div>
+            <div class="kpi-content">
+              <p>Mejor Vendedor</p>
+              <h5 id="txt-vendedor-top" class="truncate">Cargando...</h5>
+            </div>
+          </div>
         </div>
 
-        <div class="row">
-            <div class="col s12 m6 l3">
-                <div class="kpi-card kpi-primary">
-                    <div class="kpi-icon"><i class="material-icons">attach_money</i></div>
-                    <div class="kpi-content">
-                        <p>Ventas Totales</p>
-                        <h4 id="txt-ventas-totales">$0</h4>
-                    </div>
-                </div>
+        <!-- NUEVA tarjeta — Producto más vendido -->
+        <div class="col s12 m6 l3" style="margin-top: 0">
+          <div
+            class="kpi-card"
+            style="border-left: 5px solid #00acc1; background: white"
+          >
+            <div class="kpi-icon">
+              <i class="material-icons" style="color: #00acc1">star</i>
             </div>
-            <div class="col s12 m6 l3">
-                <div class="kpi-card kpi-success">
-                    <div class="kpi-icon"><i class="material-icons">trending_up</i></div>
-                    <div class="kpi-content">
-                        <p>Ganancia Neta</p>
-                        <h4 id="txt-ganancia">$0</h4>
-                    </div>
-                </div>
+            <div class="kpi-content">
+              <p>Producto Top</p>
+              <h5 id="txt-producto-top" class="truncate">Cargando...</h5>
             </div>
-            <div class="col s12 m6 l3">
-                <div class="kpi-card kpi-danger" style="border-left: 5px solid #c62828;">
-                    <div class="kpi-icon"><i class="material-icons red-text">money_off</i></div>
-                    <div class="kpi-content">
-                        <p>Gastos Operativos</p>
-                        <h4 id="txt-gastos-totales">$0</h4>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 l8">
+          <div class="card chart-card">
+            <div class="card-header">
+              <span class="card-title">Rendimiento Comercial</span>
+              <div class="chart-actions">
+                <a
+                  class="waves-effect btn-small btn-flat active"
+                  onclick="cambiarVistaGrafico('dia')"
+                  >Días</a
+                >
+                <a
+                  class="waves-effect btn-small btn-flat"
+                  onclick="cambiarVistaGrafico('vendedor')"
+                  >Vendedores</a
+                >
+              </div>
             </div>
-            <div class="col s12 m6 l3">
-                <div class="kpi-card kpi-warning">
-                    <div class="kpi-icon"><i class="material-icons">emoji_events</i></div>
-                    <div class="kpi-content">
-                        <p>Mejor Vendedor</p>
-                        <h5 id="txt-vendedor-top" class="truncate">Cargando...</h5>
-                    </div>
-                </div>
+            <div class="card-content">
+              <div
+                class="chart-wrapper"
+                style="position: relative; height: 300px"
+              >
+                <canvas id="chart-ventas"></canvas>
+              </div>
             </div>
+          </div>
         </div>
 
-        <div class="row">
-            <div class="col s12 l8">
-                <div class="card chart-card">
-                    <div class="card-header">
-                        <span class="card-title">Rendimiento Comercial</span>
-                        <div class="chart-actions">
-                            <a class="waves-effect btn-small btn-flat active" onclick="cambiarVistaGrafico('dia')">Días</a>
-                            <a class="waves-effect btn-small btn-flat" onclick="cambiarVistaGrafico('vendedor')">Vendedores</a>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-wrapper" style="position: relative; height:300px;">
-                            <canvas id="chart-ventas"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <div class="col s12 l4">
+          <div class="card chart-card">
+            <div class="card-header">
+              <span class="card-title">Categorías</span>
             </div>
-
-            <div class="col s12 l4">
-                <div class="card chart-card">
-                    <div class="card-header">
-                        <span class="card-title">Categorías</span>
-                    </div>
-                    <div class="card-content">
-                        <div class="chart-wrapper" style="position: relative; height:300px;">
-                            <canvas id="chart-categorias"></canvas>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-content">
+              <div
+                class="chart-wrapper"
+                style="position: relative; height: 300px"
+              >
+                <canvas id="chart-categorias"></canvas>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="row">
-            <div class="col s12">
-                <div class="card summary-card">
-                    <div class="summary-item">
-                        <i class="material-icons grey-text">groups</i>
-                        <div>
-                            <h6>Clientes</h6>
-                            <h4 id="txt-total-personas">0</h4>
-                        </div>
-                    </div>
-                    <div class="divider-vertical hide-on-small-only"></div>
-                    <div class="summary-item">
-                        <i class="material-icons grey-text">receipt</i>
-                        <div>
-                            <h6>Ticket Promedio</h6>
-                            <h4 id="txt-ticket-promedio">$0</h4>
-                        </div>
-                    </div>
-                    <div class="divider-vertical hide-on-small-only"></div>
-                    <div class="summary-item">
-                        <i class="material-icons grey-text">health_and_safety</i>
-                        <div>
-                            <h6>Estado Salud</h6>
-                            <h5 id="txt-estado"><span class="badge-status success">Saludable</span></h5>
-                        </div>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col s12">
+          <div class="card summary-card">
+            <div class="summary-item">
+              <i class="material-icons grey-text">groups</i>
+              <div>
+                <h6>Clientes</h6>
+                <h4 id="txt-total-personas">0</h4>
+              </div>
             </div>
+            <div class="divider-vertical hide-on-small-only"></div>
+            <div class="summary-item">
+              <i class="material-icons grey-text">receipt</i>
+              <div>
+                <h6>Ticket Promedio</h6>
+                <h4 id="txt-ticket-promedio">$0</h4>
+              </div>
+            </div>
+            <div class="divider-vertical hide-on-small-only"></div>
+            <div class="summary-item">
+              <i class="material-icons grey-text">health_and_safety</i>
+              <div>
+                <h6>Estado Salud</h6>
+                <h5 id="txt-estado">
+                  <span class="badge-status success">Saludable</span>
+                </h5>
+              </div>
+            </div>
+          </div>
         </div>
-    </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inicialización del menú móvil
-            var elems = document.querySelectorAll('.sidenav');
-            M.Sidenav.init(elems, {
-                edge: 'left'
-            });
+      document.addEventListener("DOMContentLoaded", function () {
+        // Inicialización del menú móvil
+        var elems = document.querySelectorAll(".sidenav");
+        M.Sidenav.init(elems, {
+          edge: "left",
         });
+      });
     </script>
     <script src="/public/js/dashboard.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-</body>
+  </body>
 </html>

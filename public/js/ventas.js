@@ -12,6 +12,8 @@ const CATEGORIAS_DEFINIDAS = [
   "Whisky",
   "Gaseosas",
   "Hidratantes",
+  "Ingresos Barra",
+  "Ingresos Cafeteria",
   "Otros",
 ];
 
@@ -137,6 +139,8 @@ function generarMenuCategorias() {
     Whisky: "wine_bar",
     Gaseosas: "opacity",
     Hidratantes: "local_drink",
+    "Ingresos Barra": "attach_money",
+    "Ingresos Cafeteria": "coffee",
     Otros: "more_horiz",
   };
 

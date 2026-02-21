@@ -270,7 +270,9 @@
                 <div class="input-field">
                   <i class="material-icons prefix indigo-text">category</i>
                   <select id="categoria">
-                    <option value="" disabled selected>Selecciona Categoría</option>
+                    <option value="" disabled selected>
+                      Selecciona Categoría
+                    </option>
                     <option value="Aguardientes">Aguardientes</option>
                     <option value="Cervezas">Cervezas</option>
                     <option value="Rones">Rones</option>
@@ -278,6 +280,10 @@
                     <option value="Brandy">Brandy</option>
                     <option value="Hidratantes">Hidratantes</option>
                     <option value="Gaseosas">Gaseosas</option>
+                    <option value="Ingresos Barra">Ingresos barra</option>
+                    <option value="Ingresos Cafeteria">
+                      Ingresos Cafeteria
+                    </option>
                     <option value="Otros">Otros</option>
                   </select>
                 </div>
@@ -442,11 +448,25 @@
                 </div>
               </div>
 
-              <div class="card-content">
-                <div class="table-responsive-wrapper">
-                  <table class="highlight">
+              <div class="card-content" style="padding: 0 16px 16px 16px">
+                <div
+                  style="
+                    max-height: 320px;
+                    overflow-y: auto;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 6px;
+                  "
+                >
+                  <table class="highlight" style="margin: 0">
                     <thead>
-                      <tr>
+                      <tr
+                        style="
+                          position: sticky;
+                          top: 0;
+                          background: #f5f5f5;
+                          z-index: 1;
+                        "
+                      >
                         <th>Fecha</th>
                         <th>Usuario</th>
                         <th>Detalle</th>
@@ -507,6 +527,8 @@
               <option value="Brandy">Brandy</option>
               <option value="Hidratantes">Hidratantes</option>
               <option value="Gaseosas">Gaseosas</option>
+              <option value="IngresosBarra">Ingresos barra</option>
+              <option value="IngresosCafeteria">Ingresos Cafeteria</option>
               <option value="Otros">Otros</option>
             </select>
             <label>Categoría</label>
@@ -813,23 +835,23 @@
 
           const tr = document.createElement("tr");
           tr.innerHTML = `
-    <td><small>${fechaLegible}</small></td>
-    <td>${usuario}</td>
-    <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
-    <td style="font-weight: bold;">${total}</td>
-    <td class="center acciones-fila">
-        <button class="btn-flat btn-small blue-text waves-effect btn-editar-venta"
-                data-id="${v.id}"
-                title="Editar venta">
-            <i class="material-icons">edit</i>
-        </button>
-        <button class="btn-flat btn-small red-text waves-effect btn-eliminar-venta"
-                data-id="${v.id}"
-                title="Eliminar venta">
-            <i class="material-icons">delete</i>
-        </button>
-    </td>
-    `;
+          <td><small>${fechaLegible}</small></td>
+          <td>${usuario}</td>
+          <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
+          <td style="font-weight: bold;">${total}</td>
+          <td class="center acciones-fila">
+              <button class="btn-flat btn-small blue-text waves-effect btn-editar-venta"
+                      data-id="${v.id}"
+                      title="Editar venta">
+                  <i class="material-icons">edit</i>
+              </button>
+              <button class="btn-flat btn-small red-text waves-effect btn-eliminar-venta"
+                      data-id="${v.id}"
+                      title="Eliminar venta">
+                  <i class="material-icons">delete</i>
+              </button>
+          </td>
+          `;
           // Event listeners seguros — evitan el problema de IDs con caracteres especiales
           document.querySelectorAll(".btn-editar-venta").forEach((btn) => {
             btn.addEventListener("click", () => {
