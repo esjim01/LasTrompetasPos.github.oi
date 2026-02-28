@@ -464,14 +464,14 @@
                           position: sticky;
                           top: 0;
                           background: #f5f5f5;
-                          z-index: 1;
+                          z-index: 1;                        
                         "
                       >
                         <th>Fecha</th>
                         <th>Usuario</th>
                         <th>Detalle</th>
                         <th>Total</th>
-                        <th class="center">Acción</th>
+                        <th class="center" style="width: 90px; min-width: 90px;">Acción</th>
                       </tr>
                     </thead>
                     <tbody id="tabla-historial"></tbody>
@@ -839,7 +839,7 @@
           <td>${usuario}</td>
           <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
           <td style="font-weight: bold;">${total}</td>
-          <td class="center acciones-fila">
+          <td class="center acciones-fila" style="width: 90px; white-space: nowrap;">
               <button class="btn-flat btn-small blue-text waves-effect btn-editar-venta"
                       data-id="${v.id}"
                       title="Editar venta">

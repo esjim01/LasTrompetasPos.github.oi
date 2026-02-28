@@ -1,23 +1,22 @@
 // index.js - VERSIÓN DEFINITIVA Y CORREGIDA
-const express = require("express");// Framework web para Node.js
-const fs = require("fs");// Para manejo de archivos (lectura y escritura)
-const path = require("path");// Para manejo de rutas y archivos
-const multer = require("multer");// Para manejo de archivos (imágenes)
+const express = require("express"); // Framework web para Node.js
+const fs = require("fs"); // Para manejo de archivos (lectura y escritura)
+const path = require("path"); // Para manejo de rutas y archivos
+const multer = require("multer"); // Para manejo de archivos (imágenes)
 const XLSX = require("xlsx"); // Importante: usaremos "XLSX" en mayúscula en todo el archivo
-const bodyParser = require('body-parser'); // Para parsear JSON en solicitudes POST
+const bodyParser = require("body-parser"); // Para parsear JSON en solicitudes POST
 
-const app = express();// Crear instancia de Express
-
+const app = express(); // Crear instancia de Express
 
 // Usar el puerto que te da Hostinger O el 3000 si estás en local
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
 
 // --- 1. CONFIGURACIÓN DE RUTAS Y CARPETAS ---
 const RUTA_DATA = path.join(__dirname, "data");
 const RUTA_INVENTARIO = path.join(RUTA_DATA, "inventario.xlsx");
 const RUTA_VENTAS = path.join(RUTA_DATA, "ventas.xlsx");
 const RUTA_USUARIOS = path.join(RUTA_DATA, "usuarios.xlsx");
-const FILE_VENTAS = path.join(__dirname, 'ventas.json');
+const FILE_VENTAS = path.join(__dirname, "ventas.json");
 
 // Crear carpeta data si no existe
 if (!fs.existsSync(RUTA_DATA)) fs.mkdirSync(RUTA_DATA);
@@ -190,22 +189,22 @@ app.post("/api/index", (req, res) => {
 
 // --- FUNCIONES AUXILIARES PARA JSON (HISTORIAL DE VENTAS) ---
 function leerJSON(ruta) {
-    try {
-        if (!fs.existsSync(ruta)) return [];
-        const data = fs.readFileSync(ruta, 'utf-8');
-        return data ? JSON.parse(data) : [];
-    } catch (error) {
-        console.error("Error leyendo JSON:", error);
-        return [];
-    }
+  try {
+    if (!fs.existsSync(ruta)) return [];
+    const data = fs.readFileSync(ruta, "utf-8");
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error("Error leyendo JSON:", error);
+    return [];
+  }
 }
 
 function escribirJSON(ruta, datos) {
-    try {
-        fs.writeFileSync(ruta, JSON.stringify(datos, null, 2));
-    } catch (error) {
-        console.error("Error escribiendo JSON:", error);
-    }
+  try {
+    fs.writeFileSync(ruta, JSON.stringify(datos, null, 2));
+  } catch (error) {
+    console.error("Error escribiendo JSON:", error);
+  }
 }
 
 // --- 7. API: INVENTARIO ---
@@ -301,76 +300,92 @@ app.delete("/api/inventario/eliminar", (req, res) => {
 
 // BUSCA ESTA RUTA Y REEMPLÁZALA COMPLETA:
 app.get("/api/ventas/historial", (req, res) => {
-    try {
-        // CORRECCIÓN: Antes estabas usando leerVentas() (Excel).
-        // Ahora usaremos leerJSON(FILE_VENTAS) que tiene el estado "pendiente".
-        const historial = leerJSON(FILE_VENTAS); 
-        res.json(historial);
-    } catch (e) {
-        console.error("Error leyendo historial:", e);
-        res.status(500).json([]);
-    }
+  try {
+    // CORRECCIÓN: Antes estabas usando leerVentas() (Excel).
+    // Ahora usaremos leerJSON(FILE_VENTAS) que tiene el estado "pendiente".
+    const historial = leerJSON(FILE_VENTAS);
+    res.json(historial);
+  } catch (e) {
+    console.error("Error leyendo historial:", e);
+    res.status(500).json([]);
+  }
 });
 
 app.post("/api/ventas/confirmar", (req, res) => {
-    // 1. Desestructuración segura
-    const { carrito, vendedor, total, idVenta, numPersonas } = req.body;
+  // 1. Desestructuración segura
+  const { carrito, vendedor, total, idVenta, numPersonas } = req.body;
 
-    try {
-        console.log("Procesando venta...");
+  try {
+    console.log("Procesando venta...");
 
-        // --- A. GESTIÓN EXCEL (Tu código original) ---
-        let inventario = leerInventario();
-        let ventasExcel = leerVentas();
+    // --- A. GESTIÓN EXCEL (Tu código original) ---
+    let inventario = leerInventario();
+    let ventasExcel = leerVentas();
 
-        // Descontar stock
-        if (carrito && Array.isArray(carrito)) {
-            carrito.forEach((item) => {
-                const prod = inventario.find((p) => p.nombre && item.nombre && p.nombre.trim() === item.nombre.trim());
-                if (prod) {
-                    prod.cantidad = (Number(prod.cantidad) || 0) - (Number(item.cantidad) || 0);
-                }
-            });
+    // Descontar stock
+    if (carrito && Array.isArray(carrito)) {
+      carrito.forEach((item) => {
+        const prod = inventario.find(
+          (p) =>
+            p.nombre && item.nombre && p.nombre.trim() === item.nombre.trim(),
+        );
+        if (prod) {
+          prod.cantidad =
+            (Number(prod.cantidad) || 0) - (Number(item.cantidad) || 0);
         }
-
-        const ahora = new Date();
-        
-        // Guardar en Excel
-        ventasExcel.push({
-            "ID Venta": idVenta || `V-${Date.now()}`,
-            "Fecha": ahora.toLocaleDateString("es-CO"),
-            "Hora": ahora.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" }),
-            "Vendedor": vendedor || "Admin",
-            "Productos": carrito ? carrito.map((p) => `${p.nombre} (x${p.cantidad})`).join(", ") : "",
-            "Total": Number(total) || 0,
-            "Personas": numPersonas || 0,
-        });
-
-        guardarExcel(RUTA_INVENTARIO, inventario);
-        guardarExcel(RUTA_VENTAS, ventasExcel);
-
-        // --- B. GESTIÓN JSON (Nuevo sistema de pedidos) ---
-        const nuevaVentaJSON = {
-            id: idVenta || `V-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
-            fecha: new Date().toISOString(),
-            vendedor: vendedor || "Admin",
-            items: carrito || [],
-            total: Number(total) || 0,
-            numPersonas: numPersonas || 0,
-            estado: "pendiente"
-        };
-
-        const historialVentas = leerJSON(FILE_VENTAS);
-        historialVentas.push(nuevaVentaJSON);
-        escribirJSON(FILE_VENTAS, historialVentas);
-
-        console.log("Venta guardada con éxito.");
-        res.json({ ok: true, mensaje: "Venta registrada correctamente" });
-
-    } catch (e) {
-        console.error("ERROR EN SERVIDOR:", e); // Esto saldrá en tu terminal negra
-        res.status(500).json({ ok: false, mensaje: "Error interno del servidor: " + e.message });
+      });
     }
+
+    const ahora = new Date();
+
+    // Definimos la zona horaria una vez para que sea consistente
+    const opcionesZonales = { timeZone: "America/Bogota" };
+
+    // Guardar en Excel
+    ventasExcel.push({
+      "ID Venta": idVenta || `V-${Date.now()}`,
+      Fecha: ahora.toLocaleDateString("es-CO", opcionesZonales),
+      Hora: ahora.toLocaleTimeString("es-CO", {
+        ...opcionesZonales,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true, // Opcional: si prefieres formato AM/PM
+      }),
+      Vendedor: vendedor || "Admin",
+      Productos: carrito
+        ? carrito.map((p) => `${p.nombre} (x${p.cantidad})`).join(", ")
+        : "",
+      Total: Number(total) || 0,
+      Personas: numPersonas || 0,
+    });
+    
+    guardarExcel(RUTA_INVENTARIO, inventario);
+    guardarExcel(RUTA_VENTAS, ventasExcel);
+
+    // --- B. GESTIÓN JSON (Nuevo sistema de pedidos) ---
+    const nuevaVentaJSON = {
+      id:
+        idVenta || `V-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      fecha: new Date().toISOString(),
+      vendedor: vendedor || "Admin",
+      items: carrito || [],
+      total: Number(total) || 0,
+      numPersonas: numPersonas || 0,
+      estado: "pendiente",
+    };
+
+    const historialVentas = leerJSON(FILE_VENTAS);
+    historialVentas.push(nuevaVentaJSON);
+    escribirJSON(FILE_VENTAS, historialVentas);
+
+    console.log("Venta guardada con éxito.");
+    res.json({ ok: true, mensaje: "Venta registrada correctamente" });
+  } catch (e) {
+    console.error("ERROR EN SERVIDOR:", e); // Esto saldrá en tu terminal negra
+    res
+      .status(500)
+      .json({ ok: false, mensaje: "Error interno del servidor: " + e.message });
+  }
 });
 
 app.post("/api/ventas/anular", (req, res) => {
@@ -409,128 +424,150 @@ app.post("/api/ventas/anular", (req, res) => {
 // Esta ruta atiende al botón rojo de "Movimientos Recientes"
 // --- RUTA CORREGIDA: ELIMINAR VENTA Y DEVOLVER STOCK ---
 app.delete("/api/ventas/:id", (req, res) => {
-    const idParaBorrar = decodeURIComponent(req.params.id);
-    console.log("Procesando anulación de venta:", idParaBorrar);
+  const idParaBorrar = decodeURIComponent(req.params.id);
+  console.log("Procesando anulación de venta:", idParaBorrar);
 
-    try {
-        // 1. Leemos los archivos necesarios
-        let ventasJSON = leerJSON(FILE_VENTAS);      // El historial en vivo
-        let inventario = leerInventario();           // El stock actual (Excel)
+  try {
+    // 1. Leemos los archivos necesarios
+    let ventasJSON = leerJSON(FILE_VENTAS); // El historial en vivo
+    let inventario = leerInventario(); // El stock actual (Excel)
 
-        // 2. Buscamos la venta que vamos a eliminar
-        const ventaAborrar = ventasJSON.find(v => v.id === idParaBorrar);
+    // 2. Buscamos la venta que vamos a eliminar
+    const ventaAborrar = ventasJSON.find((v) => v.id === idParaBorrar);
 
-        if (!ventaAborrar) {
-            return res.status(404).json({ ok: false, message: "Venta no encontrada" });
-        }
-
-        // 3. DEVOLUCIÓN DE STOCK (La parte que faltaba)
-        if (ventaAborrar.items && Array.isArray(ventaAborrar.items)) {
-            ventaAborrar.items.forEach(itemVenta => {
-                // Buscamos el producto en el inventario por su nombre exacto
-                const productoEnStock = inventario.find(p => p.nombre.trim() === itemVenta.nombre.trim());
-                
-                if (productoEnStock) {
-                    // Sumamos la cantidad devuelta al stock actual
-                    const cantidadADevolver = Number(itemVenta.cantidad) || 0;
-                    productoEnStock.cantidad = (Number(productoEnStock.cantidad) || 0) + cantidadADevolver;
-                    console.log(`Devolviendo ${cantidadADevolver} unidades de ${itemVenta.nombre}`);
-                }
-            });
-
-            // Guardamos los cambios en el archivo de Inventario (Excel)
-            guardarExcel(RUTA_INVENTARIO, inventario);
-        }
-
-        // 4. Eliminamos la venta del registro JSON
-        const ventasRestantes = ventasJSON.filter(v => v.id !== idParaBorrar);
-        escribirJSON(FILE_VENTAS, ventasRestantes);
-
-        console.log("Stock actualizado y venta eliminada.");
-        res.json({ ok: true, message: "Venta eliminada y stock retornado" });
-
-    } catch (error) {
-        console.error("Error crítico al anular venta:", error);
-        res.status(500).json({ ok: false, error: "Error interno al devolver stock" });
+    if (!ventaAborrar) {
+      return res
+        .status(404)
+        .json({ ok: false, message: "Venta no encontrada" });
     }
+
+    // 3. DEVOLUCIÓN DE STOCK (La parte que faltaba)
+    if (ventaAborrar.items && Array.isArray(ventaAborrar.items)) {
+      ventaAborrar.items.forEach((itemVenta) => {
+        // Buscamos el producto en el inventario por su nombre exacto
+        const productoEnStock = inventario.find(
+          (p) => p.nombre.trim() === itemVenta.nombre.trim(),
+        );
+
+        if (productoEnStock) {
+          // Sumamos la cantidad devuelta al stock actual
+          const cantidadADevolver = Number(itemVenta.cantidad) || 0;
+          productoEnStock.cantidad =
+            (Number(productoEnStock.cantidad) || 0) + cantidadADevolver;
+          console.log(
+            `Devolviendo ${cantidadADevolver} unidades de ${itemVenta.nombre}`,
+          );
+        }
+      });
+
+      // Guardamos los cambios en el archivo de Inventario (Excel)
+      guardarExcel(RUTA_INVENTARIO, inventario);
+    }
+
+    // 4. Eliminamos la venta del registro JSON
+    const ventasRestantes = ventasJSON.filter((v) => v.id !== idParaBorrar);
+    escribirJSON(FILE_VENTAS, ventasRestantes);
+
+    console.log("Stock actualizado y venta eliminada.");
+    res.json({ ok: true, message: "Venta eliminada y stock retornado" });
+  } catch (error) {
+    console.error("Error crítico al anular venta:", error);
+    res
+      .status(500)
+      .json({ ok: false, error: "Error interno al devolver stock" });
+  }
 });
 
 // --- EDITAR VENTA CON AJUSTE DE STOCK ---
 app.put("/api/ventas/:id", (req, res) => {
-    const idVenta = decodeURIComponent(req.params.id);
-    const { vendedor, fecha, itemsNuevos } = req.body;
-    // itemsNuevos = array de { nombre, cantidad, precio } editado desde el frontend
+  const idVenta = decodeURIComponent(req.params.id);
+  const { vendedor, fecha, itemsNuevos } = req.body;
+  // itemsNuevos = array de { nombre, cantidad, precio } editado desde el frontend
 
-    try {
-        let ventas    = leerJSON(FILE_VENTAS);
-        let inventario = leerInventario();
+  try {
+    let ventas = leerJSON(FILE_VENTAS);
+    let inventario = leerInventario();
 
-        const index = ventas.findIndex(v => v.id === idVenta);
-        if (index === -1) {
-            return res.status(404).json({ ok: false, message: "Venta no encontrada" });
-        }
-
-        const ventaOriginal = ventas[index];
-        const itemsOriginales = ventaOriginal.items || [];
-
-        // ── PASO 1: Devolver TODO el stock original al inventario ──
-        itemsOriginales.forEach(itemOrig => {
-            const prod = inventario.find(p => p.nombre.trim() === itemOrig.nombre.trim());
-            if (prod) {
-                prod.cantidad = (Number(prod.cantidad) || 0) + (Number(itemOrig.cantidad) || 0);
-                console.log(`↩️  Devuelto: ${itemOrig.cantidad} de ${itemOrig.nombre} → stock: ${prod.cantidad}`);
-            }
-        });
-
-        // ── PASO 2: Descontar el stock con los ítems NUEVOS ──
-        let stockInsuficiente = [];
-        itemsNuevos.forEach(itemNuevo => {
-            const prod = inventario.find(p => p.nombre.trim() === itemNuevo.nombre.trim());
-            if (prod) {
-                const cantNueva = Number(itemNuevo.cantidad) || 0;
-                if (prod.cantidad < cantNueva) {
-                    stockInsuficiente.push(`${itemNuevo.nombre} (disponible: ${prod.cantidad})`);
-                }
-                prod.cantidad = (Number(prod.cantidad) || 0) - cantNueva;
-                console.log(`📦 Descontado: ${cantNueva} de ${itemNuevo.nombre} → stock: ${prod.cantidad}`);
-            }
-        });
-
-        // ── PASO 3: Advertir si hay stock insuficiente (pero no bloquear) ──
-        if (stockInsuficiente.length > 0) {
-            console.warn("⚠️ Stock insuficiente para:", stockInsuficiente.join(", "));
-        }
-
-        // ── PASO 4: Recalcular total automáticamente ──
-        const nuevoTotal = itemsNuevos.reduce((sum, item) => {
-            return sum + (Number(item.precio) || 0) * (Number(item.cantidad) || 0);
-        }, 0);
-
-        // ── PASO 5: Guardar venta actualizada ──
-        ventas[index] = {
-            ...ventaOriginal,
-            vendedor: vendedor?.trim() || ventaOriginal.vendedor,
-            fecha: fecha ? new Date(fecha).toISOString() : ventaOriginal.fecha,
-            items: itemsNuevos,
-            total: nuevoTotal,
-        };
-
-        // ── PASO 6: Persistir cambios ──
-        escribirJSON(FILE_VENTAS, ventas);
-        guardarExcel(RUTA_INVENTARIO, inventario);
-
-        console.log(`✅ Venta ${idVenta} actualizada. Nuevo total: $${nuevoTotal}`);
-        res.json({ 
-            ok: true, 
-            message: "Venta actualizada y stock ajustado",
-            stockInsuficiente,
-            nuevoTotal
-        });
-
-    } catch (error) {
-        console.error("Error al editar venta:", error);
-        res.status(500).json({ ok: false, message: "Error interno: " + error.message });
+    const index = ventas.findIndex((v) => v.id === idVenta);
+    if (index === -1) {
+      return res
+        .status(404)
+        .json({ ok: false, message: "Venta no encontrada" });
     }
+
+    const ventaOriginal = ventas[index];
+    const itemsOriginales = ventaOriginal.items || [];
+
+    // ── PASO 1: Devolver TODO el stock original al inventario ──
+    itemsOriginales.forEach((itemOrig) => {
+      const prod = inventario.find(
+        (p) => p.nombre.trim() === itemOrig.nombre.trim(),
+      );
+      if (prod) {
+        prod.cantidad =
+          (Number(prod.cantidad) || 0) + (Number(itemOrig.cantidad) || 0);
+        console.log(
+          `↩️  Devuelto: ${itemOrig.cantidad} de ${itemOrig.nombre} → stock: ${prod.cantidad}`,
+        );
+      }
+    });
+
+    // ── PASO 2: Descontar el stock con los ítems NUEVOS ──
+    let stockInsuficiente = [];
+    itemsNuevos.forEach((itemNuevo) => {
+      const prod = inventario.find(
+        (p) => p.nombre.trim() === itemNuevo.nombre.trim(),
+      );
+      if (prod) {
+        const cantNueva = Number(itemNuevo.cantidad) || 0;
+        if (prod.cantidad < cantNueva) {
+          stockInsuficiente.push(
+            `${itemNuevo.nombre} (disponible: ${prod.cantidad})`,
+          );
+        }
+        prod.cantidad = (Number(prod.cantidad) || 0) - cantNueva;
+        console.log(
+          `📦 Descontado: ${cantNueva} de ${itemNuevo.nombre} → stock: ${prod.cantidad}`,
+        );
+      }
+    });
+
+    // ── PASO 3: Advertir si hay stock insuficiente (pero no bloquear) ──
+    if (stockInsuficiente.length > 0) {
+      console.warn("⚠️ Stock insuficiente para:", stockInsuficiente.join(", "));
+    }
+
+    // ── PASO 4: Recalcular total automáticamente ──
+    const nuevoTotal = itemsNuevos.reduce((sum, item) => {
+      return sum + (Number(item.precio) || 0) * (Number(item.cantidad) || 0);
+    }, 0);
+
+    // ── PASO 5: Guardar venta actualizada ──
+    ventas[index] = {
+      ...ventaOriginal,
+      vendedor: vendedor?.trim() || ventaOriginal.vendedor,
+      fecha: fecha ? new Date(fecha).toISOString() : ventaOriginal.fecha,
+      items: itemsNuevos,
+      total: nuevoTotal,
+    };
+
+    // ── PASO 6: Persistir cambios ──
+    escribirJSON(FILE_VENTAS, ventas);
+    guardarExcel(RUTA_INVENTARIO, inventario);
+
+    console.log(`✅ Venta ${idVenta} actualizada. Nuevo total: $${nuevoTotal}`);
+    res.json({
+      ok: true,
+      message: "Venta actualizada y stock ajustado",
+      stockInsuficiente,
+      nuevoTotal,
+    });
+  } catch (error) {
+    console.error("Error al editar venta:", error);
+    res
+      .status(500)
+      .json({ ok: false, message: "Error interno: " + error.message });
+  }
 });
 
 // --- 9. API: USUARIOS (NUEVO MÓDULO) ---
@@ -585,108 +622,108 @@ app.delete("/api/usuarios/eliminar", (req, res) => {
 
 // --- NUEVO: CAMBIAR ESTADO DE VENTA ---
 app.post("/api/ventas/estado", (req, res) => {
-    const { idVenta, nuevoEstado } = req.body;
-    const ventas = leerJSON(FILE_VENTAS);
-    
-    const ventaIndex = ventas.findIndex(v => v.id === idVenta);
-    if (ventaIndex !== -1) {
-        ventas[ventaIndex].estado = nuevoEstado; // "despachado" o "pendiente"
-        escribirJSON(FILE_VENTAS, ventas);
-        res.json({ ok: true, mensaje: "Estado actualizado" });
-    } else {
-        res.status(404).json({ ok: false, mensaje: "Venta no encontrada" });
-    }
+  const { idVenta, nuevoEstado } = req.body;
+  const ventas = leerJSON(FILE_VENTAS);
+
+  const ventaIndex = ventas.findIndex((v) => v.id === idVenta);
+  if (ventaIndex !== -1) {
+    ventas[ventaIndex].estado = nuevoEstado; // "despachado" o "pendiente"
+    escribirJSON(FILE_VENTAS, ventas);
+    res.json({ ok: true, mensaje: "Estado actualizado" });
+  } else {
+    res.status(404).json({ ok: false, mensaje: "Venta no encontrada" });
+  }
 });
 
 // --- MÓDULO DE GASTOS (Pegar en index.js) ---
 
-const RUTA_GASTOS = path.join(__dirname, 'data', 'gastos.xlsx');
+const RUTA_GASTOS = path.join(__dirname, "data", "gastos.xlsx");
 
 // 1. Inicializar archivo de gastos si no existe
 if (!fs.existsSync(RUTA_GASTOS)) {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet([]); // Hoja vacía
-    XLSX.utils.book_append_sheet(wb, ws, "Gastos");
-    XLSX.writeFile(wb, RUTA_GASTOS);
-    console.log("Archivo de gastos creado.");
+  const wb = XLSX.utils.book_new();
+  const ws = XLSX.utils.json_to_sheet([]); // Hoja vacía
+  XLSX.utils.book_append_sheet(wb, ws, "Gastos");
+  XLSX.writeFile(wb, RUTA_GASTOS);
+  console.log("Archivo de gastos creado.");
 }
 
 // 2. Ruta para OBTENER todos los gastos
-app.get('/api/gastos', (req, res) => {
-    try {
-        const wb = XLSX.readFile(RUTA_GASTOS);
-        const sheet = wb.Sheets["Gastos"];
-        const datos = XLSX.utils.sheet_to_json(sheet);
-        res.json(datos);
-    } catch (error) {
-        res.status(500).json({ error: "Error al leer gastos" });
-    }
+app.get("/api/gastos", (req, res) => {
+  try {
+    const wb = XLSX.readFile(RUTA_GASTOS);
+    const sheet = wb.Sheets["Gastos"];
+    const datos = XLSX.utils.sheet_to_json(sheet);
+    res.json(datos);
+  } catch (error) {
+    res.status(500).json({ error: "Error al leer gastos" });
+  }
 });
 
 // 3. Ruta para REGISTRAR un nuevo gasto
-app.post('/api/gastos', (req, res) => {
-    try {
-        const { descripcion, monto, categoria, fecha, responsable } = req.body;
-        const nuevoGasto = {
-            id: Date.now(), // ID único basado en el tiempo
-            fecha,
-            descripcion,
-            categoria,
-            monto: Number(monto),
-            responsable
-        };
+app.post("/api/gastos", (req, res) => {
+  try {
+    const { descripcion, monto, categoria, fecha, responsable } = req.body;
+    const nuevoGasto = {
+      id: Date.now(), // ID único basado en el tiempo
+      fecha,
+      descripcion,
+      categoria,
+      monto: Number(monto),
+      responsable,
+    };
 
-        const wb = XLSX.readFile(RUTA_GASTOS);
-        const sheet = wb.Sheets["Gastos"];
-        const datos = XLSX.utils.sheet_to_json(sheet);
-        
-        datos.push(nuevoGasto); // Agregamos el nuevo
-        
-        const nuevaHoja = XLSX.utils.json_to_sheet(datos);
-        wb.Sheets["Gastos"] = nuevaHoja;
-        XLSX.writeFile(wb, RUTA_GASTOS);
-        
-        res.json({ mensaje: "Gasto registrado", gasto: nuevoGasto });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error al guardar gasto" });
-    }
+    const wb = XLSX.readFile(RUTA_GASTOS);
+    const sheet = wb.Sheets["Gastos"];
+    const datos = XLSX.utils.sheet_to_json(sheet);
+
+    datos.push(nuevoGasto); // Agregamos el nuevo
+
+    const nuevaHoja = XLSX.utils.json_to_sheet(datos);
+    wb.Sheets["Gastos"] = nuevaHoja;
+    XLSX.writeFile(wb, RUTA_GASTOS);
+
+    res.json({ mensaje: "Gasto registrado", gasto: nuevoGasto });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al guardar gasto" });
+  }
 });
 
 // 4. Ruta para ELIMINAR un gasto
-app.delete('/api/gastos/:id', (req, res) => {
-    try {
-        const idGasto = Number(req.params.id);
-        const wb = XLSX.readFile(RUTA_GASTOS);
-        const datos = XLSX.utils.sheet_to_json(wb.Sheets["Gastos"]);
+app.delete("/api/gastos/:id", (req, res) => {
+  try {
+    const idGasto = Number(req.params.id);
+    const wb = XLSX.readFile(RUTA_GASTOS);
+    const datos = XLSX.utils.sheet_to_json(wb.Sheets["Gastos"]);
 
-        const nuevosDatos = datos.filter(g => g.id !== idGasto); // Filtramos el que se va
+    const nuevosDatos = datos.filter((g) => g.id !== idGasto); // Filtramos el que se va
 
-        const nuevaHoja = XLSX.utils.json_to_sheet(nuevosDatos);
-        wb.Sheets["Gastos"] = nuevaHoja;
-        XLSX.writeFile(wb, RUTA_GASTOS);
+    const nuevaHoja = XLSX.utils.json_to_sheet(nuevosDatos);
+    wb.Sheets["Gastos"] = nuevaHoja;
+    XLSX.writeFile(wb, RUTA_GASTOS);
 
-        res.json({ mensaje: "Gasto eliminado" });
-    } catch (error) {
-        res.status(500).json({ error: "Error al eliminar" });
-    }
+    res.json({ mensaje: "Gasto eliminado" });
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar" });
+  }
 });
 
 // Ruta para obtener el reporte completo
-app.get('/api/reporte-completo', (req, res) => {
-    const { desde, hasta } = req.query; // Recibimos las fechas del filtro
+app.get("/api/reporte-completo", (req, res) => {
+  const { desde, hasta } = req.query; // Recibimos las fechas del filtro
 
-    // CONSULTA 1: Ventas Generales (Resumen)
-    const sqlResumen = `
+  // CONSULTA 1: Ventas Generales (Resumen)
+  const sqlResumen = `
         SELECT id, fecha, total, metodo_pago, vendedor 
         FROM ventas 
         WHERE fecha BETWEEN ? AND ?
         ORDER BY fecha DESC
     `;
 
-    // CONSULTA 2: Detalle Uno a Uno (Productos)
-    // Unimos la tabla de productos/detalles con la venta
-    const sqlDetalle = `
+  // CONSULTA 2: Detalle Uno a Uno (Productos)
+  // Unimos la tabla de productos/detalles con la venta
+  const sqlDetalle = `
         SELECT v.id as ticket, v.fecha, d.producto, d.cantidad, d.precio_unitario, (d.cantidad * d.precio_unitario) as subtotal
         FROM ventas v
         JOIN detalles_venta d ON v.id = d.id_venta
@@ -694,18 +731,18 @@ app.get('/api/reporte-completo', (req, res) => {
         ORDER BY v.id DESC
     `;
 
-    // Ejecutamos las dos consultas (Usando db.all si es SQLite)
-    db.all(sqlResumen, [desde, hasta], (err, resumen) => {
-        if (err) return res.status(500).json({ error: err.message });
+  // Ejecutamos las dos consultas (Usando db.all si es SQLite)
+  db.all(sqlResumen, [desde, hasta], (err, resumen) => {
+    if (err) return res.status(500).json({ error: err.message });
 
-        db.all(sqlDetalle, [desde, hasta], (err, detalle) => {
-            if (err) return res.status(500).json({ error: err.message });
-            
-            // Enviamos ambos paquetes de datos al frontend
-            res.json({ resumen, detalle });
-        });
+    db.all(sqlDetalle, [desde, hasta], (err, detalle) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      // Enviamos ambos paquetes de datos al frontend
+      res.json({ resumen, detalle });
     });
+  });
 });
 
 // --- 10. INICIAR SERVIDOR ---
-app.listen(PORT, '0.0.0.0', () => console.log(`🚀 Servidor en puerto ${PORT}`));
+app.listen(PORT, "0.0.0.0", () => console.log(`🚀 Servidor en puerto ${PORT}`));

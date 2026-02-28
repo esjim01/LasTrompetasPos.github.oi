@@ -70,7 +70,6 @@
     </style>
 </head>
 <body>
-
     <nav class="dashboard-nav">
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo"><i class="material-icons left" style="color: #3949ab;">store</i>Las Trompetas - Gastos</a>
@@ -86,6 +85,7 @@
 
     <div class="container" style="margin-top: 30px;">
         
+        <!-- KPIs -->
         <div class="row">
             <div class="col s12 m6">
                 <div class="kpi-card">
@@ -99,33 +99,37 @@
                 </div>
             </div>
 
+            <!-- ✅ NUEVA TARJETA: Top 3 categorías -->
             <div class="col s12 m6">
-                <div class="kpi-card">
-                    <div class="icon-box orange lighten-5">
-                        <i class="material-icons orange-text text-darken-2">pie_chart</i>
+                <div class="kpi-card" style="height: auto; flex-direction: column; align-items: flex-start; padding: 16px 20px;">
+                    <div style="display:flex; align-items:center; margin-bottom: 10px;">
+                        <div class="icon-box orange lighten-5" style="margin-right:10px;">
+                            <i class="material-icons orange-text text-darken-2">pie_chart</i>
+                        </div>
+                        <p class="kpi-title" style="margin:0;">Top 3 Categorías del Mes</p>
                     </div>
-                    <div>
-                        <p class="kpi-title">Mayor Categoría</p>
-                        <h4 class="kpi-value grey-text text-darken-3" id="cat-mayor" style="font-size: 1.5rem;">...</h4>
-                    </div>
+                    <table style="width:100%; font-size: 0.9rem;">
+                        <tbody id="tabla-top-categorias">
+                            <tr><td colspan="3" class="grey-text center-align">Cargando...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
 
         <div class="row">
+            <!-- Formulario -->
             <div class="col s12 m4">
                 <div class="card form-card">
                     <div class="form-header indigo darken-1">
                         <h5><i class="material-icons" style="margin-right: 10px;">add_circle</i> Registrar Gasto</h5>
                     </div>
                     <div class="form-body white">
-                        
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">calendar_today</i>
                             <input type="date" id="fecha-gasto">
                             <label class="active">Fecha</label>
                         </div>
-
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">category</i>
                             <select id="categoria-gasto">
@@ -135,50 +139,64 @@
                                 <option value="Nomina">👷 Nómina / Turnos</option>
                                 <option value="Mantenimiento">🔧 Mantenimiento</option>
                                 <option value="Arriendo">🏠 Arriendo</option>
+                                <option value="Cafeteria">☕ Gastos Cafetería</option>
                                 <option value="Otros">📦 Otros</option>
                             </select>
                             <label>Categoría</label>
                         </div>
-
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">description</i>
                             <input type="text" id="desc-gasto">
                             <label for="desc-gasto">Detalle (Ej: Tomates)</label>
                         </div>
-
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">attach_money</i>
                             <input type="number" id="monto-gasto">
                             <label for="monto-gasto">Valor ($)</label>
                         </div>
-
                         <br>
-                        <button class="btn btn-save indigo darken-3 waves-effect waves-light w-100" style="width:100%" onclick="guardarGasto()">
+                        <button class="btn btn-save indigo darken-3 waves-effect waves-light" 
+                                style="width:100%" onclick="guardarGasto()">
                             Guardar Gasto
                         </button>
                     </div>
                 </div>
             </div>
 
+            <!-- Tabla historial -->
             <div class="col s12 m8">
                 <div class="card table-card white">
-                    <span class="card-title grey-text text-darken-4" style="font-size: 1.2rem; font-weight:600; display:block; margin-bottom: 15px;">
-                        <i class="material-icons left indigo-text">history</i> Historial Reciente
-                    </span>
-                    
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+                        <span style="font-size: 1.2rem; font-weight:600; color: #263238;">
+                            <i class="material-icons left indigo-text">history</i>Historial Reciente
+                        </span>
+
+                        <!-- ✅ FILTRO POR CATEGORÍA -->
+                        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                            <span style="font-size:0.85rem; color:#666;">Filtrar:</span>
+                            <a class="chip waves-effect indigo white-text" onclick="filtrarCategoria('Todas')">Todas</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Insumos')">🛒 Insumos</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Servicios')">💡 Servicios</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Nomina')">👷 Nómina</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Mantenimiento')">🔧 Manten.</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Arriendo')">🏠 Arriendo</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Cafeteria')">☕ Cafetería</a>
+                            <a class="chip waves-effect" onclick="filtrarCategoria('Otros')">📦 Otros</a>
+                        </div>
+                    </div>
+
                     <div class="table-scroll-container">
-                        <table class="highlight">
+                        <table class="highlight" style="table-layout: fixed; width:100%;">
                             <thead>
                                 <tr>
-                                    <th width="20%">Fecha</th>
-                                    <th width="35%">Detalle</th>
-                                    <th width="20%">Categoría</th>
-                                    <th width="20%" class="right-align">Monto</th>
-                                    <th width="5%"></th>
+                                    <th style="width:20%">Fecha</th>
+                                    <th style="width:35%">Detalle</th>
+                                    <th style="width:22%">Categoría</th>
+                                    <th style="width:18%; text-align:right;">Monto</th>
+                                    <th style="width:5%;"></th>
                                 </tr>
                             </thead>
-                            <tbody id="tabla-gastos">
-                                </tbody>
+                            <tbody id="tabla-gastos"></tbody>
                         </table>
                     </div>
                 </div>
@@ -188,12 +206,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/gastos.js"></script>
-    
     <script>
-        // Inicializar selects de Materialize
         document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
+            M.FormSelect.init(document.querySelectorAll('select'));
         });
     </script>
 </body>

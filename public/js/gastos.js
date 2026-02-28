@@ -1,57 +1,61 @@
 // public/js/gastos.js
 
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. Inicializar componentes de Materialize (Selects, Modals, etc.)
-    M.AutoInit();
-    
-    // 2. Poner la fecha de hoy por defecto en el formulario
-    document.getElementById('fecha-gasto').valueAsDate = new Date();
+// Variable global para guardar todos los gastos
+let gastosGlobal = [];
+let categoriaActiva = "Todas";
 
-    // 3. Cargar los datos
+document.addEventListener('DOMContentLoaded', function() {
+    M.AutoInit();
+    document.getElementById('fecha-gasto').valueAsDate = new Date();
     cargarGastos();
 });
 
-// --- SEGURIDAD: VERIFICACIÓN DE ROL ---
+// --- SEGURIDAD ---
 (function protegerVista() {
-    // 1. Recuperar la sesión guardada
-    const sesionGuardada = localStorage.getItem('usuarioNombre'); // Ojo: Revisa si usas 'usuario', 'user' o 'session'
-
-    // 2. Si no hay sesión, mandar al Login
+    const sesionGuardada = localStorage.getItem('usuarioNombre');
     if (!sesionGuardada) {
         alert("Debes iniciar sesión primero.");
-        window.location.href = '/index.html'; // O tu ruta de login
+        window.location.href = '/index.html';
         return;
     }
-
     const usuario = JSON.parse(sesionGuardada);
-
-    // 3. REGLA DE ORO: Si no es Admin, ¡FUERA!
-    // Cambia 'admin' por como tengas escrito el rol en tu base de datos (ej: 'administrador', 'jefe', etc.)
-    if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador'&& usuario.rol !== 'admin') {
-        alert("⛔ Acceso Restringido: Solo personal autorizado.");
-        
-        // Lo redirigimos a donde SÍ puede estar (Ventas)
-        window.location.href = '/public/ventas.html'; 
+    if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador' && usuario.rol !== 'admin') {
+        alert("⛔ Acceso Restringido.");
+        window.location.href = '/public/ventas.html';
     }
 })();
-// --- FIN SEGURIDAD ---
 
-// --- FUNCIÓN PRINCIPAL: CARGAR Y MOSTRAR ---
+// --- CARGAR GASTOS ---
 async function cargarGastos() {
     try {
         const res = await fetch('/api/gastos');
         const gastos = await res.json();
-
-        // Ordenar: El más reciente primero
         gastos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+        gastosGlobal = gastos;
 
         renderizarTabla(gastos);
         calcularResumen(gastos);
-
     } catch (error) {
         console.error(error);
         M.toast({html: 'Error al cargar gastos', classes: 'red'});
     }
+}
+
+// --- FILTRO POR CATEGORÍA ---
+function filtrarCategoria(categoria) {
+    categoriaActiva = categoria;
+
+    // Actualizar chips visualmente
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.classList.remove('indigo', 'white-text');
+    });
+    event.target.classList.add('indigo', 'white-text');
+
+    const filtrados = categoria === "Todas"
+        ? gastosGlobal
+        : gastosGlobal.filter(g => g.categoria === categoria);
+
+    renderizarTabla(filtrados);
 }
 
 // --- RENDERIZAR TABLA ---
@@ -59,27 +63,36 @@ function renderizarTabla(lista) {
     const tbody = document.getElementById('tabla-gastos');
     tbody.innerHTML = '';
 
+    if (lista.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text" style="padding:30px;">
+            No hay gastos en esta categoría.
+        </td></tr>`;
+        return;
+    }
+
     lista.forEach(g => {
-        // Formato de moneda
-        const montoFormato = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(g.monto);
-        
-        // Icono según categoría
-        let icono = 'attach_money';
-        if (g.categoria === 'Insumos') icono = 'shopping_cart';
-        if (g.categoria === 'Servicios') icono = 'lightbulb';
-        if (g.categoria === 'Nomina') icono = 'groups';
+        const montoFormato = new Intl.NumberFormat('es-CO', {
+            style: 'currency', currency: 'COP', maximumFractionDigits: 0
+        }).format(g.monto);
+
+        const iconos = {
+            Insumos: '🛒', Servicios: '💡', Nomina: '👷',
+            Mantenimiento: '🔧', Arriendo: '🏠', Cafeteria: '☕', Otros: '📦'
+        };
+        const icono = iconos[g.categoria] || '📦';
 
         tbody.innerHTML += `
             <tr>
-                <td>${g.fecha}</td>
+                <td style="font-size:0.9rem;">${g.fecha}</td>
+                <td style="font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" 
+                    title="${g.descripcion}">${g.descripcion}</td>
                 <td>
-                    <span style="font-weight:500">${g.descripcion}</span>
+                    <span class="chip" style="font-size:0.8rem; margin:0;">
+                        ${icono} ${g.categoria}
+                    </span>
                 </td>
-                <td>
-                    <span class="chip text-darken-2">${g.categoria}</span>
-                </td>
-                <td class="red-text" style="font-weight:bold">${montoFormato}</td>
-                <td>
+                <td class="red-text" style="font-weight:bold; text-align:right;">${montoFormato}</td>
+                <td class="center">
                     <button class="btn-flat btn-small red-text" onclick="eliminarGasto(${g.id})">
                         <i class="material-icons">delete</i>
                     </button>
@@ -89,95 +102,102 @@ function renderizarTabla(lista) {
     });
 }
 
-// --- GUARDAR NUEVO GASTO ---
+// --- GUARDAR GASTO ---
 async function guardarGasto() {
-    const fecha = document.getElementById('fecha-gasto').value;
-    const categoria = document.getElementById('categoria-gasto').value;
+    const fecha       = document.getElementById('fecha-gasto').value;
+    const categoria   = document.getElementById('categoria-gasto').value;
     const descripcion = document.getElementById('desc-gasto').value;
-    const monto = document.getElementById('monto-gasto').value;
+    const monto       = document.getElementById('monto-gasto').value;
 
-    // Validaciones
     if (!fecha || !categoria || !descripcion || !monto) {
         return M.toast({html: 'Completa todos los campos', classes: 'orange'});
     }
-
-    const nuevoGasto = {
-        fecha,
-        categoria,
-        descripcion,
-        monto,
-        responsable: localStorage.getItem('usuarioNombre') || 'Admin'
-    };
 
     try {
         const res = await fetch('/api/gastos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nuevoGasto)
+            body: JSON.stringify({ fecha, categoria, descripcion, monto,
+                responsable: localStorage.getItem('usuarioNombre') || 'Admin' })
         });
 
         if (res.ok) {
-            M.toast({html: 'Gasto registrado', classes: 'green'});
-            // Limpiar formulario
+            M.toast({html: '✅ Gasto registrado', classes: 'green'});
             document.getElementById('desc-gasto').value = '';
             document.getElementById('monto-gasto').value = '';
-            // Recargar tabla
             cargarGastos();
         } else {
             M.toast({html: 'Error al guardar', classes: 'red'});
         }
     } catch (error) {
-        console.error(error);
         M.toast({html: 'Error de conexión', classes: 'red'});
     }
 }
 
 // --- ELIMINAR GASTO ---
 async function eliminarGasto(id) {
-    if(!confirm('¿Seguro que quieres borrar este registro?')) return;
-
+    if (!confirm('¿Seguro que quieres borrar este registro?')) return;
     try {
         const res = await fetch(`/api/gastos/${id}`, { method: 'DELETE' });
         if (res.ok) {
             M.toast({html: 'Eliminado', classes: 'grey darken-3'});
             cargarGastos();
         }
-    } catch (error) {
-        console.error(error);
-    }
+    } catch (error) { console.error(error); }
 }
 
-// --- CÁLCULOS PARA LAS TARJETAS ---
+// --- RESUMEN Y TOP 3 CATEGORÍAS ---
 function calcularResumen(gastos) {
-    // 1. Filtrar solo gastos de ESTE MES
     const hoy = new Date();
-    const mesActual = hoy.getMonth(); 
+    const mesActual = hoy.getMonth();
     const anioActual = hoy.getFullYear();
 
-    const gastosMes = gastos.filter(g => {
-        const fechaGasto = new Date(g.fecha);
-        // Ojo: en JS los meses van de 0 a 11, pero al venir de input date (YYYY-MM-DD) funciona bien con new Date()
-        // Sin embargo, new Date('2024-02-01') en UTC puede dar problemas de zona horaria.
-        // Truco rápido: comparamos strings 'YYYY-MM'
-        return g.fecha.startsWith(`${anioActual}-${String(mesActual + 1).padStart(2, '0')}`);
-    });
+    const gastosMes = gastos.filter(g =>
+        g.fecha.startsWith(`${anioActual}-${String(mesActual + 1).padStart(2, '0')}`)
+    );
 
-    // 2. Sumar Total
+    // Total del mes
     const total = gastosMes.reduce((sum, g) => sum + Number(g.monto), 0);
-    document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(total);
+    document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', {
+        style: 'currency', currency: 'COP', maximumFractionDigits: 0
+    }).format(total);
 
-    // 3. Encontrar Categoría Mayor
-    if (gastosMes.length === 0) {
-        document.getElementById('cat-mayor').innerText = "N/A";
-        return;
-    }
-
+    // Top 3 categorías
     const conteo = {};
     gastosMes.forEach(g => {
         conteo[g.categoria] = (conteo[g.categoria] || 0) + Number(g.monto);
     });
 
-    // Ordenar y sacar la mayor
-    const categoriaGanadora = Object.keys(conteo).reduce((a, b) => conteo[a] > conteo[b] ? a : b);
-    document.getElementById('cat-mayor').innerText = `${categoriaGanadora}`;
+    const top3 = Object.entries(conteo)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 3);
+
+    const iconos = {
+        Insumos: '🛒', Servicios: '💡', Nomina: '👷',
+        Mantenimiento: '🔧', Arriendo: '🏠', Cafeteria: '☕', Otros: '📦'
+    };
+
+    const colores = ['red-text', 'orange-text', 'amber-text text-darken-2'];
+    const medallas = ['🥇', '🥈', '🥉'];
+
+    const tbodyTop = document.getElementById('tabla-top-categorias');
+
+    if (top3.length === 0) {
+        tbodyTop.innerHTML = `<tr><td colspan="3" class="grey-text">Sin gastos este mes</td></tr>`;
+        return;
+    }
+
+    tbodyTop.innerHTML = top3.map(([cat, monto], i) => `
+        <tr>
+            <td style="padding: 4px 0; width:10%;">${medallas[i]}</td>
+            <td style="padding: 4px 0; font-weight:600;">
+                ${iconos[cat] || '📦'} ${cat}
+            </td>
+            <td style="padding: 4px 0; text-align:right;" class="${colores[i]}">
+                <b>${new Intl.NumberFormat('es-CO', {
+                    style: 'currency', currency: 'COP', maximumFractionDigits: 0
+                }).format(monto)}</b>
+            </td>
+        </tr>
+    `).join('');
 }
