@@ -1,132 +1,81 @@
-// public/js/dashboard.js - Versión Integrada y Responsive
+// public/js/dashboard.js — Las Trompetas · Versión Premium
 
 let miGrafico;
 let miGraficoCategorias;
 let datosVentasActuales = [];
 let datosGastosActuales = [];
-let vistaActual = "vendedor";
+let vistaActual = "dia";
 let inventarioGlobal = [];
 
 const COLORS = {
-  indigo: "#1a237e",
-  indigoLight: "rgba(26, 35, 126, 0.1)",
+  indigo:  "#1a237e",
   success: "#2e7d32",
-  warning: "#ef6c00",
-  danger: "#c62828",
-  chart: [
-    "#1a237e",
-    "#43a047",
-    "#fb8c00",
-    "#e53935",
-    "#8e24aa",
-    "#00acc1",
-    "#3949ab",
-  ],
+  danger:  "#c62828",
+  warning: "#e65100",
+  cyan:    "#00838f",
+  chart: ["#1a237e","#43a047","#fb8c00","#e53935","#8e24aa","#00acc1","#3949ab","#00695c"],
 };
 
+// ── INIT ──
 document.addEventListener("DOMContentLoaded", () => {
-  const hoy = new Date();
+  const hoy      = new Date();
   const primerDia = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-
-  if (document.getElementById("filtro-hasta"))
-    document.getElementById("filtro-hasta").valueAsDate = hoy;
-  if (document.getElementById("filtro-desde"))
-    document.getElementById("filtro-desde").valueAsDate = primerDia;
-
-  if (typeof M !== "undefined") M.updateTextFields();
+  const elHasta  = document.getElementById("filtro-hasta");
+  const elDesde  = document.getElementById("filtro-desde");
+  if (elHasta) elHasta.valueAsDate = hoy;
+  if (elDesde) elDesde.valueAsDate = primerDia;
   cargarDashboard();
 });
 
-// ==========================================
-// 1. FUNCIÓN DE PROTECCIÓN (Mantenida intacta)
-// ==========================================
+// ── PROTECCIÓN ──
 (function protegerVista() {
-  const sesionGuardada =
-    localStorage.getItem("usuarioNombre") ||
-    localStorage.getItem("usuarioActual");
-  if (!sesionGuardada) {
-    window.location.href = "index.html";
-    return;
-  }
-  let usuario = null;
-  try {
-    usuario = JSON.parse(sesionGuardada);
-  } catch (error) {
-    usuario = { nombre: sesionGuardada, rol: "ADMIN" };
-    localStorage.setItem("usuarioNombre", JSON.stringify(usuario));
-  }
-
-  if (!usuario || !usuario.rol) {
-    alert("⚠️ Error: Sesión desactualizada.");
-    localStorage.clear();
-    window.location.href = "index.html";
-    return;
-  }
-
+  const sesion = localStorage.getItem("usuarioNombre") || localStorage.getItem("usuarioActual");
+  if (!sesion) { window.location.href = "index.html"; return; }
+  let usuario;
+  try { usuario = JSON.parse(sesion); }
+  catch { usuario = { nombre: sesion, rol: "ADMIN" }; localStorage.setItem("usuarioNombre", JSON.stringify(usuario)); }
+  if (!usuario?.rol) { localStorage.clear(); window.location.href = "index.html"; return; }
   const rol = usuario.rol.toUpperCase();
-  if (rol !== "ADMIN" && rol !== "ADMINISTRADOR" && rol !== "JEFE") {
+  if (!["ADMIN","ADMINISTRADOR","JEFE"].includes(rol)) {
     window.location.href = "ventas.html";
   } else {
     document.body.style.display = "block";
   }
 })();
 
-// ==========================================
-// 2. FUNCIÓN GENERAR EXCEL (Mantenida intacta)
-// ==========================================
+// ── EXCEL ──
 function generarReporteExcel() {
-  if (!datosVentasActuales || datosVentasActuales.length === 0) {
-    M.toast({ html: "⚠️ No hay datos para exportar", classes: "orange" });
-    return;
-  }
-  if (typeof XLSX === "undefined") {
-    alert("Error: La librería SheetJS no cargó.");
-    return;
-  }
+  if (!datosVentasActuales?.length) { M.toast({ html: "⚠️ No hay datos para exportar", classes: "orange" }); return; }
+  if (typeof XLSX === "undefined") { alert("Error: librería XLSX no cargó."); return; }
   try {
-    const datosParaExcel = datosVentasActuales.map((venta) => ({
-      Fecha: venta.Fecha,
-      Vendedor: venta.Vendedor,
-      Personas: Number(venta.Personas),
-      Total: Number(venta.Total),
-      Items: venta.Productos,
-    }));
-    const ws = XLSX.utils.json_to_sheet(datosParaExcel);
+    const ws = XLSX.utils.json_to_sheet(datosVentasActuales.map(v => ({
+      Fecha: v.Fecha, Vendedor: v.Vendedor,
+      Personas: Number(v.Personas), Total: Number(v.Total), Items: v.Productos,
+    })));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reporte Ventas");
-    const hoy = new Date().toISOString().split("T")[0];
-    XLSX.writeFile(wb, `Reporte_Ventas_${hoy}.xlsx`);
+    XLSX.writeFile(wb, `Reporte_Ventas_${new Date().toISOString().split("T")[0]}.xlsx`);
     M.toast({ html: "✅ Reporte descargado", classes: "green" });
-  } catch (e) {
-    console.error("Error exportando:", e);
-  }
+  } catch (e) { console.error(e); }
 }
 
-// --- FILTROS DE TURNO RÁPIDO ---
-function aplicarTurno(horaInicio, horaFin) {
-  document.getElementById("filtro-hora-desde").value =
-    String(horaInicio).padStart(2, "0") + ":00";
-  document.getElementById("filtro-hora-hasta").value =
-    String(horaFin).padStart(2, "0") + ":59";
+// ── FILTROS DE TURNO ──
+function aplicarTurno(hi, hf) {
+  document.getElementById("filtro-hora-desde").value = String(hi).padStart(2,"0") + ":00";
+  document.getElementById("filtro-hora-hasta").value = String(hf).padStart(2,"0") + ":59";
   cargarDashboard();
 }
-
 function limpiarFiltroHora() {
   document.getElementById("filtro-hora-desde").value = "00:00";
   document.getElementById("filtro-hora-hasta").value = "23:59";
   cargarDashboard();
 }
-
-// Extrae solo HH:MM de una fecha ISO y lo convierte a minutos para comparar
-function horaAMinutos(fechaISO) {
-  try {
-    const d = new Date(fechaISO);
-    return d.getHours() * 60 + d.getMinutes();
-  } catch (e) {
-    return 0;
-  }
+function horaAMinutos(iso) {
+  try { const d = new Date(iso); return d.getHours() * 60 + d.getMinutes(); }
+  catch { return 0; }
 }
 
+// ── DASHBOARD PRINCIPAL ──
 async function cargarDashboard() {
   try {
     const [resVentas, resInv, resGastos] = await Promise.all([
@@ -134,43 +83,37 @@ async function cargarDashboard() {
       fetch("/api/inventario/ver"),
       fetch("/api/gastos"),
     ]);
-
-    const rawVentas = await resVentas.json();
+    const rawVentas  = await resVentas.json();
     const inventario = await resInv.json();
-    const rawGastos = await resGastos.json();
-
+    const rawGastos  = await resGastos.json();
     inventarioGlobal = inventario;
 
-    const ventas = rawVentas.map((v) => {
+    // Normalizar ventas
+    const ventas = rawVentas.map(v => {
       let fechaStr = v.Fecha || "";
       if (!fechaStr && v.fecha) {
         const d = new Date(v.fecha);
-        fechaStr = `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1).toString().padStart(2, "0")}/${d.getFullYear()}`;
+        fechaStr = `${String(d.getDate()).padStart(2,"0")}/${String(d.getMonth()+1).padStart(2,"0")}/${d.getFullYear()}`;
       }
       let prodStr = v.Productos || "";
-      if (!prodStr && v.items && Array.isArray(v.items)) {
-        prodStr = v.items.map((i) => `${i.nombre} (x${i.cantidad})`).join(", ");
+      if (!prodStr && Array.isArray(v.items)) {
+        prodStr = v.items.map(i => `${i.nombre} (x${i.cantidad})`).join(", ");
       }
-      let vendedorNombre = v.Vendedor || v.vendedor || "Admin";
-      if (
-        typeof vendedorNombre === "string" &&
-        vendedorNombre.startsWith("{")
-      ) {
-        try {
-          const parsed = JSON.parse(vendedorNombre);
-          vendedorNombre = parsed.nombre || "Vendedor";
-        } catch (e) {}
+      let vendedor = v.Vendedor || v.vendedor || "Admin";
+      if (typeof vendedor === "string" && vendedor.startsWith("{")) {
+        try { vendedor = JSON.parse(vendedor).nombre || "Vendedor"; } catch {}
       }
       return {
         Fecha: fechaStr,
-        Total: v.Total !== undefined ? v.Total : v.total || 0,
-        Personas: v.Personas !== undefined ? v.Personas : v.numPersonas || 0,
-        Vendedor: vendedorNombre,
+        Total: v.Total ?? v.total ?? 0,
+        Personas: v.Personas ?? v.numPersonas ?? 0,
+        Vendedor: vendedor,
         Productos: prodStr,
+        _raw: v,
       };
     });
 
-    // ✅ DESPUÉS
+    // Filtros
     const fDesde = document.getElementById("filtro-desde").value;
     const fHasta = document.getElementById("filtro-hasta").value;
     if (!fDesde || !fHasta) return;
@@ -178,298 +121,354 @@ async function cargarDashboard() {
     const desde = new Date(fDesde + "T00:00:00");
     const hasta = new Date(fHasta + "T23:59:59");
 
-    // Leer filtro de hora
-    const horaDesdeStr =
-      document.getElementById("filtro-hora-desde")?.value || "00:00";
-    const horaHastaStr =
-      document.getElementById("filtro-hora-hasta")?.value || "23:59";
+    const horaDesdeStr = document.getElementById("filtro-hora-desde")?.value || "00:00";
+    const horaHastaStr = document.getElementById("filtro-hora-hasta")?.value || "23:59";
     const [hD, mD] = horaDesdeStr.split(":").map(Number);
     const [hH, mH] = horaHastaStr.split(":").map(Number);
     const minDesde = hD * 60 + mD;
     const minHasta = hH * 60 + mH;
 
-    // Filtramos por fecha Y hora
-    datosVentasActuales = ventas.filter((v) => {
-      const fechaVenta = parsearFecha(v.Fecha);
-      if (fechaVenta < desde || fechaVenta > hasta) return false;
-
-      // Si la venta tiene fecha ISO (JSON), aplicamos filtro de hora
-      const ventaOriginal = rawVentas.find((r) => {
-        const d = new Date(r.fecha || 0);
-        const dStr = `${d.getDate().toString().padStart(2, "0")}/${(d.getMonth() + 1).toString().padStart(2, "0")}/${d.getFullYear()}`;
-        return dStr === v.Fecha && (r.vendedor || r.Vendedor) === v.Vendedor;
-      });
-
-      if (ventaOriginal && ventaOriginal.fecha) {
-        const minVenta = horaAMinutos(ventaOriginal.fecha);
-        return minVenta >= minDesde && minVenta <= minHasta;
+    datosVentasActuales = ventas.filter(v => {
+      const fv = parsearFecha(v.Fecha);
+      if (fv < desde || fv > hasta) return false;
+      if (v._raw?.fecha) {
+        const min = horaAMinutos(v._raw.fecha);
+        return min >= minDesde && min <= minHasta;
       }
-
-      // Ventas del Excel (sin hora) — pasan el filtro solo si el rango cubre todo el día
       return minDesde === 0 && minHasta >= 1439;
     });
 
-    datosGastosActuales = rawGastos.filter((g) => {
-      const fechaGasto = new Date(g.fecha + "T00:00:00");
-      return fechaGasto >= desde && fechaGasto <= hasta;
+    datosGastosActuales = rawGastos.filter(g => {
+      const fg = new Date(g.fecha + "T00:00:00");
+      return fg >= desde && fg <= hasta;
     });
 
-    let totalIngresos = 0,
-      totalCostoInsumos = 0,
-      totalPersonas = 0;
-    let conteoProductos = {},
-      conteoVendedores = {};
+    // Cálculos
+    let totalIngresos = 0, totalCosto = 0, totalPersonas = 0;
+    const conteoProductos  = {};
+    const conteoVendedores = {};
 
-    datosVentasActuales.forEach((v) => {
+    datosVentasActuales.forEach(v => {
       totalIngresos += Number(v.Total) || 0;
       totalPersonas += Number(v.Personas) || 0;
-      conteoVendedores[v.Vendedor] =
-        (conteoVendedores[v.Vendedor] || 0) + (Number(v.Total) || 0);
+      conteoVendedores[v.Vendedor] = (conteoVendedores[v.Vendedor] || 0) + (Number(v.Total) || 0);
 
       if (v.Productos) {
-        v.Productos.split(", ").forEach((itemStr) => {
-          const match = itemStr.match(/(.+) \(x(\d+)\)/);
-          if (match) {
-            const nombre = match[1].trim();
-            const cant = parseInt(match[2]);
-            const prodInv = inventarioGlobal.find(
-              (p) => p.nombre.trim() === nombre,
-            );
-            let costoUnitario =
-              prodInv && prodInv.costo ? Number(prodInv.costo) : 0;
-            totalCostoInsumos += costoUnitario * cant;
+        v.Productos.split(", ").forEach(itemStr => {
+          const m = itemStr.match(/(.+) \(x(\d+)\)/);
+          if (m) {
+            const nombre = m[1].trim();
+            const cant   = parseInt(m[2]);
+            const prod   = inventarioGlobal.find(p => p.nombre?.trim() === nombre);
+            totalCosto  += (prod?.costo ? Number(prod.costo) : 0) * cant;
             conteoProductos[nombre] = (conteoProductos[nombre] || 0) + cant;
           }
         });
       }
     });
 
-    const totalGastosOperativos = datosGastosActuales.reduce(
-      (sum, g) => sum + (Number(g.monto) || 0),
-      0,
-    );
-    const gananciaNeta =
-      totalIngresos - totalCostoInsumos - totalGastosOperativos;
+    const totalGastos   = datosGastosActuales.reduce((s,g) => s + (Number(g.monto)||0), 0);
+    const gananciaNeta  = totalIngresos - totalCosto - totalGastos;
+    const ticketProm    = totalPersonas > 0 ? Math.round(totalIngresos / totalPersonas) : 0;
 
-    actualizarTexto("txt-ventas-totales", formatearDinero(totalIngresos));
-    actualizarTexto("txt-ganancia", formatearDinero(gananciaNeta));
-    actualizarTexto(
-      "txt-gastos-totales",
-      formatearDinero(totalGastosOperativos),
-    );
-    actualizarTexto("txt-total-personas", totalPersonas.toLocaleString());
+    const vendTop = mejorClave(conteoVendedores);
+    const prodTop = mejorClave(conteoProductos);
 
-    const ticketProm = totalPersonas > 0 ? totalIngresos / totalPersonas : 0;
-    actualizarTexto(
-      "txt-ticket-promedio",
-      formatearDinero(Math.round(ticketProm)),
-    );
+    // ── Actualizar header de rango
+    const optsF = { day:"numeric", month:"short" };
+    const desdeLeg = desde.toLocaleDateString("es-CO", optsF);
+    const hastaLeg = hasta.toLocaleDateString("es-CO", optsF);
+    setText("txt-rango-header", `${desdeLeg} – ${hastaLeg}`);
 
-    const prodTop =
-      Object.keys(conteoProductos).length > 0
-        ? Object.keys(conteoProductos).reduce((a, b) =>
-            conteoProductos[a] > conteoProductos[b] ? a : b,
-          )
-        : "N/A";
-    const vendTop =
-      Object.keys(conteoVendedores).length > 0
-        ? Object.keys(conteoVendedores).reduce((a, b) =>
-            conteoVendedores[a] > conteoVendedores[b] ? a : b,
-          )
-        : "N/A";
+    // ── KPIs
+    setText("txt-ventas-totales", fmt(totalIngresos));
+    setText("txt-ganancia",       fmt(gananciaNeta));
+    setText("txt-gastos-totales", fmt(totalGastos));
+    setText("txt-total-personas", totalPersonas.toLocaleString("es-CO"));
+    setText("txt-ticket-promedio", fmt(ticketProm));
+    setText("txt-vendedor-top", vendTop || "—");
+    if (vendTop) setText("sub-vendedor", fmt(conteoVendedores[vendTop]) + " en ventas");
+    setText("txt-producto-top", prodTop || "—");
+    if (prodTop) setText("sub-producto", `${conteoProductos[prodTop]} unidades`);
 
-    actualizarTexto("txt-vendedor-top", vendTop);
+    // ── Badges de ganancia
+    setBadge("badge-ganancia", gananciaNeta, totalIngresos);
+    setBadge("badge-ventas",   totalIngresos, null, datosVentasActuales.length + " ventas");
+    setBadge("badge-gastos",   -totalGastos,  null, null, true);
 
-    // KPI Producto más vendido
-    const productoTopNombre =
-      Object.keys(conteoProductos).length > 0
-        ? Object.keys(conteoProductos).reduce((a, b) =>
-            conteoProductos[a] > conteoProductos[b] ? a : b,
-          )
-        : "Sin datos";
-    const productoTopCantidad = conteoProductos[productoTopNombre] || 0;
+    // ── Color tarjeta ganancia
+    const cardGanancia = document.querySelector(".c-green");
+    if (cardGanancia) {
+      cardGanancia.querySelector("::before"); // solo referencia
+      cardGanancia.style.setProperty("--accent", gananciaNeta < 0 ? "#e53935" : "#43a047");
+      const barre = cardGanancia.querySelector(".kpi-card::before");
+    }
+    actualizarColorGanancia(gananciaNeta);
 
-    actualizarTexto(
-      "txt-producto-top",
-      productoTopNombre !== "Sin datos"
-        ? `${productoTopNombre} (${productoTopCantidad} uds)`
-        : "Sin datos",
-    );
-    
-    actualizarColorTarjetaGanancia(gananciaNeta);
+    // ── Estado de salud
+    const margenPct = totalIngresos > 0 ? (gananciaNeta / totalIngresos) * 100 : 0;
+    const estadoEl  = document.getElementById("txt-estado");
+    if (estadoEl) {
+      if (gananciaNeta < 0) {
+        estadoEl.innerHTML = `<span class="health-badge bad"><i class="material-icons">warning</i>En pérdida</span>`;
+      } else if (margenPct < 10) {
+        estadoEl.innerHTML = `<span class="health-badge" style="background:#fff3e0;color:#e65100;"><i class="material-icons">info</i>Margen bajo</span>`;
+      } else {
+        estadoEl.innerHTML = `<span class="health-badge good"><i class="material-icons">check_circle</i>Saludable</span>`;
+      }
+    }
 
+    // ── Top 5 productos
+    renderizarTop5(conteoProductos);
+
+    // ── Gráficas
     renderizarGrafico();
     renderizarGraficoCategorias();
-  } catch (error) {
-    console.error("Error Dashboard:", error);
+
+  } catch (err) {
+    console.error("Error Dashboard:", err);
+    M.toast({ html: "Error cargando datos", classes: "red" });
   }
 }
 
-// --- UTILIDADES ---
-function formatearDinero(valor) {
-  return new Intl.NumberFormat("es-CO", {
-    style: "currency",
-    currency: "COP",
-    maximumFractionDigits: 0,
-  }).format(valor);
-}
+// ── TOP 5 PRODUCTOS ──
+function renderizarTop5(conteo) {
+  const lista = document.getElementById("lista-top5");
+  if (!lista) return;
 
-function parsearFecha(fechaStr) {
-  if (!fechaStr) return new Date(0);
-  const partes = fechaStr.split("/");
-  return new Date(partes[2], partes[1] - 1, partes[0]);
-}
+  const items = Object.entries(conteo)
+    .sort((a,b) => b[1] - a[1])
+    .slice(0, 5);
 
-function actualizarTexto(id, valor) {
-  const el = document.getElementById(id);
-  if (el) el.innerText = valor;
-}
-
-function actualizarColorTarjetaGanancia(valor) {
-  const card =
-    document.querySelector(".kpi-success") ||
-    document.querySelector(".kpi-danger");
-  if (card) {
-    card.style.borderLeft =
-      valor < 0 ? "5px solid #c62828" : "5px solid #2e7d32";
+  if (items.length === 0) {
+    lista.innerHTML = `<li style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:24px 0;">Sin datos en el período</li>`;
+    return;
   }
+
+  const maxVal = items[0][1];
+  const rankClasses = ["r1","r2","r3","r4","r5"];
+  const medallas    = ["🥇","🥈","🥉","4","5"];
+
+  lista.innerHTML = items.map(([nombre, cant], i) => {
+    const pct = Math.round((cant / maxVal) * 100);
+    return `
+      <li class="top5-item">
+        <div class="top5-rank ${rankClasses[i]}">${medallas[i]}</div>
+        <div class="top5-info">
+          <div class="top5-name" title="${nombre}">${nombre}</div>
+          <div class="top5-bar-wrap">
+            <div class="top5-bar" style="width:${pct}%"></div>
+          </div>
+        </div>
+        <div class="top5-qty">${cant} uds</div>
+      </li>`;
+  }).join("");
 }
 
-function cambiarVistaGrafico(nuevaVista) {
-  vistaActual = nuevaVista;
-  renderizarGrafico();
-}
-
-// --- GRÁFICOS RESPONSIVE ---
-
+// ── GRÁFICO PRINCIPAL ──
 function renderizarGrafico() {
   const canvas = document.getElementById("chart-ventas");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   if (miGrafico) miGrafico.destroy();
 
-  // Gradiente dinámico (se ajusta a la altura del canvas actual)
-  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-  gradient.addColorStop(0, "rgba(26, 35, 126, 0.4)");
-  gradient.addColorStop(1, "rgba(26, 35, 126, 0.0)");
+  const gradient = ctx.createLinearGradient(0, 0, 0, 280);
+  gradient.addColorStop(0, "rgba(26,35,126,0.35)");
+  gradient.addColorStop(1, "rgba(26,35,126,0.0)");
 
-  let etiquetas = [],
-    valores = [],
-    tituloDataset = "";
+  let labels = [], data = [], titulo = "";
 
   if (vistaActual === "vendedor") {
-    tituloDataset = "Ventas por Vendedor";
-    const resumen = {};
-    datosVentasActuales.forEach(
-      (v) =>
-        (resumen[v.Vendedor] =
-          (resumen[v.Vendedor] || 0) + (Number(v.Total) || 0)),
-    );
-    etiquetas = Object.keys(resumen);
-    valores = Object.values(resumen);
+    titulo = "Ventas por Vendedor";
+    const r = {};
+    datosVentasActuales.forEach(v => r[v.Vendedor] = (r[v.Vendedor]||0) + (Number(v.Total)||0));
+    labels = Object.keys(r);
+    data   = Object.values(r);
   } else {
-    tituloDataset = "Ventas por Día";
-    const resumen = {};
-    datosVentasActuales.forEach(
-      (v) =>
-        (resumen[v.Fecha] = (resumen[v.Fecha] || 0) + (Number(v.Total) || 0)),
-    );
-    etiquetas = Object.keys(resumen).sort(
-      (a, b) => parsearFecha(a) - parsearFecha(b),
-    );
-    valores = etiquetas.map((f) => resumen[f]);
+    titulo = "Ventas por Día";
+    const r = {};
+    datosVentasActuales.forEach(v => r[v.Fecha] = (r[v.Fecha]||0) + (Number(v.Total)||0));
+    labels = Object.keys(r).sort((a,b) => parsearFecha(a) - parsearFecha(b));
+    data   = labels.map(f => r[f]);
   }
 
+  const esDia = vistaActual === "dia";
+
   miGrafico = new Chart(ctx, {
-    type: vistaActual === "dia" ? "line" : "bar",
+    type: esDia ? "line" : "bar",
     data: {
-      labels: etiquetas,
-      datasets: [
-        {
-          label: tituloDataset,
-          data: valores,
-          backgroundColor: vistaActual === "dia" ? gradient : COLORS.indigo,
-          borderColor: COLORS.indigo,
-          borderWidth: 2,
-          tension: 0.4,
-          fill: true,
-        },
-      ],
+      labels,
+      datasets: [{
+        label: titulo,
+        data,
+        backgroundColor: esDia ? gradient : COLORS.chart,
+        borderColor: esDia ? COLORS.indigo : "transparent",
+        borderWidth: esDia ? 2 : 0,
+        borderRadius: esDia ? 0 : 8,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: COLORS.indigo,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      }],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "#0d1547",
+          titleColor: "#fff",
+          bodyColor: "rgba(255,255,255,0.8)",
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: {
+            label: ctx => " " + fmt(ctx.raw),
+          },
+        },
+      },
       scales: {
         y: {
           beginAtZero: true,
+          grid: { color: "rgba(0,0,0,0.05)" },
           ticks: {
-            callback: (v) => "$" + v.toLocaleString(),
-            font: { size: window.innerWidth < 600 ? 10 : 12 }, // Fuente más pequeña en móvil
+            callback: v => "$" + (v >= 1000 ? (v/1000).toFixed(0)+"k" : v),
+            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
+            color: "#9ca3af",
           },
+          border: { display: false },
         },
         x: {
+          grid: { display: false },
           ticks: {
-            maxRotation: 45,
-            minRotation: 45,
-            font: { size: window.innerWidth < 600 ? 10 : 12 },
+            maxRotation: 45, minRotation: 0,
+            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
+            color: "#9ca3af",
           },
+          border: { display: false },
         },
       },
     },
   });
 }
 
+// ── GRÁFICO CATEGORÍAS ──
 function renderizarGraficoCategorias() {
-  const canvasCat = document.getElementById("chart-categorias");
-  if (!canvasCat) return;
-  const ctxCat = canvasCat.getContext("2d");
+  const canvas = document.getElementById("chart-categorias");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
   if (miGraficoCategorias) miGraficoCategorias.destroy();
 
-  const resumenCat = {};
-  datosVentasActuales.forEach((v) => {
+  const resumen = {};
+  datosVentasActuales.forEach(v => {
     if (v.Productos) {
-      v.Productos.split(", ").forEach((itemStr) => {
-        const match = itemStr.match(/(.+) \(x(\d+)\)/);
-        if (match) {
-          const nombre = match[1].trim();
-          const prodInv = inventarioGlobal.find(
-            (p) => p.nombre.trim() === nombre,
-          );
-          const cat = prodInv ? prodInv.categoria : "Otros";
-          resumenCat[cat] = (resumenCat[cat] || 0) + parseInt(match[2]);
+      v.Productos.split(", ").forEach(itemStr => {
+        const m = itemStr.match(/(.+) \(x(\d+)\)/);
+        if (m) {
+          const nombre = m[1].trim();
+          const prod   = inventarioGlobal.find(p => p.nombre?.trim() === nombre);
+          const cat    = prod?.categoria || "Otros";
+          resumen[cat] = (resumen[cat] || 0) + parseInt(m[2]);
         }
       });
     }
   });
 
-  miGraficoCategorias = new Chart(ctxCat, {
+  miGraficoCategorias = new Chart(ctx, {
     type: "doughnut",
     data: {
-      labels: Object.keys(resumenCat),
-      datasets: [
-        {
-          data: Object.values(resumenCat),
-          backgroundColor: COLORS.chart,
-          borderWidth: 2,
-        },
-      ],
+      labels: Object.keys(resumen),
+      datasets: [{
+        data:            Object.values(resumen),
+        backgroundColor: COLORS.chart,
+        borderWidth:     3,
+        borderColor:     "#fff",
+        hoverOffset:     6,
+      }],
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      cutout: "60%",
+      cutout: "65%",
       plugins: {
         legend: {
-          position: window.innerWidth < 600 ? "bottom" : "right", // Leyenda abajo en móvil, derecha en PC
-          labels: { boxWidth: 12, font: { size: 11 } },
+          position: window.innerWidth < 600 ? "bottom" : "right",
+          labels: {
+            boxWidth: 10, boxHeight: 10,
+            borderRadius: 3,
+            padding: 14,
+            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif", weight: "600" },
+            color: "#374151",
+          },
+        },
+        tooltip: {
+          backgroundColor: "#0d1547",
+          titleColor: "#fff",
+          bodyColor: "rgba(255,255,255,0.8)",
+          padding: 12,
+          cornerRadius: 8,
         },
       },
     },
   });
 }
 
-// Redibujar gráficos si se cambia el tamaño de la pantalla
+// ── UTILIDADES ──
+function fmt(val) {
+  return new Intl.NumberFormat("es-CO", {
+    style: "currency", currency: "COP", maximumFractionDigits: 0,
+  }).format(val);
+}
+
+function parsearFecha(str) {
+  if (!str) return new Date(0);
+  const p = str.split("/");
+  return new Date(p[2], p[1]-1, p[0]);
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.innerText = val;
+}
+
+function mejorClave(obj) {
+  const keys = Object.keys(obj);
+  if (!keys.length) return null;
+  return keys.reduce((a,b) => obj[a] > obj[b] ? a : b);
+}
+
+function setBadge(id, valor, total, textoFijo, invertir = false) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (textoFijo) { el.textContent = textoFijo; return; }
+  if (total && total > 0) {
+    const pct = Math.round((valor / total) * 100);
+    const dir = invertir ? pct < 0 : pct >= 0;
+    el.className = "kpi-badge " + (dir ? "up" : "down");
+    el.innerHTML = `<i class="material-icons">${dir ? "arrow_upward" : "arrow_downward"}</i>${Math.abs(pct)}%`;
+  }
+}
+
+function actualizarColorGanancia(val) {
+  const card = document.querySelector(".c-green");
+  if (!card) return;
+  const before = card.style;
+  // Cambiamos el color del accent bar via un helper class
+  if (val < 0) {
+    card.classList.remove("c-green");
+    card.classList.add("c-red-ganancia");
+  } else {
+    card.classList.remove("c-red-ganancia");
+    if (!card.classList.contains("c-green")) card.classList.add("c-green");
+  }
+}
+
+function cambiarVistaGrafico(vista) {
+  vistaActual = vista;
+  renderizarGrafico();
+}
+
 window.addEventListener("resize", () => {
   if (miGrafico) miGrafico.update();
   if (miGraficoCategorias) miGraficoCategorias.update();

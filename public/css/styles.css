@@ -475,6 +475,34 @@ nav {
    ========================================================================== */
 
 /* --- CONTENEDOR DE TABLA CON SCROLL --- */
+
+/* Fix botones que se salen del encabezado ACCIÓN */
+#tabla-historial thead tr {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #f5f5f5;
+}
+
+#tabla-historial thead th {
+    background: #f5f5f5;
+    z-index: 10;
+}
+
+#tabla-historial tbody td:last-child {
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+    overflow: hidden;
+    padding: 4px 0;
+}
+
+#tabla-historial .btn-flat {
+    padding: 0 6px;
+    margin: 0;
+    height: 32px;
+    line-height: 32px;
+}
 .table-scroll-container {
   /* CAMBIO: Usamos altura dinámica (65% de la altura de la ventana) */
   height: 65vh;

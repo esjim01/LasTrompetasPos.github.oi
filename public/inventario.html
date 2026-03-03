@@ -31,7 +31,7 @@
 
       /* 2. ENCABEZADO FIJO (STICKY HEADER) CORREGIDO */
       .table-scroll-container table thead th,
-      .sticky-header th {
+      .sticky-header th  {
         position: sticky;
         top: 0;
         z-index: 100; /* IMPORTANTE: Alto para tapar los botones que pasen por debajo */
@@ -464,7 +464,7 @@
                           position: sticky;
                           top: 0;
                           background: #f5f5f5;
-                          z-index: 1;                        
+                          z-index: 10;                        
                         "
                       >
                         <th>Fecha</th>
@@ -796,90 +796,61 @@
       }
 
       // --- RENDERIZAR TABLA 2: HISTORIAL ---
-      function renderizarHistorialStock(ventasParaMostrar) {
-        const tbody = document.getElementById("tabla-historial");
-        if (!tbody) return;
-        tbody.innerHTML = "";
+function renderizarHistorialStock(ventasParaMostrar) {
+    const tbody = document.getElementById("tabla-historial");
+    if (!tbody) return;
+    tbody.innerHTML = "";
 
-        if (ventasParaMostrar.length === 0) {
-          tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text">No hay movimientos en este rango.</td></tr>`;
-          return;
-        }
+    if (ventasParaMostrar.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="center-align grey-text">No hay movimientos en este rango.</td></tr>`;
+        return;
+    }
 
-        const limiteVisual = ventasParaMostrar.slice(0, 50);
-
-        limiteVisual.forEach((v) => {
-          const fechaObj = new Date(v.fecha);
-          const fechaLegible = isNaN(fechaObj.getTime())
+    ventasParaMostrar.slice(0, 50).forEach((v) => {
+        const fechaObj = new Date(v.fecha);
+        const fechaLegible = isNaN(fechaObj.getTime())
             ? "Inválida"
             : fechaObj.toLocaleDateString("es-CO", {
-                month: "short",
-                day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              });
+                month: "short", day: "numeric",
+                hour: "2-digit", minute: "2-digit",
+            });
 
-          let detalleTexto = "Sin detalle";
-          if (Array.isArray(v.items) && v.items.length > 0) {
+        let detalleTexto = "Sin detalle";
+        if (Array.isArray(v.items) && v.items.length > 0) {
             detalleTexto = v.items
-              .map((item) => `${item.nombre} (x${item.cantidad})`)
-              .join(", ");
-          }
+                .map((item) => `${item.nombre} (x${item.cantidad})`)
+                .join(", ");
+        }
 
-          const total = Number(v.total || 0).toLocaleString("es-CO", {
-            style: "currency",
-            currency: "COP",
-            minimumFractionDigits: 0,
-          });
-          const usuario = v.vendedor || "Sistema";
-
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-          <td><small>${fechaLegible}</small></td>
-          <td>${usuario}</td>
-          <td class="truncate" style="max-width: 150px;" title="${detalleTexto}">${detalleTexto}</td>
-          <td style="font-weight: bold;">${total}</td>
-          <td class="center acciones-fila" style="width: 90px; white-space: nowrap;">
-              <button class="btn-flat btn-small blue-text waves-effect btn-editar-venta"
-                      data-id="${v.id}"
-                      title="Editar venta">
-                  <i class="material-icons">edit</i>
-              </button>
-              <button class="btn-flat btn-small red-text waves-effect btn-eliminar-venta"
-                      data-id="${v.id}"
-                      title="Eliminar venta">
-                  <i class="material-icons">delete</i>
-              </button>
-          </td>
-          `;
-          // Event listeners seguros — evitan el problema de IDs con caracteres especiales
-          document.querySelectorAll(".btn-editar-venta").forEach((btn) => {
-            btn.addEventListener("click", () => {
-              abrirModalEditarVenta(btn.dataset.id);
-            });
-          });
-
-          document.querySelectorAll(".btn-eliminar-venta").forEach((btn) => {
-            btn.addEventListener("click", () => {
-              eliminarVenta(btn.dataset.id);
-            });
-          });
-          tbody.appendChild(tr);
+        const total = Number(v.total || 0).toLocaleString("es-CO", {
+            style: "currency", currency: "COP", minimumFractionDigits: 0,
         });
-      }
 
-      // Event listeners seguros — evitan el problema de IDs con caracteres especiales
-      document.querySelectorAll(".btn-editar-venta").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          abrirModalEditarVenta(btn.dataset.id);
-        });
-      });
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><small>${fechaLegible}</small></td>
+            <td>${v.vendedor || "Sistema"}</td>
+            <td class="truncate" style="max-width:150px;" title="${detalleTexto}">${detalleTexto}</td>
+            <td style="font-weight:bold;">${total}</td>
+            <td class="center" style="width:90px; white-space:nowrap;">
+                <button class="btn-flat btn-small blue-text waves-effect" title="Editar venta">
+                    <i class="material-icons">edit</i>
+                </button>
+                <button class="btn-flat btn-small red-text waves-effect" title="Eliminar venta">
+                    <i class="material-icons">delete</i>
+                </button>
+            </td>
+        `;
 
-      document.querySelectorAll(".btn-eliminar-venta").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          eliminarVenta(btn.dataset.id);
-        });
-      });
+        // ✅ ID capturado en closure — sin data-id, sin onclick inline
+        const idVenta = v.id;
+        const botones = tr.querySelectorAll("button");
+        botones[0].addEventListener("click", () => abrirModalEditarVenta(idVenta));
+        botones[1].addEventListener("click", () => eliminarVenta(idVenta));
+
+        tbody.appendChild(tr);
+    });
+}
 
       function verDetallePedido(idVenta) {
         const venta = pedidosCargados.find((v) => v.id === idVenta);
