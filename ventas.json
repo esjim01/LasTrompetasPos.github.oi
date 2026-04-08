@@ -21865,5 +21865,5726 @@
     "total": 15000,
     "numPersonas": 0,
     "estado": "despachado"
+  },
+  {
+    "id": "V-1774645155809-28rgu",
+    "fecha": "2026-03-27T20:59:16.025Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 101
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774645232870-r1faj",
+    "fecha": "2026-03-27T21:00:33.602Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 26
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774645496279-vdubz",
+    "fecha": "2026-03-27T21:04:57.157Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 118
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774645828923-73w91",
+    "fecha": "2026-03-27T21:10:29.743Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 64
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774646194119-j7qud",
+    "fecha": "2026-03-27T21:16:35.318Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 63
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 100
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774646924478-hzdo8",
+    "fecha": "2026-03-27T21:28:45.357Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 15
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774647011398-taunc",
+    "fecha": "2026-03-27T21:30:11.853Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 14
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774647214795-w2y4o",
+    "fecha": "2026-03-27T21:33:35.657Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 62
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774647500115-z3qdl",
+    "fecha": "2026-03-27T21:38:20.851Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 60
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774647972492-z3xvy",
+    "fecha": "2026-03-27T21:46:13.522Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 117
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 59
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774648520769-lzx68",
+    "fecha": "2026-03-27T21:55:21.335Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 115
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774648992414-9grfi",
+    "fecha": "2026-03-27T22:03:12.874Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 13
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774649180390-e8j5b",
+    "fecha": "2026-03-27T22:06:20.703Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 12
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774649975559-4cgmi",
+    "fecha": "2026-03-27T22:19:36.102Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Agua Botella Grande",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 61
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774650083011-y9xuq",
+    "fecha": "2026-03-27T22:21:23.423Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 58
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774650369164-og6as",
+    "fecha": "2026-03-27T22:26:10.274Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 98
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 57
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774650646701-ofv33",
+    "fecha": "2026-03-27T22:30:46.951Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 56
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774650881970-oip3s",
+    "fecha": "2026-03-27T22:34:42.860Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 55
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 113
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 96
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 11
+      }
+    ],
+    "total": 35000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774651270303-3ajvr",
+    "fecha": "2026-03-27T22:41:10.979Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 112
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774651361879-qs834",
+    "fecha": "2026-03-27T22:42:42.203Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 95
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774651843513-9i8t8",
+    "fecha": "2026-03-27T22:50:43.989Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 54
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774652208828-me081",
+    "fecha": "2026-03-27T22:56:49.214Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 53
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774652304881-7kw29",
+    "fecha": "2026-03-27T22:58:25.086Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 52
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774652737531-lu2fz",
+    "fecha": "2026-03-27T23:05:37.576Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 111
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774652920379-ewmsb",
+    "fecha": "2026-03-27T23:08:40.812Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 94
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774652999474-ylltg",
+    "fecha": "2026-03-27T23:10:00.082Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 110
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653119687-qy86y",
+    "fecha": "2026-03-27T23:12:00.071Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 51
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653326843-mjzq5",
+    "fecha": "2026-03-27T23:15:28.367Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 50
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 93
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653512081-j4h9q",
+    "fecha": "2026-03-27T23:18:32.602Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653557303-gkjch",
+    "fecha": "2026-03-27T23:19:17.363Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Agua Botella Grande",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 59
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653709755-n7d3x",
+    "fecha": "2026-03-27T23:21:50.228Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 4,
+        "stockMax": 160
+      }
+    ],
+    "total": 40000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774653927137-shkfx",
+    "fecha": "2026-03-27T23:25:27.417Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 109
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 91
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774654083675-01s6q",
+    "fecha": "2026-03-27T23:28:04.496Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 156
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774654190380-0mchw",
+    "fecha": "2026-03-27T23:29:50.766Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 154
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 108
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774654469340-31flj",
+    "fecha": "2026-03-27T23:34:30.152Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 90
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 152
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774654674398-c2h1n",
+    "fecha": "2026-03-27T23:37:55.011Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 96
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774654759436-3jlfq",
+    "fecha": "2026-03-27T23:39:19.737Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 151
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774655025319-d5o5n",
+    "fecha": "2026-03-27T23:43:46.045Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Agua Botella Pequeña",
+        "precio": 3000,
+        "cantidad": 1,
+        "stockMax": 21
+      }
+    ],
+    "total": 3000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774655441037-wjun5",
+    "fecha": "2026-03-27T23:50:41.365Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 150
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774655590700-b1fkq",
+    "fecha": "2026-03-27T23:53:11.408Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 89
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774655933271-lgflf",
+    "fecha": "2026-03-27T23:58:54.045Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 95
+      },
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 49
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774656595694-ob0h3",
+    "fecha": "2026-03-28T00:09:55.908Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 107
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774656713302-6du9s",
+    "fecha": "2026-03-28T00:11:54.061Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Buchanans Media",
+        "precio": 130000,
+        "cantidad": 1,
+        "stockMax": 1
+      }
+    ],
+    "total": 130000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774656984312-710x6",
+    "fecha": "2026-03-28T00:16:24.948Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 87
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774657421961-e1m9c",
+    "fecha": "2026-03-28T00:23:42.316Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 106
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774657429732-aw9xc",
+    "fecha": "2026-03-28T00:23:49.799Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 105
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774657879798-b38ag",
+    "fecha": "2026-03-28T00:31:20.221Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 149
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774660046210-aarpt",
+    "fecha": "2026-03-28T01:07:26.859Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 104
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774660310381-0orvj",
+    "fecha": "2026-03-28T01:11:50.711Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 86
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774661186118-0mgnp",
+    "fecha": "2026-03-28T01:26:26.623Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 147
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774663225749-a62oy",
+    "fecha": "2026-03-28T02:00:26.636Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 146
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774665818963-uy0ot",
+    "fecha": "2026-03-28T02:43:39.579Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 145
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774744011347-u40fd",
+    "fecha": "2026-03-29T00:26:52.034Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 48
+      },
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 29
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774744614063-x4pbu",
+    "fecha": "2026-03-29T00:36:54.363Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Media",
+        "precio": 68000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 68000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774744803438-nremn",
+    "fecha": "2026-03-29T00:40:04.872Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 144
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774744852376-tbtet",
+    "fecha": "2026-03-29T00:40:53.132Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774744868037-lzaa8",
+    "fecha": "2026-03-29T00:41:09.606Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 85
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774745164185-wnsne",
+    "fecha": "2026-03-29T00:46:04.389Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Ron 8 años Botella",
+        "precio": 156000,
+        "cantidad": 1,
+        "stockMax": 8
+      }
+    ],
+    "total": 156000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774745174165-0lg1o",
+    "fecha": "2026-03-29T00:46:14.379Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 93
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774745331229-c9baw",
+    "fecha": "2026-03-29T00:48:50.100Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774745537178-frqmd",
+    "fecha": "2026-03-29T00:52:17.837Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 142
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746094172-3pgag",
+    "fecha": "2026-03-29T01:01:00.000Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "cantidad": 1,
+        "precio": 10000
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746246506-hhaxs",
+    "fecha": "2026-03-29T01:04:07.477Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 37
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746253939-6id62",
+    "fecha": "2026-03-29T01:04:15.086Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 34
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746425811-dsqp8",
+    "fecha": "2026-03-29T01:07:06.594Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 141
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746446128-0cjv6",
+    "fecha": "2026-03-29T01:07:26.478Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 36
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746496414-m3ljr",
+    "fecha": "2026-03-29T01:08:17.404Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 15
+      }
+    ],
+    "total": 132000,
+    "numPersonas": 9,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746557677-dzk0b",
+    "fecha": "2026-03-29T01:09:18.334Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Botella",
+        "precio": 108000,
+        "cantidad": 1,
+        "stockMax": 26
+      }
+    ],
+    "total": 108000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746777710-ti8mz",
+    "fecha": "2026-03-29T01:12:56.514Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 37
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746887899-uoo6a",
+    "fecha": "2026-03-29T01:14:48.881Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Botella",
+        "precio": 108000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 108000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774746894146-5q4qr",
+    "fecha": "2026-03-29T01:14:55.114Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 53
+      },
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 48
+      }
+    ],
+    "total": 62000,
+    "numPersonas": 9,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747014703-dbgr8",
+    "fecha": "2026-03-29T01:16:55.343Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747091000-gb6oh",
+    "fecha": "2026-03-29T01:18:09.524Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 14
+      }
+    ],
+    "total": 132000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747127616-xk9cx",
+    "fecha": "2026-03-29T01:18:47.955Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747162757-htwl2",
+    "fecha": "2026-03-29T01:19:00.000Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "cantidad": 1,
+        "precio": 88000
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 9,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747328285-unpjg",
+    "fecha": "2026-03-29T01:22:08.991Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Media",
+        "precio": 68000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 68000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747343965-q9llx",
+    "fecha": "2026-03-29T01:22:24.637Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 26
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747454739-4yoqw",
+    "fecha": "2026-03-29T01:24:13.217Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 52
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747461050-oengv",
+    "fecha": "2026-03-29T01:24:21.683Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 34
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747552046-o6mme",
+    "fecha": "2026-03-29T01:25:52.856Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747785162-fdzga",
+    "fecha": "2026-03-29T01:29:45.792Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747858545-c3di0",
+    "fecha": "2026-03-29T01:30:57.129Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 34
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747897490-k6viv",
+    "fecha": "2026-03-29T01:31:38.290Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 38
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 140
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 91
+      }
+    ],
+    "total": 69000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747915263-lpapj",
+    "fecha": "2026-03-29T01:31:55.318Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 142
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774747987830-siwqp",
+    "fecha": "2026-03-29T01:33:07.906Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 102
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748080778-tbd9g",
+    "fecha": "2026-03-29T01:34:41.719Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748161463-53pu7",
+    "fecha": "2026-03-29T01:36:02.047Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 46
+      },
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 24
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748183400-l171n",
+    "fecha": "2026-03-29T01:36:23.993Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Botella",
+        "precio": 104000,
+        "cantidad": 1,
+        "stockMax": 30
+      },
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 26
+      }
+    ],
+    "total": 114000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748189541-kxf8v",
+    "fecha": "2026-03-29T01:36:27.853Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron 8 años Media",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 23
+      },
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 93000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748285592-xml38",
+    "fecha": "2026-03-29T01:38:00.000Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Botella",
+        "cantidad": 1,
+        "precio": 108000
+      },
+      {
+        "nombre": "Electrolit",
+        "cantidad": 1,
+        "precio": 10000
+      }
+    ],
+    "total": 118000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748412234-06mw1",
+    "fecha": "2026-03-29T01:40:10.517Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 21
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748427037-vhg4m",
+    "fecha": "2026-03-29T01:40:28.333Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 32
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 137
+      }
+    ],
+    "total": 80000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748540445-6cwi0",
+    "fecha": "2026-03-29T01:42:21.647Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748553858-pof3x",
+    "fecha": "2026-03-29T01:42:33.925Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748688480-zplyq",
+    "fecha": "2026-03-29T01:44:49.150Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 37
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774748722901-f12ic",
+    "fecha": "2026-03-29T01:45:23.891Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 21
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 100
+      }
+    ],
+    "total": 120000,
+    "numPersonas": 9,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749192571-kdjuv",
+    "fecha": "2026-03-29T01:53:13.375Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 136
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749237958-0bro4",
+    "fecha": "2026-03-29T01:53:58.725Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 136
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 99
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 90
+      }
+    ],
+    "total": 25000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749380966-bvb9w",
+    "fecha": "2026-03-29T01:56:21.890Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 100
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749512772-g9je0",
+    "fecha": "2026-03-29T01:58:32.932Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 3,
+        "stockMax": 136
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749643182-bkx2h",
+    "fecha": "2026-03-29T02:00:44.460Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 98
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749716423-tsqpp",
+    "fecha": "2026-03-29T02:01:54.879Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774749778170-iwe70",
+    "fecha": "2026-03-29T02:02:58.110Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750051677-lld0r",
+    "fecha": "2026-03-29T02:07:32.467Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 51
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 96
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 89
+      }
+    ],
+    "total": 71000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750241652-yhq9c",
+    "fecha": "2026-03-29T02:10:42.242Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 13
+      }
+    ],
+    "total": 132000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750487382-2s88n",
+    "fecha": "2026-03-29T02:14:46.007Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750626106-2auuu",
+    "fecha": "2026-03-29T02:17:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "cantidad": 1,
+        "precio": 6000
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750652257-fqsiq",
+    "fecha": "2026-03-29T02:17:32.937Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Botella",
+        "precio": 108000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 108000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774750855198-0bj07",
+    "fecha": "2026-03-29T02:20:55.968Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 19
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 131
+      }
+    ],
+    "total": 120000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751145053-wekgi",
+    "fecha": "2026-03-29T02:25:45.879Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 130
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751173266-mewac",
+    "fecha": "2026-03-29T02:26:11.847Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 50
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751181204-6fblf",
+    "fecha": "2026-03-29T02:26:21.388Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 19
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751257376-wspqi",
+    "fecha": "2026-03-29T02:27:37.579Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Black and White",
+        "precio": 74000,
+        "cantidad": 1,
+        "stockMax": 3
+      }
+    ],
+    "total": 74000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751268413-h70yz",
+    "fecha": "2026-03-29T02:27:48.837Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 50
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751304629-0g6kj",
+    "fecha": "2026-03-29T02:28:25.270Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751306272-10kgz",
+    "fecha": "2026-03-29T02:28:26.281Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 45
+      },
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 20
+      }
+    ],
+    "total": 83000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751402820-xdq6d",
+    "fecha": "2026-03-29T02:30:02.932Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 22
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751407259-bxik2",
+    "fecha": "2026-03-29T02:30:08.294Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 129
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774751647282-rspn8",
+    "fecha": "2026-03-29T02:34:05.640Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752062814-y2duc",
+    "fecha": "2026-03-29T02:41:03.479Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 20
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752129684-u1ci5",
+    "fecha": "2026-03-29T02:42:09.909Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ron 8 años Botella",
+        "precio": 156000,
+        "cantidad": 1,
+        "stockMax": 7
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 129
+      }
+    ],
+    "total": 166000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752139580-gkei3",
+    "fecha": "2026-03-29T02:42:19.912Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 18
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752265381-6wsdk",
+    "fecha": "2026-03-29T02:44:23.283Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752344122-9pptk",
+    "fecha": "2026-03-29T02:45:45.065Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 88
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752367526-1qtdy",
+    "fecha": "2026-03-29T02:46:07.770Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 127
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752588114-vsf8d",
+    "fecha": "2026-03-29T02:49:48.983Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 51
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774752870557-q3g1d",
+    "fecha": "2026-03-29T02:54:31.701Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 83
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753070550-ajqiz",
+    "fecha": "2026-03-29T02:57:51.387Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 44
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753351236-yxtk5",
+    "fecha": "2026-03-29T03:02:31.517Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 126
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 83
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753397246-9krqo",
+    "fecha": "2026-03-29T03:03:17.510Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia Lata",
+        "precio": 12000,
+        "cantidad": 1,
+        "stockMax": 65
+      }
+    ],
+    "total": 12000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753455431-5o8pd",
+    "fecha": "2026-03-29T03:04:16.363Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Corona",
+        "precio": 12000,
+        "cantidad": 1,
+        "stockMax": 11
+      },
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 44
+      }
+    ],
+    "total": 90000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753549203-3ffkb",
+    "fecha": "2026-03-29T03:05:50.636Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 95
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774753762129-0izdp",
+    "fecha": "2026-03-29T03:09:22.443Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 2,
+        "stockMax": 45
+      }
+    ],
+    "total": 12000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754010375-amcwe",
+    "fecha": "2026-03-29T03:13:28.851Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754034781-4ezxz",
+    "fecha": "2026-03-29T03:13:55.865Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 87
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754132983-hnajj",
+    "fecha": "2026-03-29T03:15:33.275Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754146788-qqvh7",
+    "fecha": "2026-03-29T03:15:44.887Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 124
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754187074-ycvcj",
+    "fecha": "2026-03-29T03:16:27.013Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754267444-xcihz",
+    "fecha": "2026-03-29T03:17:47.801Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 124
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754513596-u8edg",
+    "fecha": "2026-03-29T03:21:53.855Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 122
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774754758908-mob6e",
+    "fecha": "2026-03-29T03:25:59.288Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 118
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774755097232-2fqty",
+    "fecha": "2026-03-29T03:31:37.731Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 36
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774755353849-5w8nt",
+    "fecha": "2026-03-29T03:35:54.183Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 80
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774755503889-zo3rb",
+    "fecha": "2026-03-29T03:38:23.987Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 22
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756069634-div94",
+    "fecha": "2026-03-29T03:47:50.008Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 45
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756310434-gvlv6",
+    "fecha": "2026-03-29T03:51:51.406Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 45
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756442729-xzgzx",
+    "fecha": "2026-03-29T03:54:03.145Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 86
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756573242-ydym6",
+    "fecha": "2026-03-29T03:56:13.723Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 118
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756714145-v9pl8",
+    "fecha": "2026-03-29T03:58:34.527Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 93
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756828066-hjcsz",
+    "fecha": "2026-03-29T04:00:28.463Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 117
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756850430-84p1q",
+    "fecha": "2026-03-29T04:00:51.284Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 93
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774756987798-e0fgy",
+    "fecha": "2026-03-29T04:03:08.226Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757092980-d0gil",
+    "fecha": "2026-03-29T04:04:53.430Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757132728-zghxb",
+    "fecha": "2026-03-29T04:05:33.136Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 78
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757315703-3g63l",
+    "fecha": "2026-03-29T04:08:36.150Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 12
+      },
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 138000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757476480-im6ln",
+    "fecha": "2026-03-29T04:11:14.700Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 17
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757752113-vabf9",
+    "fecha": "2026-03-29T04:16:00.000Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Botella",
+        "cantidad": 1,
+        "precio": 104000
+      }
+    ],
+    "total": 104000,
+    "numPersonas": 6,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757816310-deeoe",
+    "fecha": "2026-03-29T04:16:56.737Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 77
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774757970871-te2qs",
+    "fecha": "2026-03-29T04:19:31.369Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 42
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758008640-6987c",
+    "fecha": "2026-03-29T04:20:09.073Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 76
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758125893-rld57",
+    "fecha": "2026-03-29T04:22:07.077Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758320719-faf74",
+    "fecha": "2026-03-29T04:25:21.244Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 15
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758377182-btuvm",
+    "fecha": "2026-03-29T04:26:17.640Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758487449-hexvo",
+    "fecha": "2026-03-29T04:28:08.729Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 45
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758672797-jfi6s",
+    "fecha": "2026-03-29T04:31:13.291Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 40
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774758779481-x7vgx",
+    "fecha": "2026-03-29T04:32:57.705Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 11
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 3,
+        "stockMax": 84
+      }
+    ],
+    "total": 147000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774759004962-822a1",
+    "fecha": "2026-03-29T04:36:45.462Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 91
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774759006753-rg2n0",
+    "fecha": "2026-03-29T04:36:47.792Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Botella",
+        "precio": 108000,
+        "cantidad": 1,
+        "stockMax": 22
+      },
+      {
+        "nombre": "Electrolit",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 9
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 91
+      }
+    ],
+    "total": 128000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774759492967-ptz6d",
+    "fecha": "2026-03-29T04:44:53.468Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 115
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774759606827-5oosp",
+    "fecha": "2026-03-29T04:46:47.819Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 115
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774759973075-chevn",
+    "fecha": "2026-03-29T04:52:53.860Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 117
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760129622-w278m",
+    "fecha": "2026-03-29T04:55:30.174Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 31
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760277088-rajcg",
+    "fecha": "2026-03-29T04:57:57.978Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 89
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760277490-fqsxw",
+    "fecha": "2026-03-29T04:57:58.094Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 42
+      },
+      {
+        "nombre": "Cerveza Corona",
+        "precio": 12000,
+        "cantidad": 1,
+        "stockMax": 10
+      }
+    ],
+    "total": 90000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760336738-f0b7c",
+    "fecha": "2026-03-29T04:58:57.347Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 42
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760400515-hv5bb",
+    "fecha": "2026-03-29T04:59:58.678Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 10
+      }
+    ],
+    "total": 132000,
+    "numPersonas": 7,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760438815-sgag3",
+    "fecha": "2026-03-29T05:00:39.906Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Caja",
+        "precio": 122000,
+        "cantidad": 1,
+        "stockMax": 21
+      }
+    ],
+    "total": 122000,
+    "numPersonas": 7,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760886198-4kcpw",
+    "fecha": "2026-03-29T05:08:06.782Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 111
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774760952745-il8ve",
+    "fecha": "2026-03-29T05:09:13.327Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 81
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774761179899-zzdwm",
+    "fecha": "2026-03-29T05:13:00.559Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 22
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774761193119-mdia3",
+    "fecha": "2026-03-29T05:13:14.079Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 44
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774761199046-qyazg",
+    "fecha": "2026-03-29T05:13:19.640Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Bonfiest Bomba",
+        "precio": 3000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 3000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774761445564-d9yni",
+    "fecha": "2026-03-29T05:17:26.123Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 75
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774761735332-ybrch",
+    "fecha": "2026-03-29T05:22:15.917Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 73
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762019616-4870e",
+    "fecha": "2026-03-29T05:27:00.566Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 15
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762075020-o9yg0",
+    "fecha": "2026-03-29T05:27:55.439Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 35
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762158663-6b7wc",
+    "fecha": "2026-03-29T05:29:19.270Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 41
+      },
+      {
+        "nombre": "Bonfiest Bomba",
+        "precio": 3000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 9000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762160986-0bbhb",
+    "fecha": "2026-03-29T05:29:22.749Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 110
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762284391-knhrn",
+    "fecha": "2026-03-29T05:31:25.040Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 110
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762399999-usk73",
+    "fecha": "2026-03-29T05:33:20.603Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 72
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762560141-3jd6u",
+    "fecha": "2026-03-29T05:36:01.664Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 21
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762665894-02azt",
+    "fecha": "2026-03-29T05:37:46.947Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 87
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762695155-z3xgp",
+    "fecha": "2026-03-29T05:38:16.724Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 40
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762783989-lnsiq",
+    "fecha": "2026-03-29T05:39:44.648Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 87
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 106
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774762955714-92fws",
+    "fecha": "2026-03-29T05:42:33.306Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 14
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 9,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774763481970-cauxl",
+    "fecha": "2026-03-29T05:51:22.560Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 110
+      },
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 38
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774763592083-fwecn",
+    "fecha": "2026-03-29T05:53:12.850Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 80
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774763731101-gynio",
+    "fecha": "2026-03-29T05:55:31.780Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 103
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774763786168-9iufw",
+    "fecha": "2026-03-29T05:56:26.841Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 39
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774763984337-py638",
+    "fecha": "2026-03-29T05:59:45.025Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 85
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 79
+      }
+    ],
+    "total": 15000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764048457-mz19q",
+    "fecha": "2026-03-29T06:00:49.576Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 106
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764049542-j7q81",
+    "fecha": "2026-03-29T06:00:50.253Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 41
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764428730-kke6i",
+    "fecha": "2026-03-29T06:07:09.425Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 70
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764443982-wr6b6",
+    "fecha": "2026-03-29T06:07:24.805Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 100
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764588266-mv9ev",
+    "fecha": "2026-03-29T06:09:46.312Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764600552-zstx5",
+    "fecha": "2026-03-29T06:10:00.000Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "cantidad": 2,
+        "precio": 5000
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764767439-zuxj9",
+    "fecha": "2026-03-29T06:12:47.526Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 13
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764857084-qhb17",
+    "fecha": "2026-03-29T06:14:17.782Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Media",
+        "precio": 68000,
+        "cantidad": 1,
+        "stockMax": 23
+      }
+    ],
+    "total": 68000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764880910-mvixw",
+    "fecha": "2026-03-29T06:14:41.639Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 36
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764935230-12ltr",
+    "fecha": "2026-03-29T06:15:35.942Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 99
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774764962792-bqn2u",
+    "fecha": "2026-03-29T06:16:03.690Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774765019282-jo4gp",
+    "fecha": "2026-03-29T06:17:00.282Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 86
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774765146398-3ldse",
+    "fecha": "2026-03-29T06:19:07.200Z",
+    "vendedor": "Valeria",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 12
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774765563514-cskok",
+    "fecha": "2026-03-29T06:26:03.806Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 99
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774765898553-6l7j5",
+    "fecha": "2026-03-29T06:31:39.309Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 68
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774766166948-2miwj",
+    "fecha": "2026-03-29T06:36:07.694Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 40
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 95
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774766749490-8rnxa",
+    "fecha": "2026-03-29T06:45:50.090Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 95
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774766776787-6osar",
+    "fecha": "2026-03-29T06:46:16.685Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "precio": 132000,
+        "cantidad": 1,
+        "stockMax": 9
+      }
+    ],
+    "total": 132000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774767200503-v6p5v",
+    "fecha": "2026-03-29T06:53:21.168Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 67
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774767348621-m5qwk",
+    "fecha": "2026-03-29T06:55:49.424Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 94
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 5,
+        "stockMax": 67
+      }
+    ],
+    "total": 60000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774767842247-a88ym",
+    "fecha": "2026-03-29T07:04:02.286Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 3,
+        "stockMax": 92
+      }
+    ],
+    "total": 30000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1774768049246-nuhs9",
+    "fecha": "2026-03-29T07:07:30.068Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 92
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775076045644-6zvk0",
+    "fecha": "2026-04-01T20:40:46.288Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 35
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775076212397-92us6",
+    "fecha": "2026-04-01T20:43:00.000Z",
+    "vendedor": "juan",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "cantidad": 1,
+        "precio": 35000
+      }
+    ],
+    "total": 35000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775076345898-lmgiv",
+    "fecha": "2026-04-01T20:45:46.240Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 82
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775079005786-1sati",
+    "fecha": "2026-04-01T21:30:06.279Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 61
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775079912232-4gc84",
+    "fecha": "2026-04-01T21:45:12.448Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 66
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 78
+      }
+    ],
+    "total": 21000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775080306027-qy2xy",
+    "fecha": "2026-04-01T21:51:46.316Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 80
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775080916072-2509o",
+    "fecha": "2026-04-01T22:01:56.503Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 54
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775081904503-kq7i3",
+    "fecha": "2026-04-01T22:18:24.688Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 64
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775081999758-iar7x",
+    "fecha": "2026-04-01T22:19:00.000Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "cantidad": 1,
+        "precio": 8000
+      },
+      {
+        "nombre": "Soda",
+        "cantidad": 1,
+        "precio": 5000
+      }
+    ],
+    "total": 13000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775082324473-lig9i",
+    "fecha": "2026-04-01T22:25:00.000Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "cantidad": 1,
+        "precio": 70000
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775082627162-z8uga",
+    "fecha": "2026-04-01T22:30:00.000Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "cantidad": 2,
+        "precio": 2000
+      }
+    ],
+    "total": 4000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775083648731-a41v5",
+    "fecha": "2026-04-01T22:47:29.283Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 63
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775083715713-i4p1i",
+    "fecha": "2026-04-01T22:48:35.888Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 78
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775085437976-2e6gd",
+    "fecha": "2026-04-01T23:17:16.668Z",
+    "vendedor": "juan",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 78
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775086354234-dmmrp",
+    "fecha": "2026-04-01T23:32:34.390Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 62
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775086665003-3gtqo",
+    "fecha": "2026-04-01T23:37:45.236Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 77
+      },
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 20
+      }
+    ],
+    "total": 13000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775086911033-yq0vy",
+    "fecha": "2026-04-01T23:41:51.649Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 76
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775087072904-2nr4e",
+    "fecha": "2026-04-01T23:44:33.094Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 75
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775087751845-hdnp6",
+    "fecha": "2026-04-01T23:55:00.000Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "cantidad": 1,
+        "precio": 35000
+      }
+    ],
+    "total": 35000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775087952194-b8grl",
+    "fecha": "2026-04-01T23:59:00.000Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Vinos",
+        "cantidad": 1,
+        "precio": 45000
+      }
+    ],
+    "total": 45000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775088139927-wpb2b",
+    "fecha": "2026-04-02T00:02:20.170Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 74
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775088472041-khq2c",
+    "fecha": "2026-04-02T00:07:52.493Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 61
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 73
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 49
+      }
+    ],
+    "total": 21000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775088658965-udnjy",
+    "fecha": "2026-04-02T00:10:59.163Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 60
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 53
+      },
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 19
+      }
+    ],
+    "total": 21000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775090662902-9fpii",
+    "fecha": "2026-04-02T00:44:24.295Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 72
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775093639850-6cx25",
+    "fecha": "2026-04-02T01:34:00.138Z",
+    "vendedor": "Stiven",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 71
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775350544812-a1k2t",
+    "fecha": "2026-04-05T00:55:45.223Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775350552534-m93wd",
+    "fecha": "2026-04-05T00:55:00.000Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "cantidad": 1,
+        "precio": 35000
+      }
+    ],
+    "total": 35000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775351382465-e3s95",
+    "fecha": "2026-04-05T01:09:43.125Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 3,
+        "stockMax": 179
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 130
+      }
+    ],
+    "total": 40000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775352238871-576gi",
+    "fecha": "2026-04-05T01:23:59.480Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 33
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775352413709-3ih0z",
+    "fecha": "2026-04-05T01:26:54.705Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 31
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775352487081-xgy1q",
+    "fecha": "2026-04-05T01:28:08.072Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 176
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775352652861-m43ae",
+    "fecha": "2026-04-05T01:30:53.744Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 42
+      },
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 36
+      }
+    ],
+    "total": 62000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353010702-ns4pt",
+    "fecha": "2026-04-05T01:36:51.341Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353127154-urt1c",
+    "fecha": "2026-04-05T01:38:49.754Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353533746-6mxgn",
+    "fecha": "2026-04-05T01:45:00.000Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "cantidad": 1,
+        "precio": 110000
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353610304-mxt0y",
+    "fecha": "2026-04-05T01:46:52.319Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 31
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353714478-75s3b",
+    "fecha": "2026-04-05T01:48:35.134Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353868778-zl8cx",
+    "fecha": "2026-04-05T01:51:09.287Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353957043-rqua4",
+    "fecha": "2026-04-05T01:52:37.662Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353963186-c65vf",
+    "fecha": "2026-04-05T01:52:44.035Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 49
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 175
+      }
+    ],
+    "total": 80000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775353987421-8spoq",
+    "fecha": "2026-04-05T01:53:09.671Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 27
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 48
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775354127389-5lomd",
+    "fecha": "2026-04-05T01:55:27.880Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 175
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775354259172-9rb0f",
+    "fecha": "2026-04-05T01:57:40.061Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 48
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775354573752-4pjzz",
+    "fecha": "2026-04-05T02:02:54.030Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 29
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 46
+      }
+    ],
+    "total": 105000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775354684295-bjopf",
+    "fecha": "2026-04-05T02:04:44.821Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 173
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775355394949-t2mk1",
+    "fecha": "2026-04-05T02:16:35.423Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775355577542-u5nqo",
+    "fecha": "2026-04-05T02:19:37.808Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 31
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775355650126-v8g80",
+    "fecha": "2026-04-05T02:20:50.892Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 129
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 172
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775355894641-qoku7",
+    "fecha": "2026-04-05T02:24:54.889Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 128
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 171
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356224898-kw8jq",
+    "fecha": "2026-04-05T02:30:25.151Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 170
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356299469-x631n",
+    "fecha": "2026-04-05T02:31:41.453Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Botella",
+        "precio": 86000,
+        "cantidad": 1,
+        "stockMax": 29
+      }
+    ],
+    "total": 86000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356459593-r0li6",
+    "fecha": "2026-04-05T02:34:20.173Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 172
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356507117-9w7m6",
+    "fecha": "2026-04-05T02:35:08.839Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 127
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356571552-lat36",
+    "fecha": "2026-04-05T02:36:12.149Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 48
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356881773-kysko",
+    "fecha": "2026-04-05T02:41:22.390Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 167
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356900839-5hji6",
+    "fecha": "2026-04-05T02:41:41.371Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 40
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775356978718-94sqh",
+    "fecha": "2026-04-05T02:42:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Ron 5 años Botella",
+        "cantidad": 1,
+        "precio": 70000
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357207319-z4kpp",
+    "fecha": "2026-04-05T02:46:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "cantidad": 1,
+        "precio": 50000
+      }
+    ],
+    "total": 50000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357278440-bj9q5",
+    "fecha": "2026-04-05T02:47:59.309Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Ron 8 años Media",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 22
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357457846-c9v53",
+    "fecha": "2026-04-05T02:50:58.218Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 26
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357523775-48ebm",
+    "fecha": "2026-04-05T02:52:04.111Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 21
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357621091-uayv4",
+    "fecha": "2026-04-05T02:53:41.816Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 16
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775357723658-5azfo",
+    "fecha": "2026-04-05T02:55:24.290Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 166
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775358061083-wfzrj",
+    "fecha": "2026-04-05T03:01:01.378Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 165
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 126
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775358100631-v8cqv",
+    "fecha": "2026-04-05T03:01:41.319Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 88000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775358577144-tdomv",
+    "fecha": "2026-04-05T03:09:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "cantidad": 1,
+        "precio": 5000
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775359300043-keuca",
+    "fecha": "2026-04-05T03:21:40.858Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 125
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775359355833-ae1ui",
+    "fecha": "2026-04-05T03:22:36.586Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 164
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775359768513-omofi",
+    "fecha": "2026-04-05T03:29:29.206Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 124
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775359806386-9tn5z",
+    "fecha": "2026-04-05T03:30:07.961Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 82
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775359997053-9u1v6",
+    "fecha": "2026-04-05T03:33:18.773Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Botella",
+        "precio": 104000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 104000,
+    "numPersonas": 5,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775360180203-7tgvs",
+    "fecha": "2026-04-05T03:36:21.010Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 164
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775360676454-y5dzj",
+    "fecha": "2026-04-05T03:44:37.296Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 27
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 44
+      }
+    ],
+    "total": 105000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775360748617-zmlvz",
+    "fecha": "2026-04-05T03:45:49.340Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 163
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361119364-wurn2",
+    "fecha": "2026-04-05T03:52:00.434Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 70000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361138826-ecr2e",
+    "fecha": "2026-04-05T03:52:19.322Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 123
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361156005-8rzo0",
+    "fecha": "2026-04-05T03:52:36.631Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 123
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361644870-9w17m",
+    "fecha": "2026-04-05T04:00:45.761Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 162
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361697236-ffe6c",
+    "fecha": "2026-04-05T04:01:00.000Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "cantidad": 1,
+        "precio": 50000
+      }
+    ],
+    "total": 50000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361839669-18dso",
+    "fecha": "2026-04-05T04:04:00.408Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 159
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361846410-8zps7",
+    "fecha": "2026-04-05T04:04:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia Lata",
+        "cantidad": 1,
+        "precio": 10000
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775361915216-imior",
+    "fecha": "2026-04-05T04:05:15.726Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 34
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775362121796-yavci",
+    "fecha": "2026-04-05T04:08:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Descorche",
+        "cantidad": 1,
+        "precio": 20000
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775362342761-mpkl5",
+    "fecha": "2026-04-05T04:12:23.045Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775362637585-z1j17",
+    "fecha": "2026-04-05T04:17:19.496Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 163
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775362846927-90mdt",
+    "fecha": "2026-04-05T04:20:47.730Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 33
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775363247521-k6ivt",
+    "fecha": "2026-04-05T04:27:28.363Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 156
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775363712804-yebdl",
+    "fecha": "2026-04-05T04:35:14.893Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 120
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364085275-3wzpz",
+    "fecha": "2026-04-05T04:41:26.363Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 158
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364134887-zpuok",
+    "fecha": "2026-04-05T04:42:16.945Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 32
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364377413-o1pvi",
+    "fecha": "2026-04-05T04:46:18.267Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364479377-9xasr",
+    "fecha": "2026-04-05T04:48:00.156Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Media",
+        "precio": 68000,
+        "cantidad": 1,
+        "stockMax": 22
+      }
+    ],
+    "total": 68000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364613356-99ukd",
+    "fecha": "2026-04-05T04:50:14.206Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 38
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775364820477-80vqq",
+    "fecha": "2026-04-05T04:53:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia Lata",
+        "cantidad": 1,
+        "precio": 8000
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775365333992-5tsgm",
+    "fecha": "2026-04-05T05:02:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia Lata",
+        "cantidad": 1,
+        "precio": 8000
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775365358389-nr0eo",
+    "fecha": "2026-04-05T05:02:40.001Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 154
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775365468753-6vx4p",
+    "fecha": "2026-04-05T05:04:00.000Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "cantidad": 2,
+        "precio": 10000
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775365675459-x8xsv",
+    "fecha": "2026-04-05T05:07:57.949Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 31
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775366478910-4cno0",
+    "fecha": "2026-04-05T05:21:19.984Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 154
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775367458815-rtmlr",
+    "fecha": "2026-04-05T05:37:39.824Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 2,
+        "stockMax": 119
+      }
+    ],
+    "total": 20000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775367760506-i3q4b",
+    "fecha": "2026-04-05T05:42:41.915Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 119
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775367913453-g0tdj",
+    "fecha": "2026-04-05T05:45:14.405Z",
+    "vendedor": "Saray",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 24
+      }
+    ],
+    "total": 78000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775368068822-d12j0",
+    "fecha": "2026-04-05T05:47:49.127Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Ron Tradicional Botella",
+        "precio": 104000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 104000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775368393220-2lgm5",
+    "fecha": "2026-04-05T05:53:13.644Z",
+    "vendedor": "Alexander",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Caja",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 9
+      }
+    ],
+    "total": 110000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775368864849-myfrg",
+    "fecha": "2026-04-05T06:01:05.257Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775369221360-stgw8",
+    "fecha": "2026-04-05T06:07:00.000Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Soda",
+        "cantidad": 1,
+        "precio": 5000
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775369240610-wq56f",
+    "fecha": "2026-04-05T06:07:20.867Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 149
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775369276528-fcplb",
+    "fecha": "2026-04-05T06:07:56.382Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Caja",
+        "precio": 100000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 100000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775370017159-5akrf",
+    "fecha": "2026-04-05T06:20:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Descorche",
+        "cantidad": 1,
+        "precio": 25000
+      }
+    ],
+    "total": 25000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775370442018-9ixs3",
+    "fecha": "2026-04-05T06:27:21.841Z",
+    "vendedor": "Juanita",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 116
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775371123707-va440",
+    "fecha": "2026-04-05T06:38:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Cuarto",
+        "cantidad": 1,
+        "precio": 25000
+      }
+    ],
+    "total": 25000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775371763142-p7b8y",
+    "fecha": "2026-04-05T06:49:24.068Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 148
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775372676965-6nk2u",
+    "fecha": "2026-04-05T07:04:37.194Z",
+    "vendedor": "Martha2",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 10000,
+        "cantidad": 1,
+        "stockMax": 147
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775372997794-3f9y2",
+    "fecha": "2026-04-05T07:09:00.000Z",
+    "vendedor": "Dianis",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Cuarto",
+        "cantidad": 1,
+        "precio": 25000
+      }
+    ],
+    "total": 25000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775373017381-f64kg",
+    "fecha": "2026-04-05T07:10:19.067Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 30
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 1,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1775373082541-g08s3",
+    "fecha": "2026-04-05T07:11:24.904Z",
+    "vendedor": "jhojan",
+    "items": [
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 6000,
+    "numPersonas": 0,
+    "estado": "despachado"
   }
 ]

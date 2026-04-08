@@ -16,7 +16,7 @@
         .dashboard-nav ul a { color: #546e7a; font-weight: 500; }
         .dashboard-nav ul a:hover { color: #1a237e; background-color: transparent; }
         
-        /* Tarjetas de Estadísticas (Lo que marcaste en amarillo) */
+        /* Tarjetas de Estadísticas */
         .kpi-card {
             background: white;
             border-radius: 16px;
@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             transition: transform 0.2s;
-            height: 100px; /* Altura fija para alineación */
+            height: 100px;
         }
         .kpi-card:hover { transform: translateY(-3px); }
         
@@ -62,11 +62,127 @@
         th { color: #78909c; font-weight: 600; border-bottom: 2px solid #eceff1; }
         td { padding: 15px 5px; color: #37474f; font-weight: 500; }
 
-        /* Badges para categorías (Opcional visual) */
+        /* Badges para categorías */
         .cat-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
         .cat-insumos { background: #e3f2fd; color: #1565c0; }
         .cat-servicios { background: #fff3e0; color: #ef6c00; }
         .cat-nomina { background: #e8f5e9; color: #2e7d32; }
+
+        /* ── FIX: Select nativo con scroll ── */
+        .select-categoria-wrapper {
+            position: relative;
+        }
+        .select-categoria-wrapper select {
+            display: block !important;
+            width: 100% !important;
+            height: 48px !important;
+            padding: 0 10px !important;
+            border: 1px solid #9e9e9e !important;
+            border-radius: 4px !important;
+            background-color: white !important;
+            font-size: 0.95rem !important;
+            color: #37474f !important;
+            appearance: auto !important;
+            -webkit-appearance: auto !important;
+            cursor: pointer !important;
+            margin-top: 8px !important;
+            overflow-y: auto !important;
+        }
+        .select-categoria-wrapper select:focus {
+            border-color: #3949ab !important;
+            outline: none !important;
+        }
+        .select-categoria-label {
+            font-size: 0.8rem;
+            color: #9e9e9e;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        /* ── Filtro de fechas ── */
+        .filtro-fechas-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 10px 0 14px 0;
+            border-bottom: 1px solid #eceff1;
+            margin-bottom: 12px;
+        }
+        .filtro-fechas-bar label {
+            font-size: 0.82rem;
+            color: #78909c;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .filtro-fechas-bar input[type="date"] {
+            border: 1px solid #cfd8dc;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 0.88rem;
+            color: #37474f;
+            background: #f8f9fa;
+            height: 36px;
+            outline: none;
+        }
+        .filtro-fechas-bar input[type="date"]:focus {
+            border-color: #3949ab;
+        }
+        .btn-filtrar-fecha {
+            height: 36px;
+            line-height: 36px;
+            border-radius: 8px;
+            padding: 0 16px;
+            font-size: 0.85rem;
+            text-transform: none;
+            font-weight: 600;
+            box-shadow: none;
+        }
+        .btn-limpiar-fecha {
+            height: 36px;
+            line-height: 36px;
+            border-radius: 8px;
+            padding: 0 14px;
+            font-size: 0.85rem;
+            text-transform: none;
+            font-weight: 500;
+            box-shadow: none;
+        }
+
+        /* ── Botón Excel ── */
+        .btn-excel {
+            height: 36px;
+            line-height: 36px;
+            border-radius: 8px;
+            padding: 0 16px;
+            font-size: 0.85rem;
+            text-transform: none;
+            font-weight: 600;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(46,125,50,0.25);
+            transition: background 0.2s;
+        }
+        .btn-excel:hover { background-color: #1b5e20; }
+        .btn-excel i { font-size: 1rem; }
+
+        /* Indicador de rango activo */
+        .rango-activo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: #e8eaf6;
+            color: #3949ab;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 0.78rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -99,7 +215,7 @@
                 </div>
             </div>
 
-            <!-- ✅ NUEVA TARJETA: Top 3 categorías -->
+            <!-- Top 3 categorías -->
             <div class="col s12 m6">
                 <div class="kpi-card" style="height: auto; flex-direction: column; align-items: flex-start; padding: 16px 20px;">
                     <div style="display:flex; align-items:center; margin-bottom: 10px;">
@@ -130,20 +246,25 @@
                             <input type="date" id="fecha-gasto">
                             <label class="active">Fecha</label>
                         </div>
+
+                        <!-- ── Select nativo con scroll (reemplaza el de Materialize) ── -->
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">category</i>
-                            <select id="categoria-gasto">
-                                <option value="" disabled selected>Elija una opción</option>
-                                <option value="Insumos">🛒 Insumos / Compra</option>
-                                <option value="Servicios">💡 Servicios (Luz/Agua)</option>
-                                <option value="Nomina">👷 Nómina / Turnos</option>
-                                <option value="Mantenimiento">🔧 Mantenimiento</option>
-                                <option value="Arriendo">🏠 Arriendo</option>
-                                <option value="Cafeteria">☕ Gastos Cafetería</option>
-                                <option value="Otros">📦 Otros</option>
-                            </select>
-                            <label>Categoría</label>
+                            <div class="select-categoria-wrapper" style="margin-left: 42px;">
+                                <span class="select-categoria-label">Categoría</span>
+                                <select id="categoria-gasto" size="1">
+                                    <option value="" disabled selected>Elija una opción</option>
+                                    <option value="Insumos">🛒 Insumos / Compra</option>
+                                    <option value="Servicios">💡 Servicios (Luz/Agua)</option>
+                                    <option value="Nomina">👷 Nómina / Turnos</option>
+                                    <option value="Mantenimiento">🔧 Mantenimiento</option>
+                                    <option value="Arriendo">🏠 Arriendo</option>
+                                    <option value="Cafeteria">☕ Gastos Cafetería</option>
+                                    <option value="Otros">📦 Otros</option>
+                                </select>
+                            </div>
                         </div>
+
                         <div class="input-field">
                             <i class="material-icons prefix grey-text">description</i>
                             <input type="text" id="desc-gasto">
@@ -166,23 +287,47 @@
             <!-- Tabla historial -->
             <div class="col s12 m8">
                 <div class="card table-card white">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap: wrap; gap: 10px;">
+                    
+                    <!-- Encabezado: título + botón Excel -->
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap: wrap; gap: 10px;">
                         <span style="font-size: 1.2rem; font-weight:600; color: #263238;">
                             <i class="material-icons left indigo-text">history</i>Historial Reciente
                         </span>
+                        <button class="btn-excel waves-effect" onclick="descargarExcel()">
+                            <i class="material-icons" style="font-size:1.1rem;">download</i>
+                            Exportar Excel
+                        </button>
+                    </div>
 
-                        <!-- ✅ FILTRO POR CATEGORÍA -->
-                        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
-                            <span style="font-size:0.85rem; color:#666;">Filtrar:</span>
-                            <a class="chip waves-effect indigo white-text" onclick="filtrarCategoria('Todas')">Todas</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Insumos')">🛒 Insumos</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Servicios')">💡 Servicios</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Nomina')">👷 Nómina</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Mantenimiento')">🔧 Manten.</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Arriendo')">🏠 Arriendo</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Cafeteria')">☕ Cafetería</a>
-                            <a class="chip waves-effect" onclick="filtrarCategoria('Otros')">📦 Otros</a>
-                        </div>
+                    <!-- ── Filtro por rango de fechas ── -->
+                    <div class="filtro-fechas-bar">
+                        <label><i class="material-icons" style="font-size:1rem; vertical-align:middle;">date_range</i> Rango:</label>
+                        <input type="date" id="fecha-desde" onchange="aplicarFiltros()">
+                        <label>hasta</label>
+                        <input type="date" id="fecha-hasta" onchange="aplicarFiltros()">
+                        <button class="btn btn-filtrar-fecha indigo darken-1 waves-effect waves-light" onclick="aplicarFiltros()">
+                            Filtrar
+                        </button>
+                        <button class="btn btn-limpiar-fecha grey lighten-2 grey-text text-darken-2 waves-effect" onclick="limpiarFechas()">
+                            Limpiar
+                        </button>
+                        <span id="rango-badge" class="rango-activo-badge" style="display:none;">
+                            <i class="material-icons" style="font-size:0.9rem;">filter_alt</i>
+                            <span id="rango-badge-texto"></span>
+                        </span>
+                    </div>
+
+                    <!-- ── Filtro por categoría ── -->
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom: 12px;">
+                        <span style="font-size:0.85rem; color:#666;">Filtrar:</span>
+                        <a class="chip waves-effect indigo white-text" onclick="filtrarCategoria('Todas', this)">Todas</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Insumos', this)">🛒 Insumos</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Servicios', this)">💡 Servicios</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Nomina', this)">👷 Nómina</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Mantenimiento', this)">🔧 Manten.</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Arriendo', this)">🏠 Arriendo</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Cafeteria', this)">☕ Cafetería</a>
+                        <a class="chip waves-effect" onclick="filtrarCategoria('Otros', this)">📦 Otros</a>
                     </div>
 
                     <div class="table-scroll-container">
@@ -205,11 +350,8 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- SheetJS para exportar Excel en el cliente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="js/gastos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            M.FormSelect.init(document.querySelectorAll('select'));
-        });
-    </script>
 </body>
 </html>
