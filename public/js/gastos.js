@@ -42,8 +42,8 @@ async function cargarGastos() {
         const gastos = await res.json();
         gastos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
         gastosGlobal = gastos;
-        aplicarFiltros();
-        calcularResumen(gastos);
+        aplicarFiltros();    // → renderiza tabla + actualiza KPI total
+        calcularResumen(gastos); // → solo Top 3 categorías del mes
     } catch (error) {
         console.error(error);
         M.toast({ html: 'Error al cargar gastos', classes: 'red' });
@@ -100,6 +100,23 @@ function aplicarFiltros() {
     }
 
     renderizarTabla(filtrados);
+    actualizarKpiTotal(filtrados);
+}
+
+// --- ACTUALIZAR KPI TOTAL según filtro activo ---
+function actualizarKpiTotal(gastos) {
+    const hayFiltroFecha = fechaDesde || fechaHasta;
+
+    // Cambia el título del KPI según si hay rango activo o no
+    const kpiTitulo = document.getElementById('total-mes')
+                               .closest('.kpi-card')
+                               .querySelector('.kpi-title');
+    kpiTitulo.textContent = hayFiltroFecha ? 'Total Gastos (Rango)' : 'Total Gastos (Mes)';
+
+    const total = gastos.reduce((sum, g) => sum + Number(g.monto), 0);
+    document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', {
+        style: 'currency', currency: 'COP', maximumFractionDigits: 0
+    }).format(total);
 }
 
 // --- LIMPIAR FECHAS ---
@@ -290,7 +307,7 @@ function descargarExcel() {
     const rangoNombre = (fechaDesde || fechaHasta)
         ? `_${fechaDesde || 'inicio'}_a_${fechaHasta || 'hoy'}`
         : `_todos`;
-    XLSX.writeFile(wb, `Gastos_Las_Trompetas${rangoNombre}.xlsx`);
+    XLSX.writeFile(wb, `Gastos_LasTrampas${rangoNombre}.xlsx`);
 
     M.toast({ html: '📥 Excel descargado', classes: 'green darken-2' });
 }
@@ -305,11 +322,7 @@ function calcularResumen(gastos) {
         g.fecha.startsWith(`${anioActual}-${String(mesActual + 1).padStart(2, '0')}`)
     );
 
-    const total = gastosMes.reduce((sum, g) => sum + Number(g.monto), 0);
-    document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', {
-        style: 'currency', currency: 'COP', maximumFractionDigits: 0
-    }).format(total);
-
+    // El KPI de total lo gestiona actualizarKpiTotal() — aquí solo el Top 3
     const conteo = {};
     gastosMes.forEach(g => {
         conteo[g.categoria] = (conteo[g.categoria] || 0) + Number(g.monto);
