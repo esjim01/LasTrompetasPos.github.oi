@@ -144,22 +144,22 @@ function generarMenuCategorias() {
     Otros: "more_horiz",
   };
 
-  let htmlDesktop = `<div class="indigo lighten-5" style="padding:15px; font-weight:bold; color:#1a237e">CATEGORÍAS</div>`;
+  let htmlDesktop = `<div class="bg-slate-900 text-white p-4 font-bold rounded-xl mb-4 shadow-md flex items-center gap-2 uppercase tracking-wider text-xs"><i class="material-icons text-[18px]">category</i> CATEGORÍAS</div>`;
   let htmlMobile = ``;
 
   CATEGORIAS_DEFINIDAS.forEach((cat) => {
     const icon = iconos[cat] || "label";
-    const isActive = cat === "Todas" ? "active" : "";
-    const isMobileActive = cat === "Todas" ? "indigo white-text" : "";
+    const isActive = cat === "Todas" ? "bg-brand-600 text-white shadow-lg shadow-brand-500/30" : "text-slate-500 hover:bg-slate-100 hover:text-slate-800";
+    const isMobileActive = cat === "Todas" ? "bg-brand-600 text-white border-brand-600" : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50";
 
     htmlDesktop += `
-            <div class="cat-item ${isActive}" onclick="filtrarPorCategoria('${cat}', this, false)">
-                <i class="material-icons">${icon}</i> ${cat}
+            <div class="cat-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 ${isActive} mb-1" onclick="filtrarPorCategoria('${cat}', this, false)">
+                <i class="material-icons text-[20px]">${icon}</i> ${cat}
             </div>`;
 
     htmlMobile += `
-            <div class="chip ${isMobileActive}" onclick="filtrarPorCategoria('${cat}', this, true)">
-                ${cat}
+            <div class="px-4 py-2 rounded-full text-sm font-bold border cursor-pointer whitespace-nowrap transition-all shadow-sm flex items-center gap-2 ${isMobileActive}" onclick="filtrarPorCategoria('${cat}', this, true)">
+                <i class="material-icons text-[16px]">${icon}</i> ${cat}
             </div>`;
   });
 
@@ -185,35 +185,48 @@ function renderizarCatalogo(lista, categoria = "Todas") {
     const precio = Number(p.precio);
     const nombreSafe = p.nombre.replace(/'/g, "\\'");
 
-    let badgeColor = "green";
+    let badgeColor = "bg-emerald-100 text-emerald-700 border-emerald-200";
     let disabled = "";
 
     if (stock <= 0) {
-      badgeColor = "grey";
-      disabled =
-        "style='pointer-events:none; filter:grayscale(1); opacity:0.6'";
+      badgeColor = "bg-slate-100 text-slate-500 border-slate-200";
+      disabled = "style='pointer-events:none; filter:grayscale(1); opacity:0.6'";
     } else if (stock < 5) {
-      badgeColor = "red";
+      badgeColor = "bg-rose-100 text-rose-700 border-rose-200";
     }
 
     const imgUrl = `img/${formatearNombreImagen(p.nombre)}`;
-    // Usamos una imagen transparente o placeholder local si prefieres
     const imagenError = "https://via.placeholder.com/150?text=Sin+Foto";
 
     contenedor.innerHTML += `
-            <div class="col s6 m4 l3">
-                <div class="card product-card hoverable" ${disabled} onclick="agregarAlCarrito('${nombreSafe}', ${precio}, ${stock})" style="height: 100%; min-height: 320px; display: flex; flex-direction: column;">
-                    <div class="card-image" style="height: 150px; padding: 10px; display: flex; align-items: center; justify-content: center;">
-                        <img src="${imgUrl}" style="max-height: 100%; width: auto;" onerror="this.onerror=null; this.src='${imagenError}'">
+            <div class="group bg-white rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 hover:shadow-xl hover:border-brand-300 transition-all duration-300 flex flex-col h-full relative cursor-pointer overflow-hidden" ${disabled} onclick="agregarAlCarrito('${nombreSafe}', ${precio}, ${stock})">
+                <!-- Hover effect background -->
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-50/50 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+                
+                <!-- Image Container -->
+                <div class="h-32 sm:h-40 bg-slate-50 rounded-xl mb-3 sm:mb-4 p-2 sm:p-3 flex items-center justify-center border border-slate-100 relative group-hover:scale-[1.02] transition-transform duration-300">
+                    <img src="${imgUrl}" class="max-h-full max-w-full object-contain drop-shadow-md" onerror="this.onerror=null; this.src='${imagenError}'" alt="${p.nombre}">
+                    
+                    <!-- Add Button Overlay -->
+                    <div class="absolute bottom-2 right-2 w-8 h-8 bg-brand-600 text-white rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg shadow-brand-500/30">
+                        <i class="material-icons text-[18px]">add_shopping_cart</i>
                     </div>
-                    <div class="card-content" style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 10px;">
-                        <span style="font-weight:600; font-size:1rem; line-height: 1.2; display: block; margin-bottom: 8px; color: #333;">
-                            ${p.nombre}
-                        </span>
-                        
+                </div>
+
+                <!-- Content -->
+                <div class="flex-1 flex flex-col justify-between relative z-10">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm sm:text-base leading-tight mb-2 group-hover:text-brand-600 transition-colors line-clamp-2">${p.nombre}</h3>
+                    </div>
+                    
+                    <div class="flex items-end justify-between mt-2 pt-3 border-t border-slate-100">
                         <div>
-                            <div class="product-price" style="font-size: 1.2rem; color: #1a237e; font-weight: bold;">$${precio.toLocaleString()}</div>
-                            <span class="new badge ${badgeColor}" data-badge-caption="stock" style="float:none; margin:5px auto 0; padding: 2px 8px; border-radius:4px;">${stock}</span>
+                            <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Precio</p>
+                            <p class="text-base sm:text-lg font-black text-slate-900 leading-none">$${precio.toLocaleString()}</p>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Stock</span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-bold border ${badgeColor}">${stock}</span>
                         </div>
                     </div>
                 </div>
@@ -227,18 +240,20 @@ function filtrarPorCategoria(categoria, elementoDOM, esMovil = false) {
   if (esMovil) {
     const contenedorMovil = document.getElementById("menu-categorias-movil");
     if (contenedorMovil) {
-      contenedorMovil.querySelectorAll(".chip").forEach((chip) => {
-        chip.classList.remove("indigo", "white-text");
+      contenedorMovil.querySelectorAll("div").forEach((chip) => {
+        chip.className = "px-4 py-2 rounded-full text-sm font-bold border cursor-pointer whitespace-nowrap transition-all shadow-sm flex items-center gap-2 bg-white text-slate-600 border-slate-200 hover:bg-slate-50";
       });
     }
     if (elementoDOM) {
-      elementoDOM.classList.add("indigo", "white-text");
+      elementoDOM.className = "px-4 py-2 rounded-full text-sm font-bold border cursor-pointer whitespace-nowrap transition-all shadow-sm flex items-center gap-2 bg-brand-600 text-white border-brand-600";
     }
   } else {
-    document
-      .querySelectorAll(".cat-item")
-      .forEach((el) => el.classList.remove("active"));
-    if (elementoDOM) elementoDOM.classList.add("active");
+    document.querySelectorAll(".cat-item").forEach((el) => {
+        el.className = "cat-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 text-slate-500 hover:bg-slate-100 hover:text-slate-800 mb-1";
+    });
+    if (elementoDOM) {
+        elementoDOM.className = "cat-item flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold cursor-pointer transition-all duration-200 bg-brand-600 text-white shadow-lg shadow-brand-500/30 mb-1";
+    }
   }
 
   const filtrados =
@@ -299,26 +314,43 @@ function actualizarInterfazCarrito() {
     itemsCount += item.cantidad;
 
     lista.innerHTML += `
-            <li class="collection-item avatar" style="min-height: auto; padding-left: 15px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; width:100%">
-                    <div style="flex-grow:1">
-                        <span class="title" style="font-weight:bold">${item.nombre}</span>
-                        <p class="grey-text">$${item.precio.toLocaleString()} x ${item.cantidad} = <span class="indigo-text">$${(item.precio * item.cantidad).toLocaleString()}</span></p>
-                    </div>
-                    
-                    <div class="secondary-content" style="display:flex; align-items:center; gap:10px; position:static">
-                        <button class="btn-small btn-flat red-text" onclick="modificarCantidad(${index}, -1)"><i class="material-icons">remove_circle_outline</i></button>
-                        <span style="font-size:1.2em; font-weight:bold">${item.cantidad}</span>
-                        <button class="btn-small btn-flat green-text" onclick="modificarCantidad(${index}, 1)"><i class="material-icons">add_circle_outline</i></button>
-                    </div>
+            <li class="bg-white border border-slate-100 p-3 sm:p-4 rounded-2xl shadow-sm flex items-center gap-3 sm:gap-4 transition-all hover:shadow-md">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-slate-50 rounded-xl flex items-center justify-center flex-shrink-0 border border-slate-200">
+                    <img src="img/${formatearNombreImagen(item.nombre)}" class="max-h-6 sm:max-h-8 max-w-6 sm:max-w-8 object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=NA'">
+                </div>
+                
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-bold text-slate-800 text-sm truncate">${item.nombre}</h4>
+                    <p class="text-xs font-medium text-slate-500 mt-0.5">$${item.precio.toLocaleString()} c/u</p>
+                </div>
+                
+                <div class="flex items-center gap-1 sm:gap-2 bg-slate-50 p-1 sm:p-1.5 rounded-lg border border-slate-200 flex-shrink-0">
+                    <button class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-slate-500 hover:bg-white hover:text-rose-500 hover:shadow-sm rounded-md transition-all" onclick="modificarCantidad(${index}, -1)">
+                        <i class="material-icons text-[16px] sm:text-[18px]">remove</i>
+                    </button>
+                    <span class="text-xs sm:text-sm font-black text-slate-800 min-w-[1.2rem] sm:min-w-[1.5rem] text-center">${item.cantidad}</span>
+                    <button class="w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center text-slate-500 hover:bg-white hover:text-emerald-500 hover:shadow-sm rounded-md transition-all" onclick="modificarCantidad(${index}, 1)">
+                        <i class="material-icons text-[16px] sm:text-[18px]">add</i>
+                    </button>
+                </div>
+                
+                <div class="text-right ml-1 sm:ml-2 min-w-[60px] sm:min-w-[70px] flex-shrink-0">
+                    <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">Subtotal</p>
+                    <p class="text-sm font-black text-brand-600">$${(item.precio * item.cantidad).toLocaleString()}</p>
                 </div>
             </li>
         `;
   });
 
   if (carrito.length === 0) {
-    lista.innerHTML =
-      "<div class='center padding-20 grey-text'>Carrito vacío</div>";
+    lista.innerHTML = `
+        <div class="text-center py-10 flex flex-col items-center">
+            <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-4 border border-slate-100">
+                <i class="material-icons text-slate-300 text-4xl">remove_shopping_cart</i>
+            </div>
+            <h4 class="font-bold text-slate-500">Tu carrito está vacío</h4>
+            <p class="text-sm text-slate-400 mt-1">Agrega productos del catálogo para continuar.</p>
+        </div>`;
   }
 
   totalEl.innerText = total.toLocaleString();

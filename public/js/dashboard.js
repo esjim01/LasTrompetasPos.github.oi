@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!["ADMIN","ADMINISTRADOR","JEFE"].includes(rol)) {
     window.location.href = "ventas.html";
   } else {
-    document.body.style.display = "block";
+    document.body.style.display = "flex";
   }
 })();
 
@@ -218,8 +218,8 @@ async function cargarDashboard() {
       }
     }
 
-    // ── Top 5 productos
-    renderizarTop5(conteoProductos);
+    // ── Top 10 productos
+    renderizarTop10(conteoProductos);
 
     // ── Gráficas
     renderizarGrafico();
@@ -231,187 +231,255 @@ async function cargarDashboard() {
   }
 }
 
-// ── TOP 5 PRODUCTOS ──
-function renderizarTop5(conteo) {
-  const lista = document.getElementById("lista-top5");
-  if (!lista) return;
+// ── TOP 10 PRODUCTOS (Tabla) ──
+function renderizarTop10(conteo) {
+  const tabla = document.getElementById("tabla-top10");
+  if (!tabla) return;
 
   const items = Object.entries(conteo)
     .sort((a,b) => b[1] - a[1])
-    .slice(0, 5);
+    .slice(0, 10);
 
   if (items.length === 0) {
-    lista.innerHTML = `<li style="color:var(--text-muted);font-size:0.85rem;text-align:center;padding:24px 0;">Sin datos en el período</li>`;
+    tabla.innerHTML = `<tr><td colspan="3" class="p-8 text-center text-slate-400 font-medium">Sin datos en el período</td></tr>`;
     return;
   }
 
-  const maxVal = items[0][1];
-  const rankClasses = ["r1","r2","r3","r4","r5"];
-  const medallas    = ["🥇","🥈","🥉","4","5"];
+  const medallas = ["🥇", "🥈", "🥉"];
 
-  lista.innerHTML = items.map(([nombre, cant], i) => {
-    const pct = Math.round((cant / maxVal) * 100);
+  tabla.innerHTML = items.map(([nombre, cant], i) => {
+    const pos = i + 1;
+    const posDecorated = i < 3 ? medallas[i] : pos;
+    const rowClass = i % 2 === 0 ? "bg-white" : "bg-slate-50/30";
+    
     return `
-      <li class="top5-item">
-        <div class="top5-rank ${rankClasses[i]}">${medallas[i]}</div>
-        <div class="top5-info">
-          <div class="top5-name" title="${nombre}">${nombre}</div>
-          <div class="top5-bar-wrap">
-            <div class="top5-bar" style="width:${pct}%"></div>
-          </div>
-        </div>
-        <div class="top5-qty">${cant} uds</div>
-      </li>`;
+      <tr class="${rowClass} hover:bg-slate-50 transition-colors">
+        <td class="px-5 py-3 text-center font-bold text-slate-400">${posDecorated}</td>
+        <td class="px-5 py-3">
+          <div class="font-bold text-slate-700 truncate max-w-[200px]" title="${nombre}">${nombre}</div>
+        </td>
+        <td class="px-5 py-3 text-right">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-50 text-brand-700 border border-brand-100">
+            ${cant} uds
+          </span>
+        </td>
+      </tr>`;
   }).join("");
 }
 
-// ── GRÁFICO PRINCIPAL ──
+// ── GRÁFICO PRINCIPAL (Rendimiento Comercial) ──
 function renderizarGrafico() {
-  const canvas = document.getElementById("chart-ventas");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  if (miGrafico) miGrafico.destroy();
+    const canvas = document.getElementById("chart-ventas");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (miGrafico) miGrafico.destroy();
 
-  const gradient = ctx.createLinearGradient(0, 0, 0, 280);
-  gradient.addColorStop(0, "rgba(26,35,126,0.35)");
-  gradient.addColorStop(1, "rgba(26,35,126,0.0)");
+    // Degradados Premium
+    const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+    gradient.addColorStop(0, "rgba(99, 102, 241, 0.25)"); // Indigo-500
+    gradient.addColorStop(1, "rgba(99, 102, 241, 0.0)");
 
-  let labels = [], data = [], titulo = "";
+    let labels = [], data = [], titulo = "";
 
-  if (vistaActual === "vendedor") {
-    titulo = "Ventas por Vendedor";
-    const r = {};
-    datosVentasActuales.forEach(v => r[v.Vendedor] = (r[v.Vendedor]||0) + (Number(v.Total)||0));
-    labels = Object.keys(r);
-    data   = Object.values(r);
-  } else {
-    titulo = "Ventas por Día";
-    const r = {};
-    datosVentasActuales.forEach(v => r[v.Fecha] = (r[v.Fecha]||0) + (Number(v.Total)||0));
-    labels = Object.keys(r).sort((a,b) => parsearFecha(a) - parsearFecha(b));
-    data   = labels.map(f => r[f]);
-  }
+    if (vistaActual === "vendedor") {
+        titulo = "Ventas por Vendedor";
+        const r = {};
+        datosVentasActuales.forEach(v => r[v.Vendedor] = (r[v.Vendedor] || 0) + (Number(v.Total) || 0));
+        // Ordenar por volumen
+        const sorted = Object.entries(r).sort((a, b) => b[1] - a[1]);
+        labels = sorted.map(i => i[0]);
+        data = sorted.map(i => i[1]);
+    } else {
+        titulo = "Ventas por Día";
+        const r = {};
+        datosVentasActuales.forEach(v => r[v.Fecha] = (r[v.Fecha] || 0) + (Number(v.Total) || 0));
+        labels = Object.keys(r).sort((a, b) => parsearFecha(a) - parsearFecha(b));
+        data = labels.map(f => r[f]);
+    }
 
-  const esDia = vistaActual === "dia";
+    const esDia = vistaActual === "dia";
 
-  miGrafico = new Chart(ctx, {
-    type: esDia ? "line" : "bar",
-    data: {
-      labels,
-      datasets: [{
-        label: titulo,
-        data,
-        backgroundColor: esDia ? gradient : COLORS.chart,
-        borderColor: esDia ? COLORS.indigo : "transparent",
-        borderWidth: esDia ? 2 : 0,
-        borderRadius: esDia ? 0 : 8,
-        tension: 0.4,
-        fill: true,
-        pointBackgroundColor: COLORS.indigo,
-        pointRadius: 4,
-        pointHoverRadius: 6,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: "#0d1547",
-          titleColor: "#fff",
-          bodyColor: "rgba(255,255,255,0.8)",
-          padding: 12,
-          cornerRadius: 8,
-          callbacks: {
-            label: ctx => " " + fmt(ctx.raw),
-          },
+    miGrafico = new Chart(ctx, {
+        type: esDia ? "line" : "bar",
+        data: {
+            labels,
+            datasets: [{
+                label: titulo,
+                data,
+                backgroundColor: esDia ? gradient : "#6366f1",
+                borderColor: "#6366f1",
+                borderWidth: esDia ? 3 : 0,
+                borderRadius: esDia ? 0 : 12,
+                tension: 0.45,
+                fill: true,
+                pointBackgroundColor: "#fff",
+                pointBorderColor: "#6366f1",
+                pointBorderWidth: 2,
+                pointRadius: esDia ? 4 : 0,
+                pointHoverRadius: esDia ? 7 : 0,
+                pointHoverBackgroundColor: "#6366f1",
+                pointHoverBorderColor: "#fff",
+                pointHoverBorderWidth: 2,
+            }],
         },
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          grid: { color: "rgba(0,0,0,0.05)" },
-          ticks: {
-            callback: v => "$" + (v >= 1000 ? (v/1000).toFixed(0)+"k" : v),
-            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
-            color: "#9ca3af",
-          },
-          border: { display: false },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                intersect: false,
+                mode: 'index',
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: "rgba(15, 23, 42, 0.95)",
+                    titleFont: { size: 13, weight: '700', family: "'Outfit', sans-serif" },
+                    bodyFont: { size: 12, family: "'Outfit', sans-serif" },
+                    padding: 12,
+                    cornerRadius: 12,
+                    displayColors: false,
+                    callbacks: {
+                        label: (context) => ` Total: ${fmt(context.raw)}`,
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { 
+                        color: "rgba(226, 232, 240, 0.5)",
+                        drawBorder: false
+                    },
+                    ticks: {
+                        callback: v => v >= 1000 ? (v / 1000).toFixed(0) + "k" : v,
+                        font: { size: 10, family: "'Outfit', sans-serif", weight: '500' },
+                        color: "#94a3b8",
+                        padding: 10
+                    }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        font: { size: 10, family: "'Outfit', sans-serif", weight: '500' },
+                        color: "#94a3b8",
+                        padding: 10
+                    }
+                }
+            }
         },
-        x: {
-          grid: { display: false },
-          ticks: {
-            maxRotation: 45, minRotation: 0,
-            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif" },
-            color: "#9ca3af",
-          },
-          border: { display: false },
-        },
-      },
-    },
-  });
+    });
 }
 
 // ── GRÁFICO CATEGORÍAS ──
 function renderizarGraficoCategorias() {
-  const canvas = document.getElementById("chart-categorias");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d");
-  if (miGraficoCategorias) miGraficoCategorias.destroy();
+    const canvas = document.getElementById("chart-categorias");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (miGraficoCategorias) miGraficoCategorias.destroy();
 
-  const resumen = {};
-  datosVentasActuales.forEach(v => {
-    if (v.Productos) {
-      v.Productos.split(", ").forEach(itemStr => {
-        const m = itemStr.match(/(.+) \(x(\d+)\)/);
-        if (m) {
-          const nombre = m[1].trim();
-          const prod   = inventarioGlobal.find(p => p.nombre?.trim() === nombre);
-          const cat    = prod?.categoria || "Otros";
-          resumen[cat] = (resumen[cat] || 0) + parseInt(m[2]);
+    const resumen = {};
+    let totalUnidades = 0;
+
+    datosVentasActuales.forEach(v => {
+        if (v.Productos) {
+            v.Productos.split(", ").forEach(itemStr => {
+                const m = itemStr.match(/(.+) \(x(\d+)\)/);
+                if (m) {
+                    const nombre = m[1].trim();
+                    const cant = parseInt(m[2]);
+                    const prod = inventarioGlobal.find(p => p.nombre?.trim() === nombre);
+                    const cat = prod?.categoria || "Otros";
+                    resumen[cat] = (resumen[cat] || 0) + cant;
+                    totalUnidades += cant;
+                }
+            });
         }
-      });
-    }
-  });
+    });
 
-  miGraficoCategorias = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: Object.keys(resumen),
-      datasets: [{
-        data:            Object.values(resumen),
-        backgroundColor: COLORS.chart,
-        borderWidth:     3,
-        borderColor:     "#fff",
-        hoverOffset:     6,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: "65%",
-      plugins: {
-        legend: {
-          position: window.innerWidth < 600 ? "bottom" : "right",
-          labels: {
-            boxWidth: 10, boxHeight: 10,
-            borderRadius: 3,
-            padding: 14,
-            font: { size: 11, family: "'Plus Jakarta Sans', sans-serif", weight: "600" },
-            color: "#374151",
-          },
+    const labels = Object.keys(resumen);
+    const data = Object.values(resumen);
+
+    // Plugin para texto central
+    const centerTextPlugin = {
+        id: 'centerText',
+        afterDraw: (chart) => {
+            const { ctx, chartArea: { left, top, right, bottom } } = chart;
+            ctx.save();
+            const centerX = (left + right) / 2;
+            const centerY = (top + bottom) / 2;
+
+            // Dibujar número grande
+            ctx.font = 'bold 24px Outfit';
+            ctx.fillStyle = '#1e293b';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(totalUnidades, centerX, centerY - 5);
+
+            // Dibujar etiqueta pequeña
+            ctx.font = 'bold 10px Outfit';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('UNIDADES', centerX, centerY + 15);
+            ctx.restore();
+        }
+    };
+
+    miGraficoCategorias = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels,
+            datasets: [{
+                data,
+                backgroundColor: [
+                    "#6366f1", // Indigo
+                    "#10b981", // Emerald
+                    "#f59e0b", // Amber
+                    "#ef4444", // Rose
+                    "#8b5cf6", // Violet
+                    "#06b6d4", // Cyan
+                    "#f472b6", // Pink
+                    "#94a3b8"  // Slate
+                ],
+                borderWidth: 4,
+                borderColor: "#fff",
+                hoverOffset: 12,
+                borderRadius: 4
+            }],
         },
-        tooltip: {
-          backgroundColor: "#0d1547",
-          titleColor: "#fff",
-          bodyColor: "rgba(255,255,255,0.8)",
-          padding: 12,
-          cornerRadius: 8,
+        plugins: [centerTextPlugin],
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "75%",
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 8,
+                        boxHeight: 8,
+                        usePointStyle: true,
+                        pointStyle: 'circle',
+                        padding: 15,
+                        font: { size: 11, family: "'Outfit', sans-serif", weight: '600' },
+                        color: "#64748b",
+                    },
+                },
+                tooltip: {
+                    backgroundColor: "rgba(15, 23, 42, 0.95)",
+                    padding: 12,
+                    cornerRadius: 12,
+                    titleFont: { family: "'Outfit', sans-serif" },
+                    bodyFont: { family: "'Outfit', sans-serif" },
+                    callbacks: {
+                        label: (context) => {
+                            const val = context.raw;
+                            const pct = ((val / totalUnidades) * 100).toFixed(1);
+                            return ` ${context.label}: ${val} uds (${pct}%)`;
+                        }
+                    }
+                },
+            },
         },
-      },
-    },
-  });
+    });
 }
 
 // ── UTILIDADES ──

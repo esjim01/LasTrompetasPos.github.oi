@@ -15,8 +15,10 @@ let fechaHasta = null;
     }
     try {
         const usuario = JSON.parse(sesionGuardada);
-        if (usuario.rol !== 'ADMIN' && usuario.rol !== 'administrador' && usuario.rol !== 'admin') {
-            alert("⛔ Acceso Restringido.");
+        const rolNorm = (usuario.rol || '').toUpperCase();
+        const rolesPermitidos = ['ADMIN', 'ADMINISTRADOR', 'ADMINISTRADOR', 'JEFE', 'ENCARGADO'];
+        if (!rolesPermitidos.includes(rolNorm)) {
+            alert('⛔ Acceso Restringido.');
             window.location.href = '/public/ventas.html';
         }
     } catch (e) {
@@ -54,13 +56,23 @@ async function cargarGastos() {
 }
 
 // --- FILTRO POR CATEGORÍA ---
+const CHIP_ACTIVE   = ['bg-slate-800', 'text-white', 'border-slate-800'];
+const CHIP_INACTIVE = ['bg-white', 'text-slate-600', 'border-slate-200'];
+
 function filtrarCategoria(categoria, chipEl) {
     categoriaActiva = categoria;
 
+    // Restablecer todos los chips al estado inactivo
     document.querySelectorAll('.chip').forEach(chip => {
-        chip.classList.remove('indigo', 'white-text');
+        chip.classList.remove(...CHIP_ACTIVE);
+        chip.classList.add(...CHIP_INACTIVE);
     });
-    if (chipEl) chipEl.classList.add('indigo', 'white-text');
+
+    // Marcar el chip seleccionado como activo
+    if (chipEl) {
+        chipEl.classList.remove(...CHIP_INACTIVE);
+        chipEl.classList.add(...CHIP_ACTIVE);
+    }
 
     aplicarFiltros();
 }
@@ -108,10 +120,10 @@ function actualizarKpiTotal(gastos) {
     const hayFiltroFecha = fechaDesde || fechaHasta;
 
     // Cambia el título del KPI según si hay rango activo o no
-    const kpiTitulo = document.getElementById('total-mes')
-                               .closest('.kpi-card')
-                               .querySelector('.kpi-title');
-    kpiTitulo.textContent = hayFiltroFecha ? 'Total Gastos (Rango)' : 'Total Gastos (Mes)';
+    const kpiTitulo = document.getElementById('total-mes-titulo');
+    if (kpiTitulo) {
+        kpiTitulo.textContent = hayFiltroFecha ? 'Total Gastos (Rango)' : 'Total Gastos (Mes)';
+    }
 
     const total = gastos.reduce((sum, g) => sum + Number(g.monto), 0);
     document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', {

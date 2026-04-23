@@ -4,70 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso - Las Trompetas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/styles.css"> 
+    
+    <!-- Tailwind CSS v4 via CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --color-brand-50: #eff6ff;
+            --color-brand-100: #dbeafe;
+            --color-brand-500: #3b82f6;
+            --color-brand-600: #2563eb;
+            --color-brand-800: #1e40af;
+            --color-brand-900: #1e3a8a;
+            --color-surface: rgba(255, 255, 255, 0.75);
+        }
+        
+        body {
+            font-family: var(--font-sans);
+        }
+
+        /* Glassmorphism utilities */
+        .glass {
+            background: var(--color-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Animated gradient background */
+        .bg-animated {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #312e81, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -50px) scale(1.1); }
+        }
+
+        /* Custom Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .custom-toast {
+            min-width: 250px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        .toast-warning { background: #f59e0b; }
+    </style>
 </head>
+<body class="bg-animated min-h-screen flex items-center justify-center relative overflow-hidden text-slate-800">
 
-<body class="login-body">
+    <!-- Decorative Orbs -->
+    <div class="orb bg-blue-500/30 w-96 h-96 top-[-10%] left-[-10%]"></div>
+    <div class="orb bg-indigo-500/30 w-[500px] h-[500px] bottom-[-20%] right-[-10%]" style="animation-delay: -5s;"></div>
 
-    <div class="card login-card">
-        <div class="card-content">
-            
-            <div class="logo-container">
-                <img src="img/Las_trompetas.jpg" alt="Logo" onerror="this.src='https://via.placeholder.com/150/e8eaf6/3949ab?text=LT'">
-                <h5 style="color:var(--primary-color); font-weight:700;">Las Trompetas</h5>
-                <p style="color:#90a4ae;">Acceso Administrativo</p>
+    <!-- Login Container -->
+    <div class="glass w-full max-w-md p-8 sm:p-10 rounded-3xl shadow-2xl z-10 mx-4 flex flex-col gap-6 relative">
+        
+        <!-- Header -->
+        <div class="text-center space-y-2">
+            <div class="w-20 h-20 mx-auto bg-white rounded-2xl shadow-lg flex items-center justify-center overflow-hidden border border-slate-100 mb-4 transform transition hover:scale-105 duration-300">
+                <img src="img/Las_trompetas.jpg" alt="Logo" onerror="this.outerHTML='<i class=\'material-icons text-brand-600 text-4xl\'>storefront</i>'" class="w-full h-full object-cover">
             </div>
+            <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Las Trompetas</h1>
+            <p class="text-slate-500 font-medium text-sm">Acceso Administrativo</p>
+        </div>
 
-            <div class="input-field">
-                <i class="material-icons prefix">person_outline</i>
-                <input type="text" id="user" autocomplete="username">
-                <label for="user">Usuario</label>
-            </div>
-
-            <div class="input-field">
-                <i class="material-icons prefix">lock_outline</i>
-                <input type="password" id="pass" autocomplete="current-password">
-                <label for="pass">Contraseña</label>
-            </div>
-
-            <button class="btn btn-login waves-effect waves-light" id="btn-entrar" onclick="iniciarSesion()">
-                Ingresar al Sistema
-            </button>
-
-            <div class="loading-overlay" id="loader" style="display:none; margin-top:15px;">
-                <div class="progress">
-                    <div class="indeterminate"></div>
+        <!-- Form -->
+        <div class="space-y-5 mt-2">
+            <!-- User Input -->
+            <div class="space-y-1.5">
+                <label for="user" class="text-sm font-bold text-slate-700 ml-1">Usuario</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand-600 transition-colors">
+                        <i class="material-icons text-xl">person_outline</i>
+                    </div>
+                    <input type="text" id="user" autocomplete="username" class="w-full bg-white/60 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block pl-11 p-3.5 transition-all outline-none shadow-sm backdrop-blur-sm placeholder-slate-400 font-medium" placeholder="Ingrese su usuario">
                 </div>
             </div>
 
-            <div class="login-footer" style="text-align:center; margin-top:20px; color:#ccc; font-size:0.8rem;">
-                &copy; 2026 Sistema de Gestión
+            <!-- Password Input -->
+            <div class="space-y-1.5">
+                <label for="pass" class="text-sm font-bold text-slate-700 ml-1">Contraseña</label>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-brand-600 transition-colors">
+                        <i class="material-icons text-xl">lock_outline</i>
+                    </div>
+                    <input type="password" id="pass" autocomplete="current-password" class="w-full bg-white/60 border border-slate-200 text-slate-900 text-sm rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block pl-11 p-3.5 transition-all outline-none shadow-sm backdrop-blur-sm placeholder-slate-400 font-medium" placeholder="••••••••">
+                </div>
             </div>
 
+            <!-- Submit Button -->
+            <button id="btn-entrar" onclick="iniciarSesion()" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold rounded-xl text-sm px-5 py-4 mt-4 text-center transition-all duration-300 shadow-[0_4px_14px_0_rgba(15,23,42,0.39)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                <span>Ingresar al Sistema</span>
+                <i class="material-icons text-lg">arrow_forward</i>
+            </button>
+            
+            <!-- Loader -->
+            <div id="loader" class="hidden justify-center mt-4">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-600"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-6">
+            <p class="text-xs font-semibold text-slate-400">&copy; 2026 Sistema de Gestión</p>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
     <script>
+        // --- CUSTOM TOAST FUNCTION ---
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            let typeClass = 'toast-warning';
+            let icon = 'info';
+            
+            if (type === 'success') {
+                typeClass = 'toast-success';
+                icon = 'check_circle';
+            } else if (type === 'error') {
+                typeClass = 'toast-error';
+                icon = 'error';
+            }
+
+            toast.className = `custom-toast ${typeClass}`;
+            toast.innerHTML = `<i class="material-icons">${icon}</i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
         // --- LÓGICA DE LOGIN ---
         async function iniciarSesion() {
             const user = document.getElementById("user").value.trim();
             const pass = document.getElementById("pass").value.trim();
             const btn = document.getElementById("btn-entrar");
+            const btnText = btn.querySelector('span');
             const loader = document.getElementById("loader");
 
-            if (!user || !pass) return M.toast({html: 'Por favor, completa los datos', classes: 'rounded orange darken-2'});
+            if (!user || !pass) return showToast('Por favor, completa los datos', 'warning');
 
             // Bloquear botón y mostrar carga
             btn.disabled = true;
-            btn.innerText = 'Verificando...';
-            loader.style.display = "block";
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btnText.innerText = 'Verificando...';
+            loader.classList.remove('hidden');
+            loader.classList.add('flex');
 
             try {
                 // Petición al Backend
-                const res = await fetch("/api/index", { // Verificamos que esta ruta sea la correcta en tu servidor
+                const res = await fetch("/api/index", { 
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ user, pass }),
@@ -76,45 +222,42 @@
                 const data = await res.json();
 
                 if (res.ok) {
-                    // --- GUARDADO DE SESIÓN SEGURO (CRÍTICO) ---
-                    // Creamos un objeto limpio con los datos
                     const usuarioData = { 
                         nombre: data.user, 
                         rol: data.rol 
                     };
 
-                    // Guardamos en formato JSON string para que dashboard.js lo pueda leer bien
                     localStorage.setItem("usuarioNombre", JSON.stringify(usuarioData));
-                    
-                    // Guardamos una copia extra por seguridad
                     localStorage.setItem("usuarioActual", JSON.stringify(usuarioData));
 
-                    M.toast({html: '¡Bienvenido!', classes: 'rounded green darken-1'});
+                    showToast('¡Bienvenido!', 'success');
                     
                     // Redirección basada en rol
                     setTimeout(() => {
                         const rol = (data.rol || "").toUpperCase();
                         if (rol === "ADMIN" || rol === "ADMINISTRADOR" || rol === "JEFE") {
-                            window.location.href = "public/dashboard.html"; // Asegúrate que la carpeta public esté en la URL
+                            window.location.href = "public/dashboard.html";
                         } else {
                             window.location.href = "public/ventas.html";
                         }
                     }, 800);
 
                 } else {
-                    M.toast({html: data.mensaje || 'Credenciales incorrectas', classes: 'rounded red darken-2'});
+                    showToast(data.mensaje || 'Credenciales incorrectas', 'error');
                     resetBtn();
                 }
             } catch (error) {
                 console.error("Error en login:", error);
-                M.toast({html: 'Error de conexión con el servidor', classes: 'rounded red darken-4'});
+                showToast('Error de conexión con el servidor', 'error');
                 resetBtn();
             }
 
             function resetBtn() {
                 btn.disabled = false;
-                btn.innerText = 'Ingresar al Sistema';
-                loader.style.display = "none";
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                btnText.innerText = 'Ingresar al Sistema';
+                loader.classList.add('hidden');
+                loader.classList.remove('flex');
             }
         }
 
@@ -123,8 +266,6 @@
             document.getElementById('pass').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') iniciarSesion();
             });
-            // Inicializar inputs de Materialize
-            M.updateTextFields();
         });
     </script>
 </body>

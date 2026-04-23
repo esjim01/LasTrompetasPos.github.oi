@@ -1,1273 +1,724 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Administración — Las Trompetas</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
-  <link rel="stylesheet" href="/public/css/styles.css"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Administración — Las Trompetas</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js y SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <style>
-    /* ── DESIGN TOKENS (misma paleta que el dashboard) ── */
-    :root {
-      --indigo-900: #1a237e;
-      --indigo-700: #283593;
-      --indigo-500: #3949ab;
-      --indigo-100: #e8eaf6;
-      --indigo-50:  #f0f1fc;
-      --green-800:  #2e7d32;
-      --green-100:  #e8f5e9;
-      --red-800:    #c62828;
-      --red-100:    #ffebee;
-      --amber-700:  #f57f17;
-      --amber-100:  #fff8e1;
-      --orange-100: #fff3e0;
-      --orange-700: #e65100;
-      --surface:    #ffffff;
-      --bg:         #f0f2f8;
-      --text-main:  #1a1f36;
-      --text-muted: #6b7280;
-      --border:     #e4e7ef;
-      --radius-lg:  16px;
-      --radius-md:  10px;
-      --shadow-sm:  0 1px 4px rgba(26,35,126,0.07);
-      --shadow-md:  0 4px 20px rgba(26,35,126,0.10);
-    }
+    <!-- Tailwind CSS v4 via CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
-    *, *::before, *::after { box-sizing: border-box; }
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --color-brand-50: #eff6ff;
+            --color-brand-100: #dbeafe;
+            --color-brand-500: #3b82f6;
+            --color-brand-600: #2563eb;
+            --color-brand-800: #1e40af;
+            --color-brand-900: #0f172a;
+            --color-bg: #f8fafc;
+        }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text-main);
-      margin: 0;
-    }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg);
+            color: #334155;
+        }
 
-    /* ── NAV ── */
-    .dash-nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      height: 64px;
-      display: flex; align-items: center;
-      padding: 0 24px;
-      position: sticky; top: 0; z-index: 200;
-      box-shadow: var(--shadow-sm);
-    }
-    .dash-nav .brand {
-      font-size: 1.1rem; font-weight: 600;
-      color: var(--indigo-900);
-      display: flex; align-items: center; gap: 8px;
-      text-decoration: none; margin-right: auto;
-    }
-    .dash-nav .brand i { color: var(--indigo-500); }
-    .nav-links { display: flex; gap: 4px; align-items: center; }
-    .nav-links a {
-      font-size: 0.85rem; font-weight: 500;
-      color: var(--text-muted); text-decoration: none;
-      padding: 7px 14px; border-radius: 8px;
-      display: flex; align-items: center; gap: 6px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-links a:hover { background: var(--indigo-50); color: var(--indigo-700); }
-    .nav-links a.danger { color: #e53935; }
-    .nav-links a.danger:hover { background: var(--red-100); }
-    .nav-links a i { font-size: 1.1rem; }
-    .nav-links .btn-ventas {
-      background: var(--indigo-900); color: white !important;
-      border-radius: 8px; padding: 7px 16px;
-    }
-    .nav-links .btn-ventas:hover { background: var(--indigo-700); }
-    .sidenav-trigger { color: var(--text-main) !important; margin-right: 12px; }
-    @media (max-width: 960px) { .nav-links { display: none; } }
+        .mono-text { font-family: var(--font-mono); }
 
-    /* ── MAIN ── */
-    .inv-main {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 24px 20px 60px;
-    }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-    /* ── TABS ── */
-    .inv-tabs {
-      display: flex; gap: 4px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 6px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-sm);
-      width: fit-content;
-    }
-    .inv-tab {
-      padding: 9px 20px;
-      border-radius: 10px;
-      font-size: 0.88rem; font-weight: 600;
-      color: var(--text-muted);
-      cursor: pointer; border: none;
-      background: transparent;
-      display: flex; align-items: center; gap: 7px;
-      transition: all 0.15s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .inv-tab:hover { background: var(--indigo-50); color: var(--indigo-700); }
-    .inv-tab.active {
-      background: var(--indigo-900); color: white;
-      box-shadow: 0 2px 8px rgba(26,35,126,0.25);
-    }
-    .inv-tab i { font-size: 1rem; }
+        /* Tab Switch Transition */
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-panel.active {
+            display: block;
+            opacity: 1;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
 
-    /* ── TAB PANELS ── */
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    /* ── KPI STRIP ── */
-    .kpi-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    @media (max-width: 700px) { .kpi-strip { grid-template-columns: 1fr; } }
+        /* Modal Overlay */
+        .modal-overlay {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    .kpi-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 18px 20px;
-      box-shadow: var(--shadow-sm);
-      display: flex; align-items: center; gap: 14px;
-      position: relative; overflow: hidden;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .kpi-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 3px; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    }
-    .kpi-card.primary::before { background: var(--indigo-500); }
-    .kpi-card.warning::before { background: var(--amber-700); }
-    .kpi-card.success::before { background: var(--green-800); }
+        /* Modal Box */
+        .modal-box {
+            transform: scale(0.95) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        .modal-box.open {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-    .kpi-icon {
-      width: 46px; height: 46px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .kpi-icon i { font-size: 1.4rem; }
-    .kpi-icon.primary { background: var(--indigo-100); color: var(--indigo-700); }
-    .kpi-icon.warning { background: var(--amber-100); color: var(--amber-700); }
-    .kpi-icon.success { background: var(--green-100); color: var(--green-800); }
-    .kpi-label {
-      font-size: 0.72rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.05em;
-      color: var(--text-muted); margin-bottom: 3px;
-    }
-    .kpi-value {
-      font-size: 1.55rem; font-weight: 600;
-      color: var(--text-main); line-height: 1.1;
-      font-family: 'DM Mono', monospace;
-    }
+        /* Custom Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .custom-toast {
+            min-width: 250px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .custom-toast.show { transform: translateX(0); }
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        .toast-warning { background: #f59e0b; }
+        .toast-info { background: #0f172a; }
 
-    /* ── LAYOUT STOCK ── */
-    .stock-layout {
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 18px;
-    }
-    @media (max-width: 1024px) { .stock-layout { grid-template-columns: 1fr; } }
-
-    /* ── FORM CARD ── */
-    .form-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-      height: fit-content;
-    }
-    .form-card-header {
-      background: var(--indigo-900);
-      padding: 16px 20px;
-      display: flex; align-items: center; gap: 10px;
-      color: white;
-    }
-    .form-card-header i { font-size: 1.2rem; opacity: 0.85; }
-    .form-card-header h3 { font-size: 0.95rem; font-weight: 600; margin: 0; }
-    .form-card-body { padding: 20px; }
-
-    /* Inputs del formulario */
-    .form-card-body .input-field label { color: var(--text-muted); font-size: 0.85rem; }
-    .form-card-body .input-field input:focus + label,
-    .form-card-body .input-field input.active + label,
-    .form-card-body .input-field input:focus { color: var(--indigo-700) !important; border-bottom-color: var(--indigo-500) !important; box-shadow: none !important; }
-    .form-card-body .input-field input { color: var(--text-main); font-family: 'DM Sans', sans-serif; }
-    .form-card-body .input-field .prefix { color: var(--indigo-500); }
-
-    .btn-save {
-      width: 100%; height: 44px;
-      background: var(--indigo-900); color: white;
-      border: none; border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem; font-weight: 600;
-      cursor: pointer; display: flex; align-items: center;
-      justify-content: center; gap: 8px;
-      transition: background 0.15s;
-      margin-top: 8px;
-    }
-    .btn-save:hover { background: var(--indigo-700); }
-
-    /* ── RIGHT PANEL ── */
-    .right-panel { display: flex; flex-direction: column; gap: 18px; }
-
-    /* ── SEARCH BAR ── */
-    .search-bar {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      padding: 0 16px 0 0;
-      box-shadow: var(--shadow-sm);
-      display: flex; align-items: center;
-    }
-    .search-bar .material-icons {
-      padding: 0 14px; color: var(--indigo-500); font-size: 1.3rem;
-    }
-    .search-bar input {
-      flex: 1; height: 48px; border: none; outline: none;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem; color: var(--text-main);
-      background: transparent;
-    }
-    .search-bar input::placeholder { color: var(--text-muted); }
-
-    /* ── TABLE CARD ── */
-    .table-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    .table-card-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center;
-      justify-content: space-between;
-    }
-    .table-card-header h3 {
-      font-size: 0.95rem; font-weight: 600;
-      margin: 0; color: var(--text-main);
-      display: flex; align-items: center; gap: 8px;
-    }
-    .table-card-header h3 i { color: var(--indigo-500); font-size: 1.1rem; }
-    .table-scroll {
-      max-height: 420px; overflow-y: auto;
-    }
-    .table-scroll::-webkit-scrollbar { width: 6px; }
-    .table-scroll::-webkit-scrollbar-track { background: var(--bg); }
-    .table-scroll::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
-
-    /* Tabla productos */
-    .inv-table { width: 100%; border-collapse: collapse; }
-    .inv-table thead th {
-      position: sticky; top: 0; z-index: 10;
-      background: #f8f9ff;
-      font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--text-muted);
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-    .inv-table tbody tr {
-      border-bottom: 1px solid #f3f4f9;
-      transition: background 0.1s;
-    }
-    .inv-table tbody tr:hover { background: var(--indigo-50); }
-    .inv-table tbody tr:last-child { border-bottom: none; }
-    .inv-table tbody td {
-      padding: 11px 14px;
-      font-size: 0.88rem;
-      color: var(--text-main);
-      vertical-align: middle;
-    }
-
-    /* Badges de categoría */
-    .cat-chip {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 600;
-      background: var(--indigo-100); color: var(--indigo-700);
-    }
-
-    /* Stock badge */
-    .stock-badge {
-      display: inline-flex; align-items: center;
-      padding: 3px 10px; border-radius: 20px;
-      font-size: 0.78rem; font-weight: 700;
-      font-family: 'DM Mono', monospace;
-    }
-    .stock-badge.ok  { background: var(--green-100); color: var(--green-800); }
-    .stock-badge.low { background: var(--red-100);   color: var(--red-800); }
-
-    /* Botones acción tabla */
-    .btn-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      border: none; cursor: pointer;
-      display: inline-flex; align-items: center; justify-content: center;
-      transition: all 0.15s;
-    }
-    .btn-icon i { font-size: 1rem; }
-    .btn-icon.edit  { background: var(--indigo-100); color: var(--indigo-700); }
-    .btn-icon.edit:hover  { background: var(--indigo-500); color: white; }
-    .btn-icon.del   { background: var(--red-100);   color: var(--red-800); }
-    .btn-icon.del:hover   { background: var(--red-800); color: white; }
-
-    /* ── HISTORIAL ── */
-    .historial-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    .historial-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center;
-      justify-content: space-between; flex-wrap: wrap; gap: 10px;
-    }
-    .historial-header h3 {
-      font-size: 0.95rem; font-weight: 600; margin: 0;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .historial-header h3 i { color: var(--indigo-500); font-size: 1.1rem; }
-
-    /* Filtro fechas historial */
-    .hist-filters {
-      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-      padding: 14px 20px;
-      background: #f8f9ff;
-      border-bottom: 1px solid var(--border);
-    }
-    .hist-filter-group {
-      display: flex; flex-direction: column; gap: 3px;
-    }
-    .hist-filter-group label {
-      font-size: 0.72rem; font-weight: 600;
-      color: var(--text-muted); text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .hist-filter-group input {
-      height: 36px; border: 1px solid var(--border);
-      border-radius: 8px; padding: 0 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; color: var(--text-main);
-      background: var(--surface); outline: none;
-      transition: border-color 0.15s;
-    }
-    .hist-filter-group input:focus { border-color: var(--indigo-500); }
-    .btn-filter {
-      height: 36px; padding: 0 16px;
-      background: var(--indigo-900); color: white;
-      border: none; border-radius: 8px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.85rem; font-weight: 600;
-      cursor: pointer; display: flex; align-items: center; gap: 6px;
-      transition: background 0.15s; align-self: flex-end;
-    }
-    .btn-filter:hover { background: var(--indigo-700); }
-    .btn-limpiar {
-      font-size: 0.8rem; color: var(--red-800);
-      background: none; border: none;
-      cursor: pointer; font-family: 'DM Sans', sans-serif;
-      font-weight: 500; padding: 0; align-self: flex-end;
-      height: 36px; display: flex; align-items: center; gap: 4px;
-    }
-    .btn-limpiar:hover { text-decoration: underline; }
-
-    /* Tabla historial */
-    .hist-scroll {
-      max-height: 340px; overflow-y: auto;
-    }
-    .hist-scroll::-webkit-scrollbar { width: 6px; }
-    .hist-scroll::-webkit-scrollbar-track { background: var(--bg); }
-    .hist-scroll::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
-
-    .hist-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-    .hist-table thead th {
-      position: sticky; top: 0; z-index: 10;
-      background: #f8f9ff;
-      font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.05em;
-      color: var(--text-muted);
-      padding: 11px 14px;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-    }
-    .hist-table tbody tr {
-      border-bottom: 1px solid #f3f4f9;
-      transition: background 0.1s;
-    }
-    .hist-table tbody tr:hover { background: var(--indigo-50); }
-    .hist-table tbody tr:last-child { border-bottom: none; }
-    .hist-table tbody td {
-      padding: 10px 14px;
-      font-size: 0.85rem;
-      color: var(--text-main);
-      vertical-align: middle;
-    }
-    .hist-fecha { font-size: 0.82rem; color: var(--text-main); font-weight: 500; }
-    .hist-hora  { font-size: 0.75rem; color: var(--text-muted); display: block; }
-    .hist-total {
-      font-family: 'DM Mono', monospace;
-      font-weight: 600; color: var(--green-800);
-    }
-    .hist-actions { white-space: nowrap; text-align: center; }
-
-    /* ── PEDIDOS EN VIVO ── */
-    .pedidos-card {
-      background: var(--surface);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    .pedidos-header {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .pedidos-header h3 {
-      font-size: 0.95rem; font-weight: 600; margin: 0 0 2px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .pedidos-header p { font-size: 0.8rem; color: var(--text-muted); margin: 0; }
-    .pedidos-scroll { max-height: 520px; overflow: auto; }
-    .pedidos-scroll::-webkit-scrollbar { width: 6px; }
-    .pedidos-scroll::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
-
-    .ped-table { width: 100%; border-collapse: collapse; }
-    .ped-table thead th {
-      position: sticky; top: 0; z-index: 10;
-      background: #f8f9ff;
-      font-size: 0.72rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.05em;
-      color: var(--text-muted);
-      padding: 11px 14px;
-      border-bottom: 1px solid var(--border);
-    }
-    .ped-table tbody tr {
-      border-bottom: 1px solid #f3f4f9;
-      transition: background 0.1s;
-    }
-    .ped-table tbody tr:hover { background: var(--indigo-50); }
-    .ped-table tbody td {
-      padding: 12px 14px;
-      font-size: 0.88rem;
-      vertical-align: middle;
-    }
-
-    /* Estado badges */
-    .estado-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 4px 10px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 700;
-    }
-    .estado-badge.pendiente {
-      background: var(--amber-100); color: var(--amber-700);
-      animation: pulse-amber 2s infinite;
-    }
-    .estado-badge.despachado { background: var(--green-100); color: var(--green-800); }
-    @keyframes pulse-amber {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.6; }
-    }
-
-    /* ── MODALES ── */
-    .modal {
-      border-radius: var(--radius-lg) !important;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .modal .modal-content h4, .modal .modal-content h5 {
-      font-family: 'DM Sans', sans-serif;
-      color: var(--indigo-900);
-    }
-    .modal .modal-footer { padding: 12px 24px; border-top: 1px solid var(--border); }
-    .modal-btn-cancel {
-      height: 38px; padding: 0 18px;
-      border: 1px solid var(--border); border-radius: 8px;
-      background: var(--surface); color: var(--text-muted);
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500;
-      cursor: pointer; transition: all 0.15s;
-    }
-    .modal-btn-cancel:hover { background: var(--bg); }
-    .modal-btn-save {
-      height: 38px; padding: 0 20px;
-      border: none; border-radius: 8px;
-      background: var(--green-800); color: white;
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
-      cursor: pointer; transition: background 0.15s;
-    }
-    .modal-btn-save:hover { background: #1b5e20; }
-    .modal-btn-del {
-      height: 38px; padding: 0 20px;
-      border: none; border-radius: 8px;
-      background: var(--red-800); color: white;
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
-      cursor: pointer; transition: background 0.15s;
-    }
-    .modal-btn-del:hover { background: #b71c1c; }
-    .modal-btn-primary {
-      height: 38px; padding: 0 20px;
-      border: none; border-radius: 8px;
-      background: var(--indigo-900); color: white;
-      font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
-      cursor: pointer; transition: background 0.15s;
-    }
-    .modal-btn-primary:hover { background: var(--indigo-700); }
-
-    /* Sidenav */
-    .sidenav { z-index: 9999; }
-    .sidenav .user-view { min-height: 100px; padding: 20px 16px 14px; }
-
-    /* imagen preview */
-    #preview-img {
-      display: none; width: 100%;
-      max-height: 140px; object-fit: contain;
-      margin: 10px 0; border-radius: 10px;
-      border: 2px dashed var(--border);
-    }
-  </style>
+        input, select {
+            @apply w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block p-2.5 outline-none transition-all;
+        }
+        
+        .nav-item {
+            @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/50;
+        }
+        .nav-item.active {
+            @apply text-white bg-brand-600 shadow-lg shadow-brand-500/30;
+        }
+    </style>
 </head>
-<body>
+<body class="flex h-screen overflow-hidden antialiased">
 
-  <!-- AUDIO -->
-  <audio id="audio-notificacion" preload="auto">
-    <source src="https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3" type="audio/mpeg"/>
-  </audio>
+    <!-- AUDIO -->
+    <audio id="audio-notificacion" preload="auto">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3" type="audio/mpeg"/>
+    </audio>
 
-  <!-- SIDENAV -->
-  <ul class="sidenav" id="mobile-menu">
-    <li>
-      <div class="user-view">
-        <div class="background deep-purple darken-4"></div>
-        <span class="white-text name" style="font-weight:bold;">Las Trompetas</span>
-      </div>
-    </li>
-    <li><a href="/public/ventas.html"><i class="material-icons">point_of_sale</i>Ventas</a></li>
-    <li><a href="/public/gastos.html"><i class="material-icons">money_off</i>Gastos</a></li>
-    <li><a href="/public/dashboard.html"><i class="material-icons">analytics</i>Dashboard</a></li>
-    <li><a href="/public/usuarios.html"><i class="material-icons">group</i>Usuarios</a></li>
-    <li><div class="divider"></div></li>
-    <li><a href="/index.html" class="red-text"><i class="material-icons red-text">logout</i>Salir</a></li>
-  </ul>
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
 
-  <!-- NAV -->
-  <nav class="dash-nav">
-    <a href="#" data-target="mobile-menu" class="sidenav-trigger hide-on-large-only">
-      <i class="material-icons">menu</i>
-    </a>
-    <a href="#" class="brand">
-      <i class="material-icons">store</i>Las Trompetas — Admin
-    </a>
-    <div class="nav-links">
-      <a href="/public/ventas.html" class="btn-ventas">
-        <i class="material-icons">point_of_sale</i>Ventas
-      </a>
-      <a href="/public/gastos.html"><i class="material-icons">money_off</i>Gastos</a>
-      <a href="/public/dashboard.html"><i class="material-icons">analytics</i>Dashboard</a>
-      <a href="/public/usuarios.html"><i class="material-icons">group</i>Usuarios</a>
-      <a href="/index.html" class="danger"><i class="material-icons">logout</i>Salir</a>
-    </div>
-  </nav>
-
-  <!-- MAIN -->
-  <main class="inv-main">
-
-    <!-- TABS -->
-    <div class="inv-tabs">
-      <button class="inv-tab active" id="tab-btn-pedidos" onclick="switchTab('pedidos')">
-        <i class="material-icons">liquor</i>Pedidos en Vivo
-      </button>
-      <button class="inv-tab" id="tab-btn-inventario" onclick="switchTab('inventario')">
-        <i class="material-icons">inventory</i>Gestionar Stock
-      </button>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════ -->
-    <!-- TAB 1: PEDIDOS EN VIVO (lógica intacta, nuevo CSS) -->
-    <!-- ═══════════════════════════════════════════════════ -->
-    <div class="tab-panel active" id="panel-pedidos">
-      <div class="pedidos-card">
-        <div class="pedidos-header">
-          <h3><i class="material-icons" style="color:var(--indigo-500);">notifications_active</i>Cola de Pedidos</h3>
-          <p>Los pedidos de los meseros aparecerán aquí automáticamente.</p>
-        </div>
-        <div class="pedidos-scroll">
-          <table class="ped-table">
-            <thead>
-              <tr>
-                <th>Hora</th>
-                <th>Mesero</th>
-                <th>Detalle</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th class="center">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="tabla-pedidos"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════ -->
-    <!-- TAB 2: GESTIONAR STOCK                            -->
-    <!-- ═══════════════════════════════════════════════════ -->
-    <div class="tab-panel" id="panel-inventario">
-
-      <!-- KPI STRIP -->
-      <div class="kpi-strip">
-        <div class="kpi-card primary">
-          <div class="kpi-icon primary"><i class="material-icons">inventory_2</i></div>
-          <div>
-            <div class="kpi-label">Total Productos</div>
-            <div class="kpi-value" id="kpi-total-productos">—</div>
-          </div>
-        </div>
-        <div class="kpi-card warning">
-          <div class="kpi-icon warning"><i class="material-icons">warning</i></div>
-          <div>
-            <div class="kpi-label">Stock Bajo (≤5)</div>
-            <div class="kpi-value" id="kpi-stock-bajo">—</div>
-          </div>
-        </div>
-        <div class="kpi-card success">
-          <div class="kpi-icon success"><i class="material-icons">attach_money</i></div>
-          <div>
-            <div class="kpi-label">Valor Inventario</div>
-            <div class="kpi-value" id="kpi-valor-inv" style="font-size:1.2rem;">—</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LAYOUT PRINCIPAL -->
-      <div class="stock-layout">
-
-        <!-- FORMULARIO -->
-        <div class="form-card">
-          <div class="form-card-header">
-            <i class="material-icons">add_circle</i>
-            <h3>Nuevo Producto</h3>
-          </div>
-          <div class="form-card-body">
-            <div class="input-field">
-              <i class="material-icons prefix indigo-text">label</i>
-              <input type="text" id="nombre"/>
-              <label for="nombre">Nombre del Producto</label>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-slate-900/95 backdrop-blur-xl text-slate-300 w-72 flex-shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col border-r border-slate-800">
+        <div class="h-20 flex items-center px-6 border-b border-slate-800">
+            <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20 mr-3">
+                <i class="material-icons">store</i>
             </div>
-            <div class="input-field">
-              <i class="material-icons prefix indigo-text">category</i>
-              <select id="categoria">
-                <option value="" disabled selected>Selecciona Categoría</option>
-                <option value="Aguardientes">Aguardientes</option>
-                <option value="Cervezas">Cervezas</option>
-                <option value="Rones">Rones</option>
-                <option value="Whisky">Whisky</option>
-                <option value="Brandy">Brandy</option>
-                <option value="Hidratantes">Hidratantes</option>
-                <option value="Gaseosas">Gaseosas</option>
-                <option value="Ingresos Barra">Ingresos Barra</option>
-                <option value="Ingresos Cafeteria">Ingresos Cafetería</option>
-                <option value="Otros">Otros</option>
-              </select>
+            <div>
+                <h1 class="text-white font-extrabold tracking-tight text-lg leading-tight">Las Trompetas</h1>
+                <p class="text-xs text-brand-400 font-medium">Administración</p>
             </div>
-            <div class="row" style="margin-bottom:0;">
-              <div class="input-field col s6">
-                <input type="number" id="cantidad"/>
-                <label for="cantidad">Stock Inicial</label>
-              </div>
-              <div class="input-field col s6">
-                <input type="number" id="precio"/>
-                <label for="precio">P. Venta</label>
-              </div>
-            </div>
-            <div class="input-field">
-              <i class="material-icons prefix green-text">attach_money</i>
-              <input type="number" id="costo"/>
-              <label for="costo">Costo (Inversión)</label>
-            </div>
-            <div class="file-field input-field">
-              <div class="btn-small indigo lighten-5 indigo-text text-darken-4"
-                   style="border:1px solid #c5cae9;box-shadow:none;border-radius:8px;width:100%;">
-                <span><i class="material-icons left">cloud_upload</i>Subir Foto</span>
-                <input type="file" id="input-imagen" accept="image/*"/>
-              </div>
-              <div class="file-path-wrapper">
-                <input class="file-path validate" type="text" placeholder="Ningún archivo seleccionado"/>
-              </div>
-            </div>
-            <img id="preview-img"
-                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
-                 alt="Vista previa"/>
-            <button class="btn-save" onclick="guardarProducto()">
-              <i class="material-icons">save</i>Guardar Producto
+            <button class="ml-auto lg:hidden text-slate-400 hover:text-white" onclick="toggleSidebar()">
+                <i class="material-icons">close</i>
             </button>
-          </div>
         </div>
 
-        <!-- PANEL DERECHO -->
-        <div class="right-panel">
+        <div class="p-4 flex-1 overflow-y-auto space-y-1">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4 px-4">Principal</div>
+            <a href="/public/dashboard.html" class="nav-item"><i class="material-icons text-[20px]">dashboard</i> Dashboard</a>
+            <a href="/public/ventas.html" class="nav-item"><i class="material-icons text-[20px]">point_of_sale</i> Ventas</a>
+            <a href="/public/gastos.html" class="nav-item"><i class="material-icons text-[20px]">money_off</i> Gastos</a>
+            
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Administración</div>
+            <a href="#" class="nav-item active"><i class="material-icons text-[20px]">inventory_2</i> Inventario</a>
+            <a href="/public/usuarios.html" class="nav-item"><i class="material-icons text-[20px]">group</i> Usuarios</a>
 
-          <!-- BUSCADOR -->
-          <div class="search-bar">
-            <i class="material-icons">search</i>
-            <input type="text" id="busqueda-venta"
-                   onkeyup="filtrarProductos()"
-                   placeholder="Buscar por nombre o categoría..."/>
-          </div>
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Público</div>
+            <a href="/public/catalogo.html" target="_blank" class="nav-item"><i class="material-icons text-[20px]">qr_code_2</i> Catálogo QR</a>
+        </div>
 
-          <!-- TABLA PRODUCTOS -->
-          <div class="table-card">
-            <div class="table-card-header">
-              <h3><i class="material-icons">inventory_2</i>Inventario</h3>
+        <div class="p-4 border-t border-slate-800">
+            <a href="/index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10">
+                <i class="material-icons text-[20px]">logout</i> Salir del Sistema
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
+        
+        <!-- Top Navbar -->
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-30 flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-slate-500 hover:text-brand-600 bg-slate-100 p-2 rounded-lg transition-colors" onclick="toggleSidebar()">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div class="bg-slate-100 p-1 rounded-xl flex gap-1 shadow-inner">
+                    <button id="tab-btn-pedidos" onclick="switchTab('pedidos')" class="px-5 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-white text-brand-600 shadow-sm inv-tab active">
+                        <i class="material-icons text-[18px]">liquor</i> Pedidos en Vivo
+                    </button>
+                    <button id="tab-btn-inventario" onclick="switchTab('inventario')" class="px-5 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-500 hover:text-slate-800 inv-tab">
+                        <i class="material-icons text-[18px]">inventory_2</i> Gestionar Stock
+                    </button>
+                </div>
             </div>
-            <div class="table-scroll">
-              <table class="inv-table">
-                <thead>
-                  <tr>
-                    <th style="padding-left:20px;">Producto</th>
-                    <th>Categoría</th>
-                    <th class="center">Stock</th>
-                    <th>P. Venta</th>
-                    <th>Costo</th>
-                    <th class="center">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody id="tabla-cuerpo"></tbody>
-              </table>
+            <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm" id="user-avatar">
+                A
             </div>
-          </div>
+        </header>
 
-          <!-- HISTORIAL MOVIMIENTOS -->
-          <div class="historial-card">
-            <div class="historial-header">
-              <h3><i class="material-icons">history</i>Movimientos Recientes</h3>
+        <!-- Scrollable content -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth">
+            <div class="max-w-[1400px] mx-auto space-y-6 pb-12">
+
+                <!-- ═══════════════════════════════════════════════════ -->
+                <!-- TAB 1: PEDIDOS EN VIVO -->
+                <!-- ═══════════════════════════════════════════════════ -->
+                <div class="tab-panel active" id="panel-pedidos">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-gradient-to-r from-slate-50 to-white">
+                            <div>
+                                <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                                    <i class="material-icons text-brand-500">notifications_active</i> Cola de Pedidos
+                                </h3>
+                                <p class="text-sm text-slate-500 mt-1">Los pedidos de los meseros aparecerán aquí automáticamente.</p>
+                            </div>
+                            <div class="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-100 shadow-sm hidden sm:flex">
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <span class="text-xs font-bold uppercase tracking-wide">Sync Activo</span>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-slate-200">
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Hora</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Mesero</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-1/3">Detalle</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Total</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Estado</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabla-pedidos" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows -->
+                                    <tr><td colspan="6" class="px-6 py-8 text-center text-slate-400 font-medium">Cargando pedidos...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══════════════════════════════════════════════════ -->
+                <!-- TAB 2: GESTIONAR STOCK -->
+                <!-- ═══════════════════════════════════════════════════ -->
+                <div class="tab-panel" id="panel-inventario">
+                    
+                    <!-- KPI STRIP -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden flex items-center gap-4 hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 inset-x-0 h-1 bg-brand-500"></div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
+                                <i class="material-icons text-2xl">inventory_2</i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Total Productos</h3>
+                                <p class="text-2xl font-extrabold text-slate-900 mono-text" id="kpi-total-productos">—</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden flex items-center gap-4 hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 inset-x-0 h-1 bg-amber-500"></div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0">
+                                <i class="material-icons text-2xl">warning</i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Stock Bajo (≤5)</h3>
+                                <p class="text-2xl font-extrabold text-slate-900 mono-text" id="kpi-stock-bajo">—</p>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden flex items-center gap-4 hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 inset-x-0 h-1 bg-emerald-500"></div>
+                            <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+                                <i class="material-icons text-2xl">attach_money</i>
+                            </div>
+                            <div>
+                                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Valor Inventario</h3>
+                                <p class="text-xl font-extrabold text-slate-900 mono-text" id="kpi-valor-inv">—</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Layout: Form + Data -->
+                    <div class="flex flex-col lg:flex-row gap-6">
+                        
+                        <!-- Columna Izquierda: Formulario -->
+                        <div class="lg:w-[340px] flex-shrink-0">
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden sticky top-0">
+                                <div class="p-5 bg-slate-900 text-white flex items-center gap-3">
+                                    <i class="material-icons text-brand-400">add_circle</i>
+                                    <h3 class="font-bold">Nuevo Producto</h3>
+                                </div>
+                                <div class="p-5 space-y-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Nombre del Producto</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">label</i></div>
+                                            <input type="text" id="nombre" class="!pl-10" placeholder="Ej: Aguardiente Blanco">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Categoría</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">category</i></div>
+                                            <select id="categoria" class="!pl-10 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
+                                                <option value="" disabled selected>Selecciona Categoría</option>
+                                                <option value="Aguardientes">Aguardientes</option>
+                                                <option value="Cervezas">Cervezas</option>
+                                                <option value="Rones">Rones</option>
+                                                <option value="Whisky">Whisky</option>
+                                                <option value="Brandy">Brandy</option>
+                                                <option value="Hidratantes">Hidratantes</option>
+                                                <option value="Gaseosas">Gaseosas</option>
+                                                <option value="Ingresos Barra">Ingresos Barra</option>
+                                                <option value="Ingresos Cafeteria">Ingresos Cafetería</option>
+                                                <option value="Otros">Otros</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Stock Inicial</label>
+                                            <input type="number" id="cantidad" placeholder="0">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">P. Venta</label>
+                                            <input type="number" id="precio" placeholder="$0">
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Costo (Inversión)</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-emerald-500 text-[18px]">attach_money</i></div>
+                                            <input type="number" id="costo" class="!pl-10" placeholder="$0">
+                                        </div>
+                                    </div>
+
+                                    <!-- Fake File Input -->
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Imagen (Opcional)</label>
+                                        <div class="relative border-2 border-dashed border-slate-200 hover:border-brand-500 hover:bg-brand-50 rounded-xl p-4 transition-colors cursor-pointer text-center group" onclick="document.getElementById('input-imagen').click()">
+                                            <input type="file" id="input-imagen" accept="image/*" class="hidden">
+                                            <i class="material-icons text-slate-400 group-hover:text-brand-500 text-3xl mb-1">cloud_upload</i>
+                                            <p class="text-xs font-medium text-slate-500" id="file-name-display">Click para subir foto</p>
+                                        </div>
+                                        <img id="preview-img" class="hidden w-full h-32 object-contain mt-3 rounded-lg border border-slate-200" src="" alt="Vista previa"/>
+                                    </div>
+
+                                    <button onclick="guardarProducto()" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-bold rounded-xl py-3.5 px-4 mt-2 transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-500/10">
+                                        <i class="material-icons text-[18px]">save</i> Guardar Producto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna Derecha: Tablas -->
+                        <div class="flex-1 space-y-6 min-w-0">
+                            
+                            <!-- Búsqueda -->
+                            <div class="relative shadow-sm group">
+                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i class="material-icons text-slate-400 group-focus-within:text-brand-600 transition-colors">search</i>
+                                </div>
+                                <input type="text" id="busqueda-venta" onkeyup="filtrarProductos()" placeholder="Buscar por nombre o categoría..." class="w-full bg-white border border-slate-200 text-slate-900 text-base rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block pl-12 p-4 transition-all">
+                            </div>
+
+                            <!-- Tabla Inventario -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                <div class="p-5 border-b border-slate-100 flex items-center gap-3">
+                                    <h3 class="font-bold text-slate-900 flex items-center gap-2">
+                                        <i class="material-icons text-brand-500">inventory_2</i> Inventario
+                                    </h3>
+                                </div>
+                                <div class="overflow-x-auto max-h-[450px]">
+                                    <table class="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Producto</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Categoría</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Stock</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">P. Venta</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Costo</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-cuerpo" class="divide-y divide-slate-100">
+                                            <!-- Dynamic rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Tabla Movimientos Recientes -->
+                            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                                <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <h3 class="font-bold text-slate-900 flex items-center gap-2">
+                                        <i class="material-icons text-brand-500">history</i> Movimientos Recientes
+                                    </h3>
+                                    <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                                        <input type="date" id="filtro-desde" class="bg-transparent border-none focus:ring-0 text-xs py-1.5 px-2">
+                                        <span class="text-slate-400">-</span>
+                                        <input type="date" id="filtro-hasta" class="bg-transparent border-none focus:ring-0 text-xs py-1.5 px-2">
+                                        <button onclick="aplicarFiltroFechas()" class="bg-brand-600 text-white rounded p-1.5 hover:bg-brand-700 transition-colors"><i class="material-icons text-[16px] block">filter_list</i></button>
+                                        <button onclick="limpiarFiltros()" id="btn-limpiar-filtro" class="hidden text-rose-500 hover:bg-rose-50 rounded p-1.5 transition-colors"><i class="material-icons text-[16px] block">close</i></button>
+                                    </div>
+                                </div>
+                                <div class="overflow-x-auto max-h-[350px]">
+                                    <table class="w-full text-left border-collapse">
+                                        <thead>
+                                            <tr class="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-1/5">Fecha</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[15%]">Usuario</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-1/3">Detalle</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[15%]">Total</th>
+                                                <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[15%] text-center">Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-historial" class="divide-y divide-slate-100">
+                                            <!-- Dynamic rows -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </main>
 
-            <!-- Filtros -->
-            <div class="hist-filters">
-              <div class="hist-filter-group">
-                <label>Desde</label>
-                <input type="date" id="filtro-desde"/>
-              </div>
-              <div class="hist-filter-group">
-                <label>Hasta</label>
-                <input type="date" id="filtro-hasta"/>
-              </div>
-              <button class="btn-filter" onclick="aplicarFiltroFechas()">
-                <i class="material-icons" style="font-size:1rem;">filter_list</i>Filtrar
-              </button>
-              <button class="btn-limpiar" id="btn-limpiar-filtro"
-                      style="display:none;" onclick="limpiarFiltros()">
-                <i class="material-icons" style="font-size:0.9rem;">close</i>Limpiar
-              </button>
+    <!-- ═══ MODALS ═══ -->
+    <div id="app-modal-overlay" class="fixed inset-0 modal-overlay z-50"></div>
+
+    <!-- Modal Detalle Pedido -->
+    <div id="modal-detalle-pedido" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md modal-box flex flex-col max-h-full">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-3xl">
+                <h5 class="text-lg font-extrabold text-slate-900 flex items-center gap-2"><i class="material-icons text-brand-600">receipt_long</i> Detalle Pedido</h5>
+                <button onclick="closeModal('modal-detalle-pedido')" class="text-slate-400 hover:text-slate-700 bg-white p-1.5 rounded-full shadow-sm border border-slate-200"><i class="material-icons text-[20px] block">close</i></button>
             </div>
-
-            <!-- Tabla historial -->
-            <div class="hist-scroll">
-              <table class="hist-table">
-                <thead>
-                  <tr>
-                    <th style="width:22%;">Fecha</th>
-                    <th style="width:14%;">Usuario</th>
-                    <th style="width:34%;">Detalle</th>
-                    <th style="width:16%;">Total</th>
-                    <th style="width:14%; text-align:center;">Acción</th>
-                  </tr>
-                </thead>
-                <tbody id="tabla-historial"></tbody>
-              </table>
+            <div class="p-6 overflow-y-auto flex-1">
+                <ul id="lista-detalle-pedido" class="space-y-3"></ul>
             </div>
-          </div>
-
-        </div><!-- /right-panel -->
-      </div><!-- /stock-layout -->
-    </div><!-- /panel-inventario -->
-
-  </main>
-
-  <!-- ═══ MODALES (lógica intacta, estilos mejorados) ═══ -->
-
-  <!-- Modal Detalle Pedido -->
-  <div id="modal-detalle-pedido" class="modal" style="border-radius:16px;">
-    <div class="modal-content">
-      <h5 class="indigo-text text-darken-4">Detalle del Pedido</h5>
-      <ul class="collection" id="lista-detalle-pedido"></ul>
-      <h5 class="right-align">Total: <span id="total-detalle" class="indigo-text text-darken-4" style="font-family:'DM Mono',monospace;"></span></h5>
+            <div class="p-6 border-t border-slate-100 bg-slate-50 rounded-b-3xl">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold text-slate-500">Total:</span>
+                    <span id="total-detalle" class="text-2xl font-black text-brand-600 mono-text"></span>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="closeModal('modal-detalle-pedido')" class="flex-1 bg-white border border-slate-300 text-slate-700 font-bold py-3 rounded-xl hover:bg-slate-50 transition-colors">Cerrar</button>
+                    <button id="btn-despachar-modal" class="flex-1 bg-emerald-600 text-white font-bold py-3 rounded-xl hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-500/20">Despachar</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="modal-footer" style="display:flex;gap:8px;justify-content:flex-end;padding:12px 24px;">
-      <button class="modal-close modal-btn-cancel">Cerrar</button>
-      <button id="btn-despachar-modal" class="modal-btn-save">Marcar Despachado</button>
+
+    <!-- Modal Editar Producto -->
+    <div id="modal-editar" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl modal-box flex flex-col max-h-full">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-3xl">
+                <h5 class="text-lg font-extrabold text-slate-900 flex items-center gap-2"><i class="material-icons text-brand-600">edit</i> Editar Producto</h5>
+                <button onclick="closeModal('modal-editar')" class="text-slate-400 hover:text-slate-700 bg-white p-1.5 rounded-full shadow-sm border border-slate-200"><i class="material-icons text-[20px] block">close</i></button>
+            </div>
+            <div class="p-6 overflow-y-auto">
+                <input type="hidden" id="edit-nombre-original"/>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Nombre</label>
+                        <input type="text" id="edit-nombre">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Categoría</label>
+                        <select id="edit-categoria" class="appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
+                            <option value="Aguardientes">Aguardientes</option>
+                            <option value="Cervezas">Cervezas</option>
+                            <option value="Rones">Rones</option>
+                            <option value="Whisky">Whisky</option>
+                            <option value="Brandy">Brandy</option>
+                            <option value="Hidratantes">Hidratantes</option>
+                            <option value="Gaseosas">Gaseosas</option>
+                            <option value="IngresosBarra">Ingresos Barra</option>
+                            <option value="IngresosCafeteria">Ingresos Cafetería</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 md:col-span-2">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Stock</label>
+                            <input type="number" id="edit-cantidad">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Venta</label>
+                            <input type="number" id="edit-precio">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Costo</label>
+                            <input type="number" id="edit-costo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-100 bg-slate-50 rounded-b-3xl flex justify-end gap-3">
+                <button onclick="closeModal('modal-editar')" class="px-6 bg-white border border-slate-300 text-slate-700 font-bold py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Cancelar</button>
+                <button onclick="actualizarProducto()" class="px-6 bg-brand-600 text-white font-bold py-2.5 rounded-xl hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/20">Guardar Cambios</button>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <!-- Modal Editar Producto -->
-  <div id="modal-editar" class="modal" style="border-radius:16px;">
-    <div class="modal-content">
-      <h5 class="indigo-text text-darken-4"><b>Editar Producto</b></h5>
-      <div class="row">
-        <input type="hidden" id="edit-nombre-original"/>
-        <div class="input-field col s12 m6">
-          <input type="text" id="edit-nombre"/>
-          <label class="active" for="edit-nombre">Nombre</label>
+    <!-- Modal Eliminar Producto -->
+    <div id="modal-eliminar" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-sm modal-box flex flex-col text-center p-8">
+            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="material-icons text-3xl">warning</i>
+            </div>
+            <h5 class="text-xl font-extrabold text-slate-900 mb-2">¿Eliminar Producto?</h5>
+            <p id="nombre-eliminar-display" class="text-slate-500 font-medium mb-6">Esta acción no se puede deshacer.</p>
+            <input type="hidden" id="nombre-eliminar-hidden"/>
+            <div class="flex gap-3">
+                <button onclick="closeModal('modal-eliminar')" class="flex-1 bg-slate-100 text-slate-700 font-bold py-3 rounded-xl hover:bg-slate-200 transition-colors">Cancelar</button>
+                <button onclick="confirmarBorrado()" class="flex-1 bg-rose-600 text-white font-bold py-3 rounded-xl hover:bg-rose-700 transition-colors shadow-lg shadow-rose-500/20">Sí, eliminar</button>
+            </div>
         </div>
-        <div class="input-field col s12 m6">
-          <select id="edit-categoria">
-            <option value="Aguardientes">Aguardientes</option>
-            <option value="Cervezas">Cervezas</option>
-            <option value="Rones">Rones</option>
-            <option value="Whisky">Whisky</option>
-            <option value="Brandy">Brandy</option>
-            <option value="Hidratantes">Hidratantes</option>
-            <option value="Gaseosas">Gaseosas</option>
-            <option value="IngresosBarra">Ingresos Barra</option>
-            <option value="IngresosCafeteria">Ingresos Cafetería</option>
-            <option value="Otros">Otros</option>
-          </select>
-          <label>Categoría</label>
-        </div>
-        <div class="input-field col s4">
-          <input type="number" id="edit-cantidad"/>
-          <label class="active" for="edit-cantidad">Stock</label>
-        </div>
-        <div class="input-field col s4">
-          <input type="number" id="edit-precio"/>
-          <label class="active" for="edit-precio">Venta</label>
-        </div>
-        <div class="input-field col s4">
-          <input type="number" id="edit-costo"/>
-          <label class="active" for="edit-costo">Costo</label>
-        </div>
-      </div>
     </div>
-    <div class="modal-footer" style="display:flex;gap:8px;justify-content:flex-end;padding:12px 24px;">
-      <button class="modal-close modal-btn-cancel">Cancelar</button>
-      <button class="modal-btn-save" onclick="actualizarProducto()">Guardar</button>
-    </div>
-  </div>
 
-  <!-- Modal Eliminar Producto -->
-  <div id="modal-eliminar" class="modal" style="border-radius:16px;max-width:400px;">
-    <div class="modal-content center-align">
-      <i class="material-icons large red-text text-lighten-2">warning</i>
-      <h5>¿Eliminar Producto?</h5>
-      <p id="nombre-eliminar-display" class="indigo-text" style="font-weight:600;"></p>
-      <input type="hidden" id="nombre-eliminar-hidden"/>
-    </div>
-    <div class="modal-footer" style="display:flex;gap:8px;justify-content:flex-end;padding:12px 24px;">
-      <button class="modal-close modal-btn-cancel">Cancelar</button>
-      <button class="modal-btn-del" onclick="confirmarBorrado()">Eliminar</button>
-    </div>
-  </div>
+    <!-- Modal Editar Venta -->
+    <div id="modal-editar-venta" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-3xl modal-box flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-3xl">
+                <h5 class="text-lg font-extrabold text-slate-900 flex items-center gap-2"><i class="material-icons text-brand-600">edit_document</i> Editar Venta</h5>
+                <button onclick="closeModal('modal-editar-venta')" class="text-slate-400 hover:text-slate-700 bg-white p-1.5 rounded-full shadow-sm border border-slate-200"><i class="material-icons text-[20px] block">close</i></button>
+            </div>
+            <div class="p-6 overflow-y-auto flex-1">
+                <input type="hidden" id="edit-venta-id"/>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Vendedor</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">person</i></div>
+                            <input type="text" id="edit-venta-vendedor" class="!pl-10">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1 ml-1">Fecha y Hora</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">event</i></div>
+                            <input type="datetime-local" id="edit-venta-fecha" class="!pl-10">
+                        </div>
+                    </div>
+                </div>
 
-  <!-- Modal Editar Venta -->
-  <div id="modal-editar-venta" class="modal" style="border-radius:16px;max-width:680px;width:95%;">
-    <div class="modal-content" style="padding:24px;">
-      <h5 class="indigo-text text-darken-4" style="margin-bottom:4px;">
-        <i class="material-icons left">edit</i>Editar Venta
-      </h5>
-      <input type="hidden" id="edit-venta-id"/>
-      <div class="row" style="margin-bottom:0;margin-top:16px;">
-        <div class="input-field col s12 m6">
-          <i class="material-icons prefix indigo-text">person</i>
-          <input type="text" id="edit-venta-vendedor"/>
-          <label class="active" for="edit-venta-vendedor">Vendedor</label>
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="font-bold text-slate-800 flex items-center gap-1.5"><i class="material-icons text-[18px] text-brand-500">shopping_cart</i> Productos del pedido</span>
+                        <button onclick="agregarFilaItem()" class="bg-brand-50 hover:bg-brand-100 text-brand-700 font-bold py-1.5 px-3 rounded-lg text-xs transition-colors flex items-center gap-1 border border-brand-200">
+                            <i class="material-icons text-[16px]">add</i> Agregar ítem
+                        </button>
+                    </div>
+                    <div class="border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        <div class="overflow-x-auto max-h-[300px]">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                                    <tr>
+                                        <th class="p-3 text-xs font-bold text-slate-500 uppercase">Producto</th>
+                                        <th class="p-3 text-xs font-bold text-slate-500 uppercase text-center w-24">Cant.</th>
+                                        <th class="p-3 text-xs font-bold text-slate-500 uppercase text-center w-32">Precio</th>
+                                        <th class="p-3 text-xs font-bold text-slate-500 uppercase text-center w-32">Subtotal</th>
+                                        <th class="p-3 w-16"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="edit-items-tbody" class="divide-y divide-slate-100 bg-white">
+                                    <!-- Items via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-100 bg-slate-50 rounded-b-3xl flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div class="bg-emerald-100 text-emerald-800 px-4 py-2 rounded-xl border border-emerald-200 flex items-center gap-3">
+                    <span class="text-sm font-bold uppercase">Total Calculado</span>
+                    <span id="edit-venta-total-display" class="text-xl font-black mono-text">$0</span>
+                </div>
+                <div class="flex gap-3 w-full sm:w-auto">
+                    <button onclick="closeModal('modal-editar-venta')" class="flex-1 sm:flex-none px-6 bg-white border border-slate-300 text-slate-700 font-bold py-2.5 rounded-xl hover:bg-slate-50 transition-colors">Cancelar</button>
+                    <button onclick="guardarEdicionVenta()" class="flex-1 sm:flex-none px-6 bg-slate-900 text-white font-bold py-2.5 rounded-xl hover:bg-brand-600 transition-colors shadow-lg shadow-brand-500/20 flex items-center justify-center gap-2">
+                        <i class="material-icons text-[18px]">save</i> Guardar
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="input-field col s12 m6">
-          <i class="material-icons prefix indigo-text">event</i>
-          <input type="datetime-local" id="edit-venta-fecha"/>
-          <label class="active" for="edit-venta-fecha">Fecha y Hora</label>
-        </div>
-      </div>
-      <div style="margin-top:8px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <span style="font-weight:600;color:var(--indigo-900);font-size:0.95rem;">
-            <i class="material-icons tiny">shopping_cart</i> Productos del pedido
-          </span>
-          <button class="modal-btn-primary" style="height:34px;font-size:0.82rem;"
-                  onclick="agregarFilaItem()">
-            <i class="material-icons" style="font-size:1rem;vertical-align:middle;">add</i> Agregar ítem
-          </button>
-        </div>
-        <div style="max-height:280px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;">
-          <table style="width:100%;border-collapse:collapse;margin:0;">
-            <thead style="background:#f8f9ff;">
-              <tr>
-                <th style="padding:8px 12px;font-size:0.75rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Producto</th>
-                <th style="padding:8px;width:90px;text-align:center;font-size:0.75rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Cant.</th>
-                <th style="padding:8px;width:110px;text-align:center;font-size:0.75rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Precio</th>
-                <th style="padding:8px;width:100px;text-align:center;font-size:0.75rem;font-weight:700;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);">Subtotal</th>
-                <th style="padding:8px;width:50px;border-bottom:1px solid var(--border);"></th>
-              </tr>
-            </thead>
-            <tbody id="edit-items-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-      <div style="text-align:right;margin-top:16px;padding:12px 16px;background:var(--green-100);border-radius:8px;">
-        <span style="font-size:1rem;color:var(--text-muted);">Total calculado:</span>
-        <span id="edit-venta-total-display"
-              style="font-size:1.4rem;font-weight:700;color:var(--green-800);margin-left:12px;font-family:'DM Mono',monospace;">$0</span>
-      </div>
     </div>
-    <div class="modal-footer" style="display:flex;gap:8px;justify-content:flex-end;padding:12px 24px;">
-      <button class="modal-close modal-btn-cancel">Cancelar</button>
-      <button class="modal-btn-primary" onclick="guardarEdicionVenta()">
-        <i class="material-icons" style="font-size:1rem;vertical-align:middle;">save</i> Guardar Cambios
-      </button>
-    </div>
-  </div>
 
-  <!-- SCRIPTS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="/public/js/inventory.js"></script>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
 
-  <script>
-    // ── VARIABLES GLOBALES ──
-    let pedidosCargados = [];
-    let ultimoConteo = 0;
-    let primeraCarga = true;
-    let filtroActivo = false;
-
-    // ── INIT ──
-    document.addEventListener("DOMContentLoaded", function () {
-      M.Sidenav.init(document.querySelectorAll(".sidenav"));
-      M.Modal.init(document.querySelectorAll(".modal"));
-      M.FormSelect.init(document.querySelectorAll("select"));
-      M.Tooltip.init(document.querySelectorAll(".tooltipped"));
-      cargarPedidos();
-      setInterval(cargarPedidos, 5000);
-    });
-
-    // ── SWITCH TABS ──
-    function switchTab(tab) {
-      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-      document.querySelectorAll(".inv-tab").forEach(b => b.classList.remove("active"));
-      document.getElementById("panel-" + tab).classList.add("active");
-      document.getElementById("tab-btn-" + tab).classList.add("active");
-    }
-
-    // ── POLLING PEDIDOS ──
-    async function cargarPedidos() {
-      try {
-        const res = await fetch("/api/ventas/historial");
-        if (!res.ok) return;
-        const ventas = await res.json();
-        ventas.sort((a, b) => new Date(b.fecha || 0) - new Date(a.fecha || 0));
-        pedidosCargados = ventas;
-        renderizarTablaPedidos(ventas);
-        if (!filtroActivo) renderizarHistorialStock(ventas);
-        verificarAlerta(ventas.length);
-      } catch (e) { console.error("Error polling:", e); }
-    }
-
-    // ── TABLA PEDIDOS ──
-    function renderizarTablaPedidos(ventas) {
-      const tbody = document.getElementById("tabla-pedidos");
-      if (!tbody) return;
-      tbody.innerHTML = "";
-      ventas.forEach(v => {
-        const fechaObj = new Date(v.fecha);
-        const hora = isNaN(fechaObj.getTime()) ? "..." :
-          fechaObj.toLocaleTimeString("es-CO", { hour: "2-digit", minute: "2-digit" });
-        const items = v.items || [];
-        const total = Number(v.total || 0).toLocaleString("es-CO", { style:"currency", currency:"COP" });
-        const vendedor = v.vendedor || "Mesero";
-        const estado = v.estado || "despachado";
-
-        let badgeHtml = `<span class="estado-badge despachado"><i class="material-icons" style="font-size:0.85rem;">check</i>DESPACHADO</span>`;
-        let accionBtn = `<i class="material-icons grey-text">done_all</i>`;
-        if (estado === "pendiente") {
-          badgeHtml = `<span class="estado-badge pendiente"><i class="material-icons" style="font-size:0.85rem;">schedule</i>PENDIENTE</span>`;
-          accionBtn = `<button class="btn-icon edit tooltipped" data-tooltip="Marcar Despachado"
-                               onclick="cambiarEstadoPedido('${v.id}','despachado')">
-                         <i class="material-icons">check</i>
-                       </button>`;
+    <script>
+        // --- UI Logic & Overrides ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
         }
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td style="font-weight:600;">${hora}</td>
-          <td>${vendedor}</td>
-          <td style="font-size:0.82rem;color:var(--text-muted);">
-            ${items.map(i => `${i.nombre} (x${i.cantidad})`).join(", ")}
-          </td>
-          <td style="font-family:'DM Mono',monospace;font-weight:600;color:var(--green-800);">${total}</td>
-          <td>${badgeHtml}</td>
-          <td class="center" style="white-space:nowrap;">
-            <button class="btn-icon edit" onclick='verDetallePedido("${v.id}")' title="Ver detalles">
-              <i class="material-icons">visibility</i>
-            </button>
-            ${accionBtn}
-          </td>`;
-        tbody.appendChild(tr);
-      });
-      M.Tooltip.init(document.querySelectorAll(".tooltipped"));
-    }
 
-    // ── HISTORIAL STOCK ──
-    function renderizarHistorialStock(ventasParaMostrar) {
-      const tbody = document.getElementById("tabla-historial");
-      if (!tbody) return;
-      tbody.innerHTML = "";
-      if (ventasParaMostrar.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-muted);font-size:0.88rem;">No hay movimientos en este rango.</td></tr>`;
-        return;
-      }
-      ventasParaMostrar.slice(0, 50).forEach(v => {
-        const fechaObj = new Date(v.fecha);
-        const fechaLegible = isNaN(fechaObj.getTime()) ? "Inválida" :
-          fechaObj.toLocaleDateString("es-CO", { month:"short", day:"numeric", hour:"2-digit", minute:"2-digit" });
-        let detalle = "Sin detalle";
-        if (Array.isArray(v.items) && v.items.length > 0)
-          detalle = v.items.map(i => `${i.nombre} (x${i.cantidad})`).join(", ");
-        const total = Number(v.total || 0).toLocaleString("es-CO", { style:"currency", currency:"COP", minimumFractionDigits:0 });
+        // Custom Toast replacement
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            let typeClass = 'toast-info';
+            let icon = 'info';
+            
+            if (type === 'success' || type.includes('green')) { typeClass = 'toast-success'; icon = 'check_circle'; }
+            else if (type === 'error' || type.includes('red')) { typeClass = 'toast-error'; icon = 'error'; }
+            else if (type === 'warning' || type.includes('orange')) { typeClass = 'toast-warning'; icon = 'warning'; }
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><span class="hist-fecha">${fechaLegible}</span></td>
-          <td style="font-size:0.85rem;">${v.vendedor || "Sistema"}</td>
-          <td style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:0;"
-              title="${detalle}">${detalle}</td>
-          <td><span class="hist-total">${total}</span></td>
-          <td class="hist-actions" style="width:90px;">
-            <button class="btn-icon edit" title="Editar venta">
-              <i class="material-icons" style="font-size:0.95rem;">edit</i>
-            </button>
-            <button class="btn-icon del" title="Eliminar venta" style="margin-left:4px;">
-              <i class="material-icons" style="font-size:0.95rem;">delete</i>
-            </button>
-          </td>`;
-
-        // Listeners con closure — sin data-id ni onclick
-        const idVenta = v.id;
-        const btns = tr.querySelectorAll("button");
-        btns[0].addEventListener("click", () => abrirModalEditarVenta(idVenta));
-        btns[1].addEventListener("click", () => eliminarVenta(idVenta));
-
-        tbody.appendChild(tr);
-      });
-    }
-
-    // ── VER DETALLE ──
-    function verDetallePedido(idVenta) {
-      const venta = pedidosCargados.find(v => v.id === idVenta);
-      if (!venta) return;
-      const lista = document.getElementById("lista-detalle-pedido");
-      lista.innerHTML = "";
-      (venta.items || []).forEach(item => {
-        lista.innerHTML += `
-          <li class="collection-item avatar">
-            <i class="material-icons circle indigo lighten-4 indigo-text">local_bar</i>
-            <span class="title" style="font-weight:600;">${item.nombre}</span>
-            <p class="grey-text">Cantidad: ${item.cantidad}<br>Subtotal: $${(item.precio*item.cantidad).toLocaleString()}</p>
-          </li>`;
-      });
-      document.getElementById("total-detalle").innerText = "$" + parseInt(venta.total||0).toLocaleString();
-      const btn = document.getElementById("btn-despachar-modal");
-      const inst = M.Modal.getInstance(document.getElementById("modal-detalle-pedido"));
-      if (venta.estado === "pendiente") {
-        btn.style.display = "inline-flex";
-        btn.onclick = () => { cambiarEstadoPedido(idVenta, "despachado"); inst.close(); };
-      } else { btn.style.display = "none"; }
-      inst.open();
-    }
-
-    // ── CAMBIAR ESTADO ──
-    async function cambiarEstadoPedido(idVenta, nuevoEstado) {
-      try {
-        const res = await fetch("/api/ventas/estado", {
-          method:"POST", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ idVenta, nuevoEstado }),
-        });
-        if (res.ok) { M.toast({ html:"✅ Pedido actualizado", classes:"green rounded" }); cargarPedidos(); }
-        else M.toast({ html:"❌ Error al actualizar", classes:"red rounded" });
-      } catch(e) { console.error(e); }
-    }
-
-    // ── ELIMINAR VENTA ──
-    async function eliminarVenta(idVenta) {
-      const conf = await Swal.fire({
-        title:"¿Eliminar venta?",
-        text:"Esto devolverá los productos al stock y borrará el registro.",
-        icon:"warning", showCancelButton:true,
-        confirmButtonColor:"#c62828", cancelButtonColor:"#3949ab",
-        confirmButtonText:"Sí, eliminar", cancelButtonText:"Cancelar",
-      });
-      if (!conf.isConfirmed) return;
-      try {
-        const res = await fetch(`/api/ventas/${idVenta}`, { method:"DELETE" });
-        if (res.ok) { Swal.fire("Eliminado","La venta ha sido eliminada.","success"); cargarPedidos(); }
-        else Swal.fire("Error","No se pudo eliminar la venta.","error");
-      } catch(e) { Swal.fire("Error","Fallo de conexión.","error"); }
-    }
-
-    // ── ALERTA NUEVO PEDIDO ──
-    function verificarAlerta(cantidadActual) {
-      if (cantidadActual > ultimoConteo && !primeraCarga) {
-        M.toast({ html:"🔔 ¡NUEVO PEDIDO!", classes:"orange darken-4 rounded", displayLength:4000 });
-        document.getElementById("audio-notificacion")?.play().catch(()=>{});
-      }
-      ultimoConteo = cantidadActual;
-      primeraCarga = false;
-    }
-
-    // ── FILTROS HISTORIAL ──
-    function aplicarFiltroFechas() {
-      const desde = document.getElementById("filtro-desde").value;
-      const hasta = document.getElementById("filtro-hasta").value;
-      if (!desde || !hasta) {
-        Swal.fire("Atención","Selecciona ambas fechas.","warning"); return;
-      }
-      const dDesde = new Date(desde + "T00:00:00");
-      const dHasta = new Date(hasta + "T23:59:59");
-      const filtradas = pedidosCargados.filter(v => {
-        const f = new Date(v.fecha);
-        return f >= dDesde && f <= dHasta;
-      });
-      filtroActivo = true;
-      document.getElementById("btn-limpiar-filtro").style.display = "flex";
-      renderizarHistorialStock(filtradas);
-      M.toast({ html:`${filtradas.length} movimientos encontrados`, classes:"rounded" });
-    }
-    function limpiarFiltros() {
-      document.getElementById("filtro-desde").value = "";
-      document.getElementById("filtro-hasta").value = "";
-      filtroActivo = false;
-      document.getElementById("btn-limpiar-filtro").style.display = "none";
-      renderizarHistorialStock(pedidosCargados);
-    }
-
-    // ── CERRAR SESIÓN ──
-    function cerrarSesion() {
-      Swal.fire({ title:"¿Cerrar sesión?", icon:"question", showCancelButton:true, confirmButtonText:"Sí, salir" })
-        .then(r => { if (r.isConfirmed) { localStorage.clear(); window.location.href="/"; } });
-    }
-
-    // ═══════════════════════════════════════════
-    // EDITAR VENTA — lógica completa intacta
-    // ═══════════════════════════════════════════
-    function abrirModalEditarVenta(idVenta) {
-      const venta = pedidosCargados.find(v => v.id === idVenta);
-      if (!venta) { M.toast({ html:"No se encontró la venta", classes:"red rounded" }); return; }
-      document.getElementById("edit-venta-id").value = idVenta;
-      document.getElementById("edit-venta-vendedor").value = venta.vendedor || "";
-      if (venta.fecha) {
-        document.getElementById("edit-venta-fecha").value =
-          new Date(venta.fecha).toISOString().slice(0, 16);
-      }
-      renderizarItemsEditables(venta.items || []);
-      recalcularTotalModal();
-      M.updateTextFields();
-      M.Modal.getInstance(document.getElementById("modal-editar-venta")).open();
-    }
-    function renderizarItemsEditables(items) {
-      const tbody = document.getElementById("edit-items-tbody");
-      tbody.innerHTML = "";
-      items.forEach((item, i) => agregarFilaItem(item, i));
-    }
-    function agregarFilaItem(item = null, index = null) {
-      const tbody = document.getElementById("edit-items-tbody");
-      const idx = index !== null ? index : tbody.rows.length;
-      const nombre  = item ? item.nombre   : "";
-      const cantidad = item ? item.cantidad : 1;
-      const precio  = item ? item.precio   : 0;
-      const tr = document.createElement("tr");
-      tr.dataset.idx = idx;
-      tr.innerHTML = `
-        <td style="padding:6px 8px;">
-          <input type="text" class="browser-default item-nombre" value="${nombre}"
-                 placeholder="Nombre producto"
-                 style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;width:100%;font-size:0.88rem;font-family:'DM Sans',sans-serif;">
-        </td>
-        <td style="padding:6px 4px;" class="center">
-          <input type="number" class="browser-default item-cantidad" value="${cantidad}" min="1"
-                 style="border:1px solid var(--border);border-radius:6px;padding:4px 6px;width:70px;text-align:center;font-size:0.88rem;"
-                 oninput="recalcularTotalModal()">
-        </td>
-        <td style="padding:6px 4px;" class="center">
-          <input type="number" class="browser-default item-precio" value="${precio}" min="0"
-                 style="border:1px solid var(--border);border-radius:6px;padding:4px 6px;width:90px;text-align:center;font-size:0.88rem;"
-                 oninput="recalcularTotalModal()">
-        </td>
-        <td style="padding:6px 4px;" class="center">
-          <span class="item-subtotal" style="font-family:'DM Mono',monospace;font-weight:600;color:var(--green-800);font-size:0.88rem;">
-            $${(Number(cantidad)*Number(precio)).toLocaleString("es-CO")}
-          </span>
-        </td>
-        <td style="padding:6px 4px;" class="center">
-          <button class="btn-icon del" onclick="eliminarFilaItem(this)" title="Eliminar ítem">
-            <i class="material-icons" style="font-size:0.9rem;">delete</i>
-          </button>
-        </td>`;
-      tbody.appendChild(tr);
-    }
-    function eliminarFilaItem(btn) {
-      const fila = btn.closest("tr");
-      const nombre = fila.querySelector(".item-nombre").value;
-      if (!nombre) { fila.remove(); recalcularTotalModal(); return; }
-      if (confirm(`¿Eliminar "${nombre}" del pedido?`)) { fila.remove(); recalcularTotalModal(); }
-    }
-    function recalcularTotalModal() {
-      let total = 0;
-      document.querySelectorAll("#edit-items-tbody tr").forEach(fila => {
-        const cant  = Number(fila.querySelector(".item-cantidad")?.value) || 0;
-        const prec  = Number(fila.querySelector(".item-precio")?.value) || 0;
-        const sub   = cant * prec;
-        total += sub;
-        const span = fila.querySelector(".item-subtotal");
-        if (span) span.textContent = "$" + sub.toLocaleString("es-CO");
-      });
-      document.getElementById("edit-venta-total-display").textContent =
-        "$" + total.toLocaleString("es-CO");
-    }
-    async function guardarEdicionVenta() {
-      const id       = document.getElementById("edit-venta-id").value;
-      const vendedor = document.getElementById("edit-venta-vendedor").value.trim();
-      const fecha    = document.getElementById("edit-venta-fecha").value;
-      const filas    = document.querySelectorAll("#edit-items-tbody tr");
-      const itemsNuevos = [];
-      let hayError = false;
-      filas.forEach(fila => {
-        const nombre   = fila.querySelector(".item-nombre").value.trim();
-        const cantidad = Number(fila.querySelector(".item-cantidad").value);
-        const precio   = Number(fila.querySelector(".item-precio").value);
-        if (!nombre || cantidad <= 0) { hayError = true; return; }
-        itemsNuevos.push({ nombre, cantidad, precio });
-      });
-      if (hayError)      { M.toast({ html:"⚠️ Revisa ítems inválidos", classes:"orange rounded" }); return; }
-      if (!vendedor)     { M.toast({ html:"El vendedor es obligatorio", classes:"red rounded" }); return; }
-      if (!itemsNuevos.length) { M.toast({ html:"La venta debe tener al menos un ítem", classes:"red rounded" }); return; }
-      try {
-        const res  = await fetch(`/api/ventas/${encodeURIComponent(id)}`, {
-          method:"PUT", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ vendedor, fecha, itemsNuevos }),
-        });
-        const data = await res.json();
-        if (res.ok) {
-          if (data.stockInsuficiente?.length)
-            M.toast({ html:`⚠️ Stock bajo: ${data.stockInsuficiente.join(", ")}`, classes:"orange darken-2 rounded", displayLength:5000 });
-          M.toast({ html:"✅ Venta actualizada", classes:"green rounded" });
-          M.Modal.getInstance(document.getElementById("modal-editar-venta")).close();
-          cargarPedidos();
-        } else {
-          M.toast({ html:`❌ Error: ${data.message||"No se pudo actualizar"}`, classes:"red rounded" });
+            toast.className = `custom-toast ${typeClass}`;
+            toast.innerHTML = `<i class="material-icons">${icon}</i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
         }
-      } catch(e) { M.toast({ html:"Error de conexión", classes:"red rounded" }); }
-    }
-  </script>
+
+        window.M = window.M || {};
+        window.M.AutoInit = function() {}; // Prevent crashes when inventory.js calls it
+        window.M.toast = function(opts) { showToast(opts.html, opts.classes || 'info'); };
+        
+        // Mock Materialize updateTextFields
+        window.M.updateTextFields = function() {};
+        
+        // Mock Materialize FormSelect
+        window.M.FormSelect = { init: function() {} };
+        
+        // Mock Materialize Tooltip
+        window.M.Tooltip = { init: function() {} };
+
+        // Modal Logic
+        let currentModal = null;
+        function openModal(id) {
+            currentModal = id;
+            document.getElementById('app-modal-overlay').classList.add('open');
+            document.getElementById(id).classList.add('open');
+            document.getElementById(id).querySelector('.modal-box').classList.add('open');
+        }
+        function closeModal(id) {
+            currentModal = null;
+            document.getElementById('app-modal-overlay').classList.remove('open');
+            const modal = document.getElementById(id);
+            if(modal) {
+                modal.classList.remove('open');
+                modal.querySelector('.modal-box').classList.remove('open');
+            }
+        }
+        
+        // Mock M.Modal
+        window.M.Modal = {
+            getInstance: function(el) {
+                return {
+                    open: function() { openModal(el.id); },
+                    close: function() { closeModal(el.id); }
+                };
+            },
+            init: function() {}
+        };
+
+        // File input proxy
+        document.getElementById('input-imagen').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('file-name-display').textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('preview-img');
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Set User Avatar
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const user = JSON.parse(localStorage.getItem('usuarioNombre')) || JSON.parse(localStorage.getItem('usuarioActual'));
+                if (user && user.nombre) {
+                    document.getElementById('user-avatar').innerText = user.nombre.charAt(0).toUpperCase();
+                }
+            } catch (e) {}
+        });
+    </script>
+    
+    <!-- Load functionality -->
+    <script>
+        // Tab system requires manual override in this setup
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.inv-tab').forEach(b => {
+                b.classList.remove('active', 'bg-white', 'text-brand-600', 'shadow-sm');
+                b.classList.add('text-slate-500');
+            });
+            
+            // Add active classes
+            document.getElementById('panel-' + tabId).classList.add('active');
+            const btn = document.getElementById('tab-btn-' + tabId);
+            btn.classList.remove('text-slate-500');
+            btn.classList.add('active', 'bg-white', 'text-brand-600', 'shadow-sm');
+        }
+    </script>
+    
+    <!-- The original JS containing the core logic -->
+    <script src="/public/js/inventory.js"></script>
+
 </body>
 </html>

@@ -2,77 +2,415 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios - Las Trompetas</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS v4 via CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --color-brand-50: #eff6ff;
+            --color-brand-100: #dbeafe;
+            --color-brand-500: #3b82f6;
+            --color-brand-600: #2563eb;
+            --color-brand-800: #1e40af;
+            --color-brand-900: #0f172a;
+            --color-bg: #f8fafc;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--color-bg);
+            color: #334155;
+        }
+
+        .mono-text { font-family: var(--font-mono); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Custom Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .custom-toast {
+            min-width: 250px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .custom-toast.show { transform: translateX(0); }
+        .toast-success { background: #10b981; }
+        .toast-error { background: #ef4444; }
+        .toast-warning { background: #f59e0b; }
+        .toast-info { background: #0f172a; }
+
+        input, select {
+            @apply w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block p-2.5 outline-none transition-all;
+        }
+        
+        .nav-item {
+            @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/50;
+        }
+        .nav-item.active {
+            @apply text-white bg-purple-600 shadow-lg shadow-purple-500/30;
+        }
+        
+        .role-badge {
+            @apply px-3 py-1 rounded-full text-xs font-bold tracking-wider inline-flex items-center gap-1;
+        }
+        .role-admin { @apply bg-purple-100 text-purple-700 border border-purple-200; }
+        .role-vendedor { @apply bg-blue-100 text-blue-700 border border-blue-200; }
+    </style>
 </head>
-<body class="grey lighten-4">
-    <nav class="indigo darken-4">
-        <div class="nav-wrapper container">
-            <a href="usuarios.html" class="brand-logo">Las Trompetas - Usuarios</a>
-            <ul class="right">
-                <li><a href="inventario.html"><i class="material-icons left">arrow_back</i>Volver</a></li>
-            </ul>
+<body class="flex h-screen overflow-hidden antialiased">
+
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="bg-slate-900/95 backdrop-blur-xl text-slate-300 w-72 flex-shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col border-r border-slate-800">
+        <div class="h-20 flex items-center px-6 border-b border-slate-800">
+            <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20 mr-3">
+                <i class="material-icons">store</i>
+            </div>
+            <div>
+                <h1 class="text-white font-extrabold tracking-tight text-lg leading-tight">Las Trompetas</h1>
+                <p class="text-xs text-brand-400 font-medium">Gestión de Usuarios</p>
+            </div>
+            <button class="ml-auto lg:hidden text-slate-400 hover:text-white" onclick="toggleSidebar()">
+                <i class="material-icons">close</i>
+            </button>
         </div>
-    </nav>
 
-    <div class="container" style="margin-top: 30px;">
-        <div class="row">
-            <div class="col s12 m4">
-                <div class="card white">
-                    <div class="card-content">
-                        <span class="card-title" id="form-titulo">Nuevo Usuario</span>
-                        
-                        <input type="hidden" id="user-id-original">
+        <div class="p-4 flex-1 overflow-y-auto space-y-1">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4 px-4">Principal</div>
+            <a href="/public/dashboard.html" class="nav-item"><i class="material-icons text-[20px]">dashboard</i> Dashboard</a>
+            <a href="/public/ventas.html" class="nav-item"><i class="material-icons text-[20px]">point_of_sale</i> Ventas</a>
+            <a href="/public/gastos.html" class="nav-item"><i class="material-icons text-[20px]">money_off</i> Gastos</a>
+            
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Administración</div>
+            <a href="/public/inventario.html" class="nav-item"><i class="material-icons text-[20px]">inventory_2</i> Inventario</a>
+            <a href="#" class="nav-item active"><i class="material-icons text-[20px]">group</i> Usuarios</a>
 
-                        <div class="input-field">
-                            <input type="text" id="user-nombre">
-                            <label for="user-nombre">Nombre de Usuario</label>
-                        </div>
-                        <div class="input-field">
-                            <input type="password" id="user-clave">
-                            <label for="user-clave">Contraseña</label>
-                            <span class="helper-text" id="helper-clave"></span>
-                        </div>
-                        <div class="input-field">
-                            <select id="user-rol">
-                                <option value="VENDEDOR">VENDEDOR</option>
-                                <option value="ADMIN">ADMINISTRADOR</option>
-                            </select>
-                            <label>Rol del Usuario</label>
-                        </div>
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Público</div>
+            <a href="/public/catalogo.html" target="_blank" class="nav-item"><i class="material-icons text-[20px]">qr_code_2</i> Catálogo QR</a>
+        </div>
 
-                        <button class="btn indigo darken-4" onclick="guardarUsuario()" style="width:100%; margin-bottom: 10px;" id="btn-guardar">
-                            Guardar <i class="material-icons right">save</i>
-                        </button>
+        <div class="p-4 border-t border-slate-800">
+            <a href="/index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10">
+                <i class="material-icons text-[20px]">logout</i> Salir del Sistema
+            </a>
+        </div>
+    </aside>
 
-                        <button class="btn red lighten-2" onclick="limpiarFormulario()" style="width:100%; display:none;" id="btn-cancelar">
-                            Cancelar Edición <i class="material-icons right">cancel</i>
-                        </button>
-                    </div>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
+        
+        <!-- Top Navbar -->
+        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-30 flex-shrink-0">
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-slate-500 hover:text-brand-600 bg-slate-100 p-2 rounded-lg transition-colors" onclick="toggleSidebar()">
+                    <i class="material-icons">menu</i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900 tracking-tight leading-none mb-1">Usuarios del Sistema</h2>
+                    <p class="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
+                        <i class="material-icons text-[14px]">admin_panel_settings</i> Control de accesos y roles
+                    </p>
                 </div>
             </div>
+            <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm" id="user-avatar">
+                A
+            </div>
+        </header>
 
-            <div class="col s12 m8">
-                <div class="card white">
-                    <div class="card-content">
-                        <table class="striped highlight responsive-table">
-                            <thead>
-                                <tr>
-                                    <th>Usuario</th>
-                                    <th>Rol</th>
-                                    <th class="center-align">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-usuarios"></tbody>
-                        </table>
+        <!-- Scrollable content -->
+        <div class="flex-1 overflow-y-auto p-4 sm:p-6 scroll-smooth">
+            <div class="max-w-[1100px] mx-auto space-y-6 pb-12">
+
+                <!-- Layout Principal -->
+                <div class="flex flex-col lg:flex-row gap-6">
+                    
+                    <!-- Columna Izquierda: Formulario -->
+                    <div class="lg:w-[380px] flex-shrink-0">
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden sticky top-0">
+                            <div class="p-5 bg-slate-900 text-white flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center"><i class="material-icons text-white text-[18px]">person_add</i></div>
+                                <h3 class="font-bold" id="form-titulo">Nuevo Usuario</h3>
+                            </div>
+                            <div class="p-6 space-y-5">
+                                <input type="hidden" id="user-id-original">
+                                
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1.5 ml-1">Nombre de Usuario</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">person</i></div>
+                                        <input type="text" id="user-nombre" class="!pl-10" placeholder="Ej: admin123">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1.5 ml-1">Contraseña</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">lock</i></div>
+                                        <input type="password" id="user-clave" class="!pl-10" placeholder="••••••••">
+                                    </div>
+                                    <p class="text-[10px] font-semibold text-amber-600 mt-1.5 ml-1" id="helper-clave"></p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1.5 ml-1">Rol del Usuario</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><i class="material-icons text-slate-400 text-[18px]">badge</i></div>
+                                        <select id="user-rol" class="!pl-10 appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%2364748b%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E')] bg-no-repeat bg-[position:right_0.75rem_center]">
+                                            <option value="VENDEDOR">VENDEDOR</option>
+                                            <option value="ADMIN">ADMINISTRADOR</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="pt-2 flex flex-col gap-3">
+                                    <button id="btn-guardar" onclick="guardarUsuario()" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-extrabold rounded-xl py-3.5 transition-all shadow-lg shadow-brand-500/20 flex items-center justify-center gap-2">
+                                        <i class="material-icons text-[20px]">save</i> Guardar
+                                    </button>
+                                    
+                                    <button id="btn-cancelar" onclick="limpiarFormulario()" class="w-full bg-slate-100 hover:bg-rose-50 text-slate-700 hover:text-rose-600 font-extrabold rounded-xl py-3.5 transition-all flex items-center justify-center gap-2" style="display:none;">
+                                        <i class="material-icons text-[20px]">cancel</i> Cancelar Edición
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Tabla Usuarios -->
+                    <div class="flex-1 space-y-4 min-w-0">
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-full min-h-[400px]">
+                            
+                            <div class="p-5 border-b border-slate-100 bg-slate-50">
+                                <h3 class="font-extrabold text-slate-900 flex items-center gap-2">
+                                    <i class="material-icons text-brand-500">group</i> Lista de Usuarios
+                                </h3>
+                            </div>
+
+                            <div class="flex-1 overflow-x-auto bg-white">
+                                <table class="w-full text-left">
+                                    <thead class="bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                                        <tr>
+                                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[40%]">Usuario</th>
+                                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[30%]">Rol</th>
+                                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-[30%] text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabla-usuarios" class="divide-y divide-slate-100">
+                                        <!-- Dynamic rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
+    </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        // --- UI Logic & Overrides ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        // Custom Toast replacement
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            let typeClass = 'toast-info';
+            let icon = 'info';
+            
+            if (type === 'success' || type.includes('green')) { typeClass = 'toast-success'; icon = 'check_circle'; }
+            else if (type === 'error' || type.includes('red')) { typeClass = 'toast-error'; icon = 'error'; }
+            else if (type === 'warning' || type.includes('orange')) { typeClass = 'toast-warning'; icon = 'warning'; }
+
+            toast.className = `custom-toast ${typeClass}`;
+            toast.innerHTML = `<i class="material-icons">${icon}</i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        // Mock Materialize — must be defined BEFORE usuarios.js loads
+        window.M = window.M || {};
+        window.M.toast = function(opts) { showToast(opts.html, opts.classes || 'info'); };
+        window.M.updateTextFields = function() {};
+        window.M.AutoInit = function() {};              // Prevents crash on DOMContentLoaded
+        window.M.FormSelect = { init: function() {} }; // Prevents crash on select init
+
+        // Set User Avatar
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                const user = JSON.parse(localStorage.getItem('usuarioNombre')) || JSON.parse(localStorage.getItem('usuarioActual'));
+                if (user && user.nombre) {
+                    document.getElementById('user-avatar').innerText = user.nombre.charAt(0).toUpperCase();
+                }
+            } catch (e) {}
+        });
+    </script>
+    
+    <!-- Lógica de usuarios original -->
     <script src="js/usuarios.js"></script>
+
+    <script>
+        // ── Override cargarUsuarios to render Tailwind-styled rows ──
+        // We wrap the original fetch+render logic entirely to avoid Materialize dependency.
+        const _originalCargarUsuarios = window.cargarUsuarios;
+        window.cargarUsuarios = async function() {
+            try {
+                const res = await fetch("/api/usuarios/ver");
+                const usuarios = await res.json();
+                const tabla = document.getElementById("tabla-usuarios");
+                if (!tabla) return;
+
+                if (usuarios.length === 0) {
+                    tabla.innerHTML = `<tr><td colspan="3" class="py-8 text-center text-slate-400 font-medium">No hay usuarios registrados.</td></tr>`;
+                    return;
+                }
+
+                tabla.innerHTML = usuarios.map(u => {
+                    const roleBadge = u.rol === 'ADMIN'
+                        ? `<span class="role-badge role-admin"><i class="material-icons text-[14px]">shield</i> ADMIN</span>`
+                        : `<span class="role-badge role-vendedor"><i class="material-icons text-[14px]">storefront</i> VENDEDOR</span>`;
+                    const inicial = (u.usuario || u.nombre || '?').charAt(0).toUpperCase();
+                    const nombre  = u.usuario || u.nombre || 'Sin nombre';
+                    return `
+                        <tr class="hover:bg-slate-50/80 transition-colors">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs">${inicial}</div>
+                                    <span class="font-bold text-slate-800">${nombre}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">${roleBadge}</td>
+                            <td class="px-6 py-4 text-center">
+                                <button onclick="prepararEdicion('${nombre}', '${u.rol}')" class="text-slate-400 hover:text-brand-600 hover:bg-brand-50 p-2 rounded-lg transition-colors mr-1" title="Editar">
+                                    <i class="material-icons text-[20px]">edit</i>
+                                </button>
+                                <button onclick="eliminarUsuario('${nombre}')" class="text-rose-400 hover:text-rose-600 hover:bg-rose-50 p-2 rounded-lg transition-colors" title="Eliminar">
+                                    <i class="material-icons text-[20px]">delete</i>
+                                </button>
+                            </td>
+                        </tr>`;
+                }).join('');
+            } catch (e) {
+                M.toast({ html: 'Error cargando usuarios', classes: 'red' });
+            }
+        };
+        // Re-run immediately since usuarios.js already ran DOMContentLoaded
+        cargarUsuarios();
+
+        if (typeof originalRenderUsuarios === 'function') {
+            window.renderUsuarios = function(usuarios) {
+                const tbody = document.getElementById('tabla-usuarios');
+                tbody.innerHTML = '';
+                
+                if (usuarios.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="py-8 text-center text-slate-400 font-medium">No hay usuarios registrados.</td></tr>`;
+                    return;
+                }
+
+                usuarios.forEach(u => {
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-slate-50/80 transition-colors";
+                    
+                    let roleBadge = '';
+                    if (u.rol === 'ADMIN') {
+                        roleBadge = `<span class="role-badge role-admin"><i class="material-icons text-[14px]">shield</i> ADMIN</span>`;
+                    } else {
+                        roleBadge = `<span class="role-badge role-vendedor"><i class="material-icons text-[14px]">storefront</i> VENDEDOR</span>`;
+                    }
+
+                    tr.innerHTML = `
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-xs">${u.nombre.charAt(0).toUpperCase()}</div>
+                                <span class="font-bold text-slate-800">${u.nombre}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">${roleBadge}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button onclick="editarUsuario('${u.nombre}')" class="text-slate-400 hover:text-brand-600 hover:bg-brand-50 p-2 rounded-lg transition-colors group relative mr-1" title="Editar">
+                                <i class="material-icons text-[20px]">edit</i>
+                            </button>
+                            <button onclick="eliminarUsuario('${u.nombre}')" class="text-rose-400 hover:text-rose-600 hover:bg-rose-50 p-2 rounded-lg transition-colors group relative" title="Eliminar">
+                                <i class="material-icons text-[20px]">delete</i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+            
+            // Re-render to apply the new UI since it might have loaded before this script override
+            if (window.usuariosGlobal) {
+                renderUsuarios(window.usuariosGlobal);
+            }
+        }
+
+        // We also need to intercept 'editarUsuario' to ensure the form title updates properly without Materialize dependency
+        const originalEditarUsuario = window.editarUsuario;
+        if(typeof originalEditarUsuario === 'function') {
+            window.editarUsuario = function(nombre) {
+                originalEditarUsuario(nombre);
+                document.getElementById('form-titulo').innerHTML = "Editar Usuario";
+                document.getElementById('helper-clave').innerText = "(Dejar en blanco para mantener la actual)";
+            }
+        }
+        
+        const originalLimpiarFormulario = window.limpiarFormulario;
+        if(typeof originalLimpiarFormulario === 'function') {
+            window.limpiarFormulario = function() {
+                originalLimpiarFormulario();
+                document.getElementById('form-titulo').innerHTML = "Nuevo Usuario";
+                document.getElementById('helper-clave').innerText = "";
+            }
+        }
+    </script>
 </body>
 </html>
