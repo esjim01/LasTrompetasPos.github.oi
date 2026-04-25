@@ -424,8 +424,7 @@ async function confirmarVenta() {
       carrito = [];
       actualizarInterfazCarrito();
 
-      const modalPedido = document.getElementById("modal-pedido");
-      if (modalPedido) M.Modal.getInstance(modalPedido).close();
+      toggleModal();
 
       // Refrescar inventario
       cargarDatos();
