@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard — Las Trompetas</title>
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- SheetJS (Excel) -->
@@ -88,15 +91,20 @@
         .btn-primary { @apply bg-emerald-600 hover:bg-emerald-700; }
     </style>
 </head>
+
 <body class="flex h-screen overflow-hidden antialiased">
 
     <!-- Mobile Overlay -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity" onclick="toggleSidebar()"></div>
+    <div id="mobile-overlay"
+        class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"
+        onclick="toggleSidebar()"></div>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar-glass text-slate-300 w-72 flex-shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col border-r border-slate-800">
+    <aside id="sidebar"
+        class="sidebar-glass text-slate-300 w-72 flex-shrink-0 fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col border-r border-slate-800">
         <div class="h-20 flex items-center px-6 border-b border-slate-800">
-            <div class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20 mr-3">
+            <div
+                class="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-500/20 mr-3">
                 <i class="material-icons">store</i>
             </div>
             <div>
@@ -111,19 +119,25 @@
         <div class="p-4 flex-1 overflow-y-auto space-y-1">
             <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-4 px-4">Principal</div>
             <a href="#" class="nav-item active"><i class="material-icons text-[20px]">dashboard</i> Dashboard</a>
-            <a href="/public/ventas.html" class="nav-item"><i class="material-icons text-[20px]">point_of_sale</i> Ventas</a>
-            <a href="/public/gastos.html" class="nav-item"><i class="material-icons text-[20px]">money_off</i> Gastos</a>
-            
+            <a href="/public/ventas.html" class="nav-item"><i class="material-icons text-[20px]">point_of_sale</i>
+                Ventas</a>
+            <a href="/public/gastos.html" class="nav-item"><i class="material-icons text-[20px]">money_off</i>
+                Gastos</a>
+
             <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Administración</div>
-            <a href="/public/inventario.html" class="nav-item"><i class="material-icons text-[20px]">inventory_2</i> Inventario</a>
-            <a href="/public/usuarios.html" class="nav-item"><i class="material-icons text-[20px]">group</i> Usuarios</a>
+            <a href="/public/inventario.html" class="nav-item"><i class="material-icons text-[20px]">inventory_2</i>
+                Inventario</a>
+            <a href="/public/usuarios.html" class="nav-item"><i class="material-icons text-[20px]">group</i>
+                Usuarios</a>
 
             <div class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 mt-6 px-4">Público</div>
-            <a href="/public/catalogo.html" target="_blank" class="nav-item"><i class="material-icons text-[20px]">qr_code_2</i> Catálogo QR</a>
+            <a href="/public/catalogo.html" target="_blank" class="nav-item"><i
+                    class="material-icons text-[20px]">qr_code_2</i> Catálogo QR</a>
         </div>
 
         <div class="p-4 border-t border-slate-800">
-            <a href="/index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10">
+            <a href="/index.html"
+                class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-rose-400 hover:text-rose-300 hover:bg-rose-500/10">
                 <i class="material-icons text-[20px]">logout</i> Salir del Sistema
             </a>
         </div>
@@ -131,15 +145,19 @@
 
     <!-- Main Content -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50">
-        
+
         <!-- Top Navbar -->
-        <header class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-30 flex-shrink-0">
+        <header
+            class="h-20 bg-white/80 backdrop-blur-md border-b border-slate-200 flex items-center justify-between px-6 z-30 flex-shrink-0">
             <div class="flex items-center gap-4">
-                <button class="lg:hidden text-slate-500 hover:text-brand-600 bg-slate-100 p-2 rounded-lg transition-colors" onclick="toggleSidebar()">
+                <button
+                    class="lg:hidden text-slate-500 hover:text-brand-600 bg-slate-100 p-2 rounded-lg transition-colors"
+                    onclick="toggleSidebar()">
                     <i class="material-icons">menu</i>
                 </button>
                 <div>
-                    <h2 class="text-xl font-extrabold text-slate-900 tracking-tight leading-none mb-1">Resumen Gerencial</h2>
+                    <h2 class="text-xl font-extrabold text-slate-900 tracking-tight leading-none mb-1">Resumen Gerencial
+                    </h2>
                     <p class="text-xs font-semibold text-slate-500 flex items-center gap-1.5">
                         <i class="material-icons text-[14px]">calendar_today</i>
                         <span id="txt-rango-header">Este mes</span>
@@ -148,11 +166,13 @@
             </div>
 
             <div class="flex items-center gap-3">
-                <div class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-100 shadow-sm">
+                <div
+                    class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full border border-emerald-100 shadow-sm">
                     <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse-live"></div>
                     <span class="text-xs font-bold uppercase tracking-wide">En vivo</span>
                 </div>
-                <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm" id="user-avatar">
+                <div class="w-10 h-10 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm"
+                    id="user-avatar">
                     A
                 </div>
             </div>
@@ -161,42 +181,60 @@
         <!-- Scrollable content -->
         <div class="flex-1 overflow-y-auto p-6 scroll-smooth">
             <div class="max-w-[1400px] mx-auto space-y-6 pb-12">
-                
+
                 <!-- Filters Section -->
                 <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden group">
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-brand-50/50 pointer-events-none"></div>
-                    
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-brand-50/50 pointer-events-none">
+                    </div>
+
                     <div class="flex flex-col lg:flex-row gap-5 items-end relative z-10">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                             <div class="filter-card">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">today</i> Desde</label>
-                                    <input type="date" id="filtro-desde"/>
+                                    <label
+                                        class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i
+                                            class="material-icons text-[12px] align-middle mr-1">today</i> Desde</label>
+                                    <input type="date" id="filtro-desde" />
                                 </div>
                                 <div class="grid grid-cols-2 gap-3 mt-2">
                                     <div>
-                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora inicio</label>
-                                        <input type="time" id="filtro-desde-hora-inicio" value="00:00"/>
+                                        <label
+                                            class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i
+                                                class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora
+                                            inicio</label>
+                                        <input type="time" id="filtro-desde-hora-inicio" value="00:00" />
                                     </div>
                                     <div>
-                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora final</label>
-                                        <input type="time" id="filtro-desde-hora-fin" value="23:59"/>
+                                        <label
+                                            class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i
+                                                class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora
+                                            final</label>
+                                        <input type="time" id="filtro-desde-hora-fin" value="23:59" />
                                     </div>
                                 </div>
                             </div>
                             <div class="filter-card">
                                 <div>
-                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">event</i> Hasta</label>
-                                    <input type="date" id="filtro-hasta"/>
+                                    <label
+                                        class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i
+                                            class="material-icons text-[12px] align-middle mr-1">event</i> Hasta</label>
+                                    <input type="date" id="filtro-hasta" />
                                 </div>
                                 <div class="grid grid-cols-2 gap-3 mt-2">
                                     <div>
-                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora inicio</label>
-                                        <input type="time" id="filtro-hasta-hora-inicio" value="00:00"/>
+                                        <label
+                                            class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i
+                                                class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora
+                                            inicio</label>
+                                        <input type="time" id="filtro-hasta-hora-inicio" value="00:00" />
                                     </div>
                                     <div>
-                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora final</label>
-                                        <input type="time" id="filtro-hasta-hora-fin" value="23:59"/>
+                                        <label
+                                            class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i
+                                                class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora
+                                            final</label>
+                                        <input type="time" id="filtro-hasta-hora-fin" value="23:59" />
                                     </div>
                                 </div>
                             </div>
@@ -216,46 +254,76 @@
 
                     <!-- Turno Chips -->
                     <div class="mt-5 pt-4 border-t border-slate-100 flex flex-wrap items-center gap-3 relative z-10">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2">Filtros rápidos:</span>
-                        <button onclick="aplicarTurno(6,12)" class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-2">Filtros
+                            rápidos:</span>
+                        <button onclick="aplicarTurno(6,12)"
+                            class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
                             ☀️ Mañana (6-12)
                         </button>
-                        <button onclick="aplicarTurno(12,18)" class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
+                        <button onclick="aplicarTurno(12,18)"
+                            class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
                             🌤 Tarde (12-18)
                         </button>
-                        <button onclick="aplicarTurno(18,23)" class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
+                        <button onclick="aplicarTurno(18,23)"
+                            class="px-4 py-1.5 rounded-full text-xs font-bold bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700 transition-colors border border-slate-200 flex items-center gap-1.5">
                             🌙 Noche (18-23)
                         </button>
-                        <button onclick="limpiarFiltroHora()" class="px-4 py-1.5 rounded-full text-xs font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors border border-rose-100 flex items-center gap-1.5">
+                        <button onclick="limpiarFiltroHora()"
+                            class="px-4 py-1.5 rounded-full text-xs font-bold bg-rose-50 text-rose-600 hover:bg-rose-100 transition-colors border border-rose-100 flex items-center gap-1.5">
                             ✕ Limpiar horas
                         </button>
                     </div>
                 </div>
 
                 <!-- KPI Cards -->
-                <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="grid grid-cols-2 lg:grid-cols-6 gap-4">
                     <!-- KPI 1 -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
                         <div class="absolute top-0 inset-x-0 h-1 bg-brand-500"></div>
                         <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
                                 <i class="material-icons">attach_money</i>
                             </div>
-                            <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" id="badge-ventas">PERÍODO</span>
+                            <span
+                                class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                                id="badge-ventas">PERÍODO</span>
                         </div>
                         <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Ventas Totales</h3>
                         <p class="text-2xl font-extrabold text-slate-900 tracking-tight" id="txt-ventas-totales">$0</p>
                         <p class="text-xs text-slate-400 mt-2 font-medium" id="sub-ventas">Periodo seleccionado</p>
                     </div>
 
+                    <!-- KPI 3.5: Ventas Netas (Nueva) -->
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                        <div class="absolute top-0 inset-x-0 h-1 bg-teal-500"></div>
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
+                                <i class="material-icons">payments</i>
+                            </div>
+                            <span
+                                class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                                id="badge-ventas-netas">NET</span>
+                        </div>
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Ventas Netas</h3>
+                        <p class="text-2xl font-extrabold text-slate-900 tracking-tight" id="txt-ventas-netas">$0</p>
+                        <p class="text-xs text-slate-400 mt-2 font-medium">Ventas - Gastos (período)</p>
+                    </div>
+
                     <!-- KPI 2 -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
                         <div class="absolute top-0 inset-x-0 h-1 bg-emerald-500"></div>
                         <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
                                 <i class="material-icons">trending_up</i>
                             </div>
-                            <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" id="badge-ganancia">NETA</span>
+                            <span
+                                class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                                id="badge-ganancia">NETA</span>
                         </div>
                         <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Ganancia Neta</h3>
                         <p class="text-2xl font-extrabold text-slate-900 tracking-tight" id="txt-ganancia">$0</p>
@@ -263,34 +331,44 @@
                     </div>
 
                     <!-- KPI 3 -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300">
                         <div class="absolute top-0 inset-x-0 h-1 bg-rose-500"></div>
                         <div class="flex justify-between items-start mb-4">
                             <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
                                 <i class="material-icons">money_off</i>
                             </div>
-                            <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider" id="badge-gastos">OPS</span>
+                            <span
+                                class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"
+                                id="badge-gastos">OPS</span>
                         </div>
-                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Gastos Operativos</h3>
+                        <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Gastos Operativos
+                        </h3>
                         <p class="text-2xl font-extrabold text-slate-900 tracking-tight" id="txt-gastos-totales">$0</p>
                         <p class="text-xs text-slate-400 mt-2 font-medium">Gastos del período</p>
                     </div>
 
+
+
                     <!-- KPI 4 -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 col-span-2 lg:col-span-1">
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 col-span-2 lg:col-span-1">
                         <div class="absolute top-0 inset-x-0 h-1 bg-amber-500"></div>
                         <div class="flex justify-between items-start mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
                                 <i class="material-icons">emoji_events</i>
                             </div>
                         </div>
                         <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Mejor Vendedor</h3>
-                        <p class="text-lg font-extrabold text-slate-900 tracking-tight truncate" id="txt-vendedor-top">—</p>
+                        <p class="text-lg font-extrabold text-slate-900 tracking-tight truncate" id="txt-vendedor-top">—
+                        </p>
                         <p class="text-xs text-slate-400 mt-2 font-medium" id="sub-vendedor">Mayor volumen</p>
                     </div>
 
                     <!-- KPI 5 -->
-                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 col-span-2 lg:col-span-1">
+                    <div
+                        class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden hover:-translate-y-1 hover:shadow-md transition-all duration-300 col-span-2 lg:col-span-1">
                         <div class="absolute top-0 inset-x-0 h-1 bg-cyan-500"></div>
                         <div class="flex justify-between items-start mb-4">
                             <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center">
@@ -298,7 +376,8 @@
                             </div>
                         </div>
                         <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Producto Top</h3>
-                        <p class="text-lg font-extrabold text-slate-900 tracking-tight truncate" id="txt-producto-top">—</p>
+                        <p class="text-lg font-extrabold text-slate-900 tracking-tight truncate" id="txt-producto-top">—
+                        </p>
                         <p class="text-xs text-slate-400 mt-2 font-medium" id="sub-producto">Más unidades</p>
                     </div>
                 </div>
@@ -310,8 +389,10 @@
                         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
                             <h3 class="text-base font-extrabold text-slate-900">Rendimiento Comercial</h3>
                             <div class="flex bg-slate-100 p-1 rounded-lg chart-tabs">
-                                <button onclick="cambiarVistaGrafico('dia'); setTabActive(this)" class="px-3 py-1.5 text-xs font-bold rounded-md bg-white text-brand-600 shadow-sm transition-all chart-tab active">Días</button>
-                                <button onclick="cambiarVistaGrafico('vendedor'); setTabActive(this)" class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all chart-tab">Vendedores</button>
+                                <button onclick="cambiarVistaGrafico('dia'); setTabActive(this)"
+                                    class="px-3 py-1.5 text-xs font-bold rounded-md bg-white text-brand-600 shadow-sm transition-all chart-tab active">Días</button>
+                                <button onclick="cambiarVistaGrafico('vendedor'); setTabActive(this)"
+                                    class="px-3 py-1.5 text-xs font-bold rounded-md text-slate-500 hover:text-slate-800 transition-all chart-tab">Vendedores</button>
                             </div>
                         </div>
                         <div class="p-5 flex-1 relative min-h-[300px]">
@@ -339,26 +420,33 @@
                         </div>
                         <div class="grid grid-cols-3 divide-x divide-slate-100">
                             <div class="p-4 text-center flex flex-col items-center justify-center">
-                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
                                     <i class="material-icons text-[20px]">groups</i>
                                 </div>
-                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Clientes</div>
+                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Clientes
+                                </div>
                                 <div class="text-xl font-extrabold text-slate-900" id="txt-total-personas">0</div>
                             </div>
                             <div class="p-4 text-center flex flex-col items-center justify-center">
-                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
                                     <i class="material-icons text-[20px]">receipt</i>
                                 </div>
-                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Ticket Prom.</div>
+                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Ticket
+                                    Prom.</div>
                                 <div class="text-xl font-extrabold text-brand-600" id="txt-ticket-promedio">$0</div>
                             </div>
                             <div class="p-4 text-center flex flex-col items-center justify-center">
-                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 mb-2">
                                     <i class="material-icons text-[20px]">health_and_safety</i>
                                 </div>
-                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Salud</div>
+                                <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Salud
+                                </div>
                                 <div id="txt-estado" class="mt-1">
-                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-100">
+                                    <span
+                                        class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-100">
                                         <i class="material-icons text-[14px]">check_circle</i> Saludable
                                     </span>
                                 </div>
@@ -370,11 +458,13 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
                             <h3 class="text-base font-extrabold text-slate-900">Top 10 Productos</h3>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Por Unidades</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Por
+                                Unidades</span>
                         </div>
                         <div class="p-0 overflow-hidden">
                             <table class="w-full text-left text-sm">
-                                <thead class="bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
+                                <thead
+                                    class="bg-slate-50/50 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100">
                                     <tr>
                                         <th class="px-5 py-3 w-12 text-center">Pos</th>
                                         <th class="px-5 py-3">Producto</th>
@@ -383,7 +473,8 @@
                                 </thead>
                                 <tbody id="tabla-top10" class="divide-y divide-slate-50">
                                     <tr>
-                                        <td colspan="3" class="p-8 text-center text-slate-400 font-medium">Cargando datos...</td>
+                                        <td colspan="3" class="p-8 text-center text-slate-400 font-medium">Cargando
+                                            datos...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -400,7 +491,7 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('mobile-overlay');
-            
+
             if (sidebar.classList.contains('-translate-x-full')) {
                 sidebar.classList.remove('-translate-x-full');
                 overlay.classList.remove('hidden');
@@ -427,21 +518,21 @@
                 if (user && user.nombre) {
                     document.getElementById('user-avatar').innerText = user.nombre.charAt(0).toUpperCase();
                 }
-            } catch (e) {}
+            } catch (e) { }
         });
     </script>
-    
+
     <!-- Materialize mock: needed because dashboard.js calls M.toast() -->
     <script>
         window.M = window.M || {};
-        window.M.toast = function(opts) {
+        window.M.toast = function (opts) {
             const msg = opts.html || '';
             const classes = opts.classes || 'info';
             // Create an inline toast for dashboard
             const el = document.createElement('div');
             let bg = '#0f172a';
-            if (classes.includes('green'))  bg = '#10b981';
-            if (classes.includes('red'))    bg = '#ef4444';
+            if (classes.includes('green')) bg = '#10b981';
+            if (classes.includes('red')) bg = '#ef4444';
             if (classes.includes('orange')) bg = '#f59e0b';
             el.style.cssText = `position:fixed;bottom:20px;right:20px;z-index:9999;background:${bg};color:#fff;padding:12px 20px;border-radius:10px;font-weight:600;box-shadow:0 10px 25px rgba(0,0,0,.2);transition:opacity .3s;`;
             el.innerHTML = msg;
@@ -454,4 +545,5 @@
     <script src="/public/js/dashboard.js"></script>
 
 </body>
+
 </html>

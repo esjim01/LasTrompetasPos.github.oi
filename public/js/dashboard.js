@@ -215,8 +215,31 @@ async function cargarDashboard() {
           if (m) {
             const nombre = m[1].trim();
             const cant   = parseInt(m[2]);
-            const prod   = inventarioGlobal.find(p => p.nombre?.trim() === nombre);
-            totalCosto  += (prod?.costo ? Number(prod.costo) : 0) * cant;
+            // Buscar producto en inventario con normalización flexible
+            const normalize = (s) => String(s || "").normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+            const target = normalize(nombre);
+            let prod = inventarioGlobal.find(p => normalize(p.nombre) === target);
+            if (!prod) {
+              // intentos de coincidencia más flexibles
+              prod = inventarioGlobal.find(p => normalize(p.nombre).includes(target))
+                  || inventarioGlobal.find(p => target.includes(normalize(p.nombre)));
+            }
+
+            const costoUnit = prod && !Number.isNaN(Number(prod.costo)) ? Number(prod.costo) : null;
+            if (costoUnit !== null) {
+              totalCosto += costoUnit * cant;
+            } else {
+              // Si no encontramos costo en inventario, intentar usar precio del item (estimación)
+              const ventaItem = (v._raw && v._raw.items) ? v._raw.items.find(it => String(it.nombre || '').trim() === nombre) : null;
+              const precioItem = ventaItem ? Number(ventaItem.precio) || null : null;
+              if (precioItem !== null) {
+                // No conocemos el costo real: no lo sumamos al costo real pero lo registramos para depuración
+                console.warn('Costo no hallado para', nombre, '- usando precio de venta como referencia:', precioItem);
+              } else {
+                console.warn('Costo no hallado para', nombre, '- producto no encontrado en inventario');
+              }
+            }
+
             conteoProductos[nombre] = (conteoProductos[nombre] || 0) + cant;
           }
         });
@@ -225,6 +248,8 @@ async function cargarDashboard() {
 
     const totalGastos   = datosGastosActuales.reduce((s,g) => s + (Number(g.monto)||0), 0);
     const gananciaNeta  = totalIngresos - totalCosto - totalGastos;
+    // Ventas netas: ingresos menos gastos del período (visualización adicional)
+    const ventasNetas   = totalIngresos - totalGastos;
     const ticketProm    = totalPersonas > 0 ? Math.round(totalIngresos / totalPersonas) : 0;
 
     const vendTop = mejorClave(conteoVendedores);
@@ -238,6 +263,7 @@ async function cargarDashboard() {
 
     // ── KPIs
     setText("txt-ventas-totales", fmt(totalIngresos));
+    setText("txt-ventas-netas",   fmt(ventasNetas));
     setText("txt-ganancia",       fmt(gananciaNeta));
     setText("txt-gastos-totales", fmt(totalGastos));
     setText("txt-total-personas", totalPersonas.toLocaleString("es-CO"));
@@ -250,6 +276,7 @@ async function cargarDashboard() {
     // ── Badges de ganancia
     setBadge("badge-ganancia", gananciaNeta, totalIngresos);
     setBadge("badge-ventas",   totalIngresos, null, datosVentasActuales.length + " ventas");
+    setBadge("badge-ventas-netas", ventasNetas, totalIngresos);
     setBadge("badge-gastos",   -totalGastos,  null, null, true);
 
     // ── Color tarjeta ganancia
