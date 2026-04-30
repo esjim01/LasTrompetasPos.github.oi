@@ -125,7 +125,18 @@ function actualizarKpiTotal(gastos) {
         kpiTitulo.textContent = hayFiltroFecha ? 'Total Gastos (Rango)' : 'Total Gastos (Mes)';
     }
 
-    const total = gastos.reduce((sum, g) => sum + Number(g.monto), 0);
+    // Si no hay filtro de fecha, mostrar solo el mes actual (inicio -> fin del mes)
+    let gastosParaSumar = gastos;
+    if (!hayFiltroFecha) {
+        const now = new Date();
+        const y = now.getFullYear();
+        const m = now.getMonth(); // 0-based
+        const inicio = new Date(y, m, 1).toISOString().slice(0, 10);
+        const fin = new Date(y, m + 1, 0).toISOString().slice(0, 10);
+        gastosParaSumar = gastos.filter(g => g.fecha >= inicio && g.fecha <= fin);
+    }
+
+    const total = gastosParaSumar.reduce((sum, g) => sum + Number(g.monto), 0);
     document.getElementById('total-mes').innerText = new Intl.NumberFormat('es-CO', {
         style: 'currency', currency: 'COP', maximumFractionDigits: 0
     }).format(total);

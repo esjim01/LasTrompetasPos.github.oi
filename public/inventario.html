@@ -121,6 +121,18 @@
         input, select {
             @apply w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block p-2.5 outline-none transition-all;
         }
+        /* Filters tweaks (shared pattern) */
+        .filter-card {
+            @apply rounded-2xl border border-slate-200 bg-white p-4;
+        }
+        .filter-actions {
+            @apply flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0 items-stretch;
+        }
+        .filter-actions .btn {
+            @apply w-full sm:w-auto flex items-center justify-center gap-2 font-bold py-2.5 px-5 rounded-lg transition-all shadow-md text-white;
+        }
+        .btn-secondary { @apply bg-slate-900 hover:bg-brand-600; }
+        .btn-primary { @apply bg-emerald-600 hover:bg-emerald-700; }
         
         .nav-item {
             @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-200 text-slate-400 hover:text-white hover:bg-slate-800/50;
@@ -399,12 +411,20 @@
                                     <h3 class="font-bold text-slate-900 flex items-center gap-2">
                                         <i class="material-icons text-brand-500">history</i> Movimientos Recientes
                                     </h3>
-                                    <div class="flex items-center gap-2 bg-slate-50 p-1 rounded-lg border border-slate-200">
+                                    <div class="filter-card flex items-center gap-2">
                                         <input type="date" id="filtro-desde" class="bg-transparent border-none focus:ring-0 text-xs py-1.5 px-2">
                                         <span class="text-slate-400">-</span>
                                         <input type="date" id="filtro-hasta" class="bg-transparent border-none focus:ring-0 text-xs py-1.5 px-2">
-                                        <button onclick="aplicarFiltroFechas()" class="bg-brand-600 text-white rounded p-1.5 hover:bg-brand-700 transition-colors"><i class="material-icons text-[16px] block">filter_list</i></button>
-                                        <button onclick="limpiarFiltros()" id="btn-limpiar-filtro" class="hidden text-rose-500 hover:bg-rose-50 rounded p-1.5 transition-colors"><i class="material-icons text-[16px] block">close</i></button>
+                                        <div class="filter-actions">
+                                            <button onclick="aplicarFiltroFechas()" class="btn btn-primary" aria-label="Filtrar">
+                                                <i class="material-icons text-[16px]">filter_list</i>
+                                                <span class="text-sm">Filtrar</span>
+                                            </button>
+                                            <button onclick="limpiarFiltros()" id="btn-limpiar-filtro" class="btn btn-secondary hidden" aria-label="Limpiar">
+                                                <i class="material-icons text-[16px]">close</i>
+                                                <span class="text-sm">Limpiar</span>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="overflow-x-auto max-h-[350px]">

@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const elDesde  = document.getElementById("filtro-desde");
   if (elHasta) elHasta.valueAsDate = hoy;
   if (elDesde) elDesde.valueAsDate = primerDia;
+  establecerHorasPorDefecto();
   cargarDashboard();
 });
 
@@ -61,18 +62,43 @@ function generarReporteExcel() {
 
 // ── FILTROS DE TURNO ──
 function aplicarTurno(hi, hf) {
-  document.getElementById("filtro-hora-desde").value = String(hi).padStart(2,"0") + ":00";
-  document.getElementById("filtro-hora-hasta").value = String(hf).padStart(2,"0") + ":59";
+  const horaInicio = String(hi).padStart(2, "0") + ":00";
+  const horaFin = String(hf).padStart(2, "0") + ":59";
+  document.getElementById("filtro-desde-hora-inicio").value = horaInicio;
+  document.getElementById("filtro-desde-hora-fin").value = horaFin;
+  document.getElementById("filtro-hasta-hora-inicio").value = horaInicio;
+  document.getElementById("filtro-hasta-hora-fin").value = horaFin;
   cargarDashboard();
 }
 function limpiarFiltroHora() {
-  document.getElementById("filtro-hora-desde").value = "00:00";
-  document.getElementById("filtro-hora-hasta").value = "23:59";
+  establecerHorasPorDefecto();
   cargarDashboard();
 }
 function horaAMinutos(iso) {
   try { const d = new Date(iso); return d.getHours() * 60 + d.getMinutes(); }
   catch { return 0; }
+}
+
+function establecerHorasPorDefecto() {
+  const campos = [
+    ["filtro-desde-hora-inicio", "00:00"],
+    ["filtro-desde-hora-fin", "23:59"],
+    ["filtro-hasta-hora-inicio", "00:00"],
+    ["filtro-hasta-hora-fin", "23:59"],
+  ];
+
+  campos.forEach(([id, valor]) => {
+    const input = document.getElementById(id);
+    if (input) input.value = valor;
+  });
+}
+
+function crearFechaHora(fechaStr, horaStr, extremo = "inicio") {
+  if (!fechaStr) return null;
+  const [anio, mes, dia] = fechaStr.split("-").map(Number);
+  const [hora = 0, minuto = 0] = (horaStr || "00:00").split(":").map(Number);
+  const fecha = new Date(anio, mes - 1, dia, hora, minuto, extremo === "fin" ? 59 : 0, extremo === "fin" ? 999 : 0);
+  return Number.isNaN(fecha.getTime()) ? null : fecha;
 }
 
 // ── DASHBOARD PRINCIPAL ──
@@ -118,29 +144,59 @@ async function cargarDashboard() {
     const fHasta = document.getElementById("filtro-hasta").value;
     if (!fDesde || !fHasta) return;
 
-    const desde = new Date(fDesde + "T00:00:00");
-    const hasta = new Date(fHasta + "T23:59:59");
+    const desdeInicio = crearFechaHora(
+      fDesde,
+      document.getElementById("filtro-desde-hora-inicio")?.value || "00:00",
+      "inicio",
+    );
+    const desdeFin = crearFechaHora(
+      fDesde,
+      document.getElementById("filtro-desde-hora-fin")?.value || "23:59",
+      "fin",
+    );
+    const hastaInicio = crearFechaHora(
+      fHasta,
+      document.getElementById("filtro-hasta-hora-inicio")?.value || "00:00",
+      "inicio",
+    );
+    const hastaFin = crearFechaHora(
+      fHasta,
+      document.getElementById("filtro-hasta-hora-fin")?.value || "23:59",
+      "fin",
+    );
 
-    const horaDesdeStr = document.getElementById("filtro-hora-desde")?.value || "00:00";
-    const horaHastaStr = document.getElementById("filtro-hora-hasta")?.value || "23:59";
-    const [hD, mD] = horaDesdeStr.split(":").map(Number);
-    const [hH, mH] = horaHastaStr.split(":").map(Number);
-    const minDesde = hD * 60 + mD;
-    const minHasta = hH * 60 + mH;
+    if (!desdeInicio || !desdeFin || !hastaInicio || !hastaFin) {
+      M.toast({ html: "⚠️ Revisa las fechas y horas del filtro", classes: "orange" });
+      return;
+    }
+
+    if (desdeInicio > desdeFin) {
+      M.toast({ html: "⚠️ La hora inicio de 'Desde' no puede ser mayor que la hora final", classes: "orange" });
+      return;
+    }
+
+    if (hastaInicio > hastaFin) {
+      M.toast({ html: "⚠️ La hora inicio de 'Hasta' no puede ser mayor que la hora final", classes: "orange" });
+      return;
+    }
+
+    const inicioFiltro = desdeInicio;
+    const finFiltro = hastaFin;
+
+    if (inicioFiltro > finFiltro) {
+      M.toast({ html: "⚠️ El rango final no puede ser menor que el rango inicial", classes: "orange" });
+      return;
+    }
 
     datosVentasActuales = ventas.filter(v => {
-      const fv = parsearFecha(v.Fecha);
-      if (fv < desde || fv > hasta) return false;
-      if (v._raw?.fecha) {
-        const min = horaAMinutos(v._raw.fecha);
-        return min >= minDesde && min <= minHasta;
-      }
-      return minDesde === 0 && minHasta >= 1439;
+      const fechaVenta = obtenerFechaVenta(v);
+      if (!fechaVenta) return false;
+      return fechaVenta >= inicioFiltro && fechaVenta <= finFiltro;
     });
 
     datosGastosActuales = rawGastos.filter(g => {
-      const fg = new Date(g.fecha + "T00:00:00");
-      return fg >= desde && fg <= hasta;
+      const fg = obtenerFechaGasto(g);
+      return fg && fg >= inicioFiltro && fg <= finFiltro;
     });
 
     // Cálculos
@@ -175,9 +231,9 @@ async function cargarDashboard() {
     const prodTop = mejorClave(conteoProductos);
 
     // ── Actualizar header de rango
-    const optsF = { day:"numeric", month:"short" };
-    const desdeLeg = desde.toLocaleDateString("es-CO", optsF);
-    const hastaLeg = hasta.toLocaleDateString("es-CO", optsF);
+    const optsF = { day: "numeric", month: "short" };
+    const desdeLeg = inicioFiltro.toLocaleDateString("es-CO", optsF);
+    const hastaLeg = finFiltro.toLocaleDateString("es-CO", optsF);
     setText("txt-rango-header", `${desdeLeg} – ${hastaLeg}`);
 
     // ── KPIs
@@ -493,6 +549,26 @@ function parsearFecha(str) {
   if (!str) return new Date(0);
   const p = str.split("/");
   return new Date(p[2], p[1]-1, p[0]);
+}
+
+function obtenerFechaVenta(venta) {
+  if (venta?._raw?.fecha) {
+    const fecha = new Date(venta._raw.fecha);
+    return Number.isNaN(fecha.getTime()) ? null : fecha;
+  }
+
+  if (venta?.Fecha) {
+    const fecha = parsearFecha(venta.Fecha);
+    return Number.isNaN(fecha.getTime()) ? null : fecha;
+  }
+
+  return null;
+}
+
+function obtenerFechaGasto(gasto) {
+  if (!gasto?.fecha) return null;
+  const fecha = new Date(gasto.fecha + "T00:00:00");
+  return Number.isNaN(fecha.getTime()) ? null : fecha;
 }
 
 function setText(id, val) {

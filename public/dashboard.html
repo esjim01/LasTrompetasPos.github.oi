@@ -73,6 +73,19 @@
         input[type="date"], input[type="time"] {
             @apply w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 block p-2.5 transition-all outline-none font-medium;
         }
+
+        /* Filters tweaks */
+        .filter-card {
+            @apply rounded-2xl border border-slate-200 bg-white p-4; 
+        }
+        .filter-actions {
+            @apply flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0 items-stretch;
+        }
+        .filter-actions .btn {
+            @apply w-full sm:w-auto flex items-center justify-center gap-2 font-bold py-2.5 px-5 rounded-lg transition-all shadow-md text-white;
+        }
+        .btn-secondary { @apply bg-slate-900 hover:bg-brand-600; }
+        .btn-primary { @apply bg-emerald-600 hover:bg-emerald-700; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden antialiased">
@@ -154,31 +167,49 @@
                     <div class="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-brand-50/50 pointer-events-none"></div>
                     
                     <div class="flex flex-col lg:flex-row gap-5 items-end relative z-10">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">today</i> Desde</label>
-                                <input type="date" id="filtro-desde"/>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+                            <div class="filter-card">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">today</i> Desde</label>
+                                    <input type="date" id="filtro-desde"/>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 mt-2">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora inicio</label>
+                                        <input type="time" id="filtro-desde-hora-inicio" value="00:00"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora final</label>
+                                        <input type="time" id="filtro-desde-hora-fin" value="23:59"/>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">event</i> Hasta</label>
-                                <input type="date" id="filtro-hasta"/>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> H. Inicio</label>
-                                <input type="time" id="filtro-hora-desde" value="00:00"/>
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> H. Fin</label>
-                                <input type="time" id="filtro-hora-hasta" value="23:59"/>
+                            <div class="filter-card">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-500 uppercase tracking-wide mb-1.5"><i class="material-icons text-[12px] align-middle mr-1">event</i> Hasta</label>
+                                    <input type="date" id="filtro-hasta"/>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 mt-2">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora inicio</label>
+                                        <input type="time" id="filtro-hasta-hora-inicio" value="00:00"/>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1"><i class="material-icons text-[12px] align-middle mr-1">schedule</i> Hora final</label>
+                                        <input type="time" id="filtro-hasta-hora-fin" value="23:59"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="flex gap-3 w-full lg:w-auto shrink-0">
-                            <button onclick="cargarDashboard()" class="flex-1 lg:flex-none bg-slate-900 hover:bg-brand-600 text-white font-bold py-2.5 px-5 rounded-lg text-sm transition-all shadow-md flex items-center justify-center gap-2">
-                                <i class="material-icons text-[18px]">refresh</i> Actualizar
+                        <div class="filter-actions">
+                            <button onclick="cargarDashboard()" class="btn btn-secondary" aria-label="Actualizar">
+                                <i class="material-icons text-[18px]">refresh</i>
+                                <span>Actualizar</span>
                             </button>
-                            <button onclick="generarReporteExcel()" class="flex-1 lg:flex-none bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-5 rounded-lg text-sm transition-all shadow-md flex items-center justify-center gap-2">
-                                <i class="material-icons text-[18px]">download</i> Reporte
+                            <button onclick="generarReporteExcel()" class="btn btn-primary" aria-label="Reporte">
+                                <i class="material-icons text-[18px]">download</i>
+                                <span>Reporte</span>
                             </button>
                         </div>
                     </div>
