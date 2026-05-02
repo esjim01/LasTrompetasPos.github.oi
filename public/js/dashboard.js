@@ -49,10 +49,43 @@ function generarReporteExcel() {
   if (!datosVentasActuales?.length) { M.toast({ html: "⚠️ No hay datos para exportar", classes: "orange" }); return; }
   if (typeof XLSX === "undefined") { alert("Error: librería XLSX no cargó."); return; }
   try {
-    const ws = XLSX.utils.json_to_sheet(datosVentasActuales.map(v => ({
-      Fecha: v.Fecha, Vendedor: v.Vendedor,
-      Personas: Number(v.Personas), Total: Number(v.Total), Items: v.Productos,
-    })));
+    // Construir filas con cálculo de costo por venta (suma de costo_unitario * cantidad)
+    const normalize = (s) => String(s || "").normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+    const rows = datosVentasActuales.map(v => {
+      let costoVenta = 0;
+      if (v.Productos) {
+        v.Productos.split(', ').forEach(itemStr => {
+          const m = itemStr.match(/(.+) \(x(\d+)\)/);
+          if (!m) return;
+          const nombre = m[1].trim();
+          const cant = parseInt(m[2]);
+          const target = normalize(nombre);
+          let prod = inventarioGlobal.find(p => normalize(p.nombre) === target);
+          if (!prod) {
+            prod = inventarioGlobal.find(p => normalize(p.nombre).includes(target))
+                || inventarioGlobal.find(p => target.includes(normalize(p.nombre)));
+          }
+          const costoRaw = prod?.costo;
+          const costoNum = costoRaw != null ? Number(String(costoRaw).replace(/[^0-9.-]+/g, '')) : NaN;
+          const costoUnit = prod && !Number.isNaN(costoNum) ? costoNum : null;
+          if (costoUnit !== null) {
+            costoVenta += costoUnit * cant;
+          }
+        });
+      }
+
+      return {
+        Fecha: v.Fecha,
+        Vendedor: v.Vendedor,
+        Personas: Number(v.Personas),
+        Total: Number(v.Total),
+        Costo: Math.round(costoVenta),
+        Items: v.Productos,
+      };
+    });
+
+    const ws = XLSX.utils.json_to_sheet(rows);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Reporte Ventas");
     XLSX.writeFile(wb, `Reporte_Ventas_${new Date().toISOString().split("T")[0]}.xlsx`);
@@ -225,8 +258,12 @@ async function cargarDashboard() {
                   || inventarioGlobal.find(p => target.includes(normalize(p.nombre)));
             }
 
-            const costoUnit = prod && !Number.isNaN(Number(prod.costo)) ? Number(prod.costo) : null;
+            // Parseo robusto de costo: aceptar strings con formato y evitar NaN
+            const costoRaw = prod?.costo;
+            const costoNum = costoRaw != null ? Number(String(costoRaw).replace(/[^0-9.-]+/g, '')) : NaN;
+            const costoUnit = prod && !Number.isNaN(costoNum) ? costoNum : null;
             if (costoUnit !== null) {
+              // Sumar costo unitario por cantidad vendida (sin aplicar descuentos)
               totalCosto += costoUnit * cant;
             } else {
               // Si no encontramos costo en inventario, intentar usar precio del item (estimación)
@@ -249,7 +286,7 @@ async function cargarDashboard() {
     const totalGastos   = datosGastosActuales.reduce((s,g) => s + (Number(g.monto)||0), 0);
     const gananciaNeta  = totalIngresos - totalCosto - totalGastos;
     // Ventas netas: ingresos menos gastos del período (visualización adicional)
-    const ventasNetas   = totalIngresos - totalGastos;
+    const ventasNetas = totalIngresos - totalGastos;
     const ticketProm    = totalPersonas > 0 ? Math.round(totalIngresos / totalPersonas) : 0;
 
     const vendTop = mejorClave(conteoVendedores);
@@ -263,7 +300,8 @@ async function cargarDashboard() {
 
     // ── KPIs
     setText("txt-ventas-totales", fmt(totalIngresos));
-    setText("txt-ventas-netas",   fmt(ventasNetas));
+    // Reemplazamos la tarjeta de 'Ventas Netas' para mostrar 'Costo de Ventas'
+    setText("txt-costo-ventas",   fmt(totalCosto));
     setText("txt-ganancia",       fmt(gananciaNeta));
     setText("txt-gastos-totales", fmt(totalGastos));
     setText("txt-total-personas", totalPersonas.toLocaleString("es-CO"));
@@ -276,7 +314,8 @@ async function cargarDashboard() {
     // ── Badges de ganancia
     setBadge("badge-ganancia", gananciaNeta, totalIngresos);
     setBadge("badge-ventas",   totalIngresos, null, datosVentasActuales.length + " ventas");
-    setBadge("badge-ventas-netas", ventasNetas, totalIngresos);
+    // Badge: mostrar porcentaje relativo al ingreso usando costo en lugar de la métrica previa
+    setBadge("badge-ventas-netas", totalCosto, totalIngresos);
     setBadge("badge-gastos",   -totalGastos,  null, null, true);
 
     // ── Color tarjeta ganancia

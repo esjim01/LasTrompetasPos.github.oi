@@ -377,7 +377,11 @@ function modificarCantidad(index, delta) {
 }
 
 // --- FINALIZAR VENTA ---
-async function confirmarVenta() {
+// Variables para control de confirmación y envío
+let ventaPendiente = null;
+let ventaEnviando = false;
+
+function confirmarVenta() {
   if (carrito.length === 0) return M.toast({ html: "El carrito está vacío" });
 
   // Verificar si se seleccionó la opción de personas
@@ -385,12 +389,11 @@ async function confirmarVenta() {
   const personasInput = document.getElementById("num-personas");
   let numPersonas = 0;
 
-  // Solo leemos el valor si el checkbox existe y está marcado
   if (checkPersonas && checkPersonas.checked) {
     numPersonas = parseInt(personasInput.value) || 0;
   }
 
-  // Obtenemos el nombre del usuario de la sesión (Seguro gracias a verificarSesionVentas)
+  // Obtenemos el nombre del usuario de la sesión
   let vendedorNombre = "Vendedor";
   try {
     const sesion = JSON.parse(localStorage.getItem("usuarioNombre"));
@@ -399,7 +402,8 @@ async function confirmarVenta() {
     vendedorNombre = localStorage.getItem("usuarioNombre") || "Vendedor";
   }
 
-  const datosVenta = {
+  // Construir objeto venta pero NO enviarlo todavía
+  ventaPendiente = {
     carrito: carrito,
     vendedor: vendedorNombre,
     total: carrito.reduce((sum, i) => sum + i.precio * i.cantidad, 0),
@@ -407,39 +411,68 @@ async function confirmarVenta() {
     numPersonas: numPersonas,
   };
 
+  // Mostrar modal de confirmación
+  const overlay = document.getElementById('confirm-overlay');
+  const modal = document.getElementById('confirm-modal');
+  if (overlay && modal) {
+    overlay.classList.remove('hidden');
+    modal.classList.remove('hidden');
+  } else {
+    // Fallback: si no existe el modal, enviar directamente
+    ejecutarVentaConfirmada();
+  }
+}
+
+function closeConfirmCobrar() {
+  const overlay = document.getElementById('confirm-overlay');
+  const modal = document.getElementById('confirm-modal');
+  if (overlay && modal) {
+    overlay.classList.add('hidden');
+    modal.classList.add('hidden');
+  }
+}
+
+async function ejecutarVentaConfirmada() {
+  if (!ventaPendiente) return M.toast({ html: 'No hay venta pendiente' });
+  if (ventaEnviando) return; // proteger contra doble envío
+
+  ventaEnviando = true;
+  const btn = document.getElementById('btn-confirmar-venta');
+  if (btn) { btn.disabled = true; btn.classList.add('opacity-60'); }
+
   try {
-    const res = await fetch("/api/ventas/confirmar", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(datosVenta),
+    const res = await fetch('/api/ventas/confirmar', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(ventaPendiente),
     });
 
     if (res.ok) {
-      M.toast({
-        html: "¡Venta Realizada con Éxito!",
-        classes: "green darken-2 rounded",
-      });
+      M.toast({ html: '¡Venta Realizada con Éxito!', classes: 'green darken-2 rounded' });
 
       // Limpieza
       carrito = [];
       actualizarInterfazCarrito();
-
       toggleModal();
-
-      // Refrescar inventario
       cargarDatos();
 
-      // Resetear personas
+      // Resetear personas checkbox
+      const checkPersonas = document.getElementById('check-personas');
       if (checkPersonas) {
         checkPersonas.checked = false;
         togglePersonas();
       }
+
+      closeConfirmCobrar();
     } else {
-      M.toast({ html: "Error al registrar venta", classes: "red" });
+      M.toast({ html: 'Error al registrar venta', classes: 'red' });
     }
   } catch (e) {
     console.error(e);
-    M.toast({ html: "Error de conexión", classes: "red" });
+    M.toast({ html: 'Error de conexión', classes: 'red' });
+  } finally {
+    ventaEnviando = false;
+    ventaPendiente = null;
+    if (btn) { btn.disabled = false; btn.classList.remove('opacity-60'); }
   }
 }
 

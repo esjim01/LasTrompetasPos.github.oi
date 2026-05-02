@@ -39418,5 +39418,1361 @@
     "total": 114000,
     "numPersonas": 0,
     "estado": "despachado"
+  },
+  {
+    "id": "V-1777520184482-75v59",
+    "fecha": "2026-04-28T12:36:00.000Z",
+    "vendedor": "MarthaC",
+    "items": [
+      {
+        "nombre": "Ventas Cafeteria",
+        "precio": 92000,
+        "cantidad": 1,
+        "stockMax": 999
+      }
+    ],
+    "total": 92000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777520227601-1vrvb",
+    "fecha": "2026-04-28T17:37:00.000Z",
+    "vendedor": "MarthaC",
+    "items": [
+      {
+        "nombre": "Ventas Barra",
+        "precio": 46000,
+        "cantidad": 1,
+        "stockMax": 1000
+      }
+    ],
+    "total": 46000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777520286362-z5o93",
+    "fecha": "2026-04-29T22:38:00.000Z",
+    "vendedor": "MarthaC",
+    "items": [
+      {
+        "nombre": "Ventas Cafeteria",
+        "precio": 75000,
+        "cantidad": 1,
+        "stockMax": 998
+      },
+      {
+        "nombre": "Ventas Barra",
+        "precio": 110000,
+        "cantidad": 1,
+        "stockMax": 999
+      }
+    ],
+    "total": 185000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777664260570-h1bfm",
+    "fecha": "2026-05-01T19:37:40.775Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Coca Cola",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 17
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667274338-1p8b4",
+    "fecha": "2026-05-01T10:27:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 22
+      }
+    ],
+    "total": 10000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667400391-79rsa",
+    "fecha": "2026-05-01T15:30:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 160
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667401430-f3x9i",
+    "fecha": "2026-05-01T15:30:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 160
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667497807-x39h5",
+    "fecha": "2026-05-01T15:31:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 158
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667583098-9zpb7",
+    "fecha": "2026-05-01T15:33:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 156
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777667740540-g3ful",
+    "fecha": "2026-05-01T20:35:41.264Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 47
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777668196217-0arbk",
+    "fecha": "2026-05-01T15:43:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 155
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777668523089-ctz1i",
+    "fecha": "2026-05-01T20:48:43.616Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 154
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777668886934-gxzc9",
+    "fecha": "2026-05-01T20:54:47.716Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 152
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777669296907-bvqpf",
+    "fecha": "2026-05-01T21:01:36.989Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 28
+      },
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 20
+      }
+    ],
+    "total": 75000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777669333907-oghtu",
+    "fecha": "2026-05-01T21:02:14.635Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 129
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777669782991-8444i",
+    "fecha": "2026-05-01T21:09:43.632Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 128
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777669940475-myveu",
+    "fecha": "2026-05-01T21:12:21.291Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 46
+      },
+      {
+        "nombre": "Ron Tradicional Media",
+        "precio": 68000,
+        "cantidad": 1,
+        "stockMax": 12
+      }
+    ],
+    "total": 73000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777670223667-umctg",
+    "fecha": "2026-05-01T21:17:04.192Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 152
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777670557853-8tslx",
+    "fecha": "2026-05-01T21:22:38.496Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Amarillo Media",
+        "precio": 70000,
+        "cantidad": 1,
+        "stockMax": 27
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 151
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 45
+      }
+    ],
+    "total": 83000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777671047980-vojv5",
+    "fecha": "2026-05-01T21:30:48.622Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 44
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777671075647-v14lc",
+    "fecha": "2026-05-01T21:31:15.737Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 150
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777671176746-d5rll",
+    "fecha": "2026-05-01T21:32:57.698Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 148
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777671267254-rfg7c",
+    "fecha": "2026-05-01T21:34:28.003Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 58
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777671695190-rr12s",
+    "fecha": "2026-05-01T21:41:35.937Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 126
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 147
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777672475206-a1d95",
+    "fecha": "2026-05-01T21:54:35.868Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 3,
+        "stockMax": 149
+      }
+    ],
+    "total": 24000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777672528557-tol82",
+    "fecha": "2026-05-01T21:55:29.083Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 146
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 13000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777672859051-zv7oi",
+    "fecha": "2026-05-01T22:00:59.685Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 3,
+        "stockMax": 145
+      }
+    ],
+    "total": 24000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777673844268-hfu18",
+    "fecha": "2026-05-01T17:17:00.000Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 125
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 4,
+        "stockMax": 42
+      },
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 19
+      },
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 44
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 142
+      }
+    ],
+    "total": 103000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777674134357-7v97w",
+    "fecha": "2026-05-01T22:22:15.035Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 121
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777674290696-szl8f",
+    "fecha": "2026-05-01T22:24:51.340Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 41
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 141
+      }
+    ],
+    "total": 21000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777674397487-y8ste",
+    "fecha": "2026-05-01T22:26:38.213Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 3,
+        "stockMax": 139
+      }
+    ],
+    "total": 24000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675123517-yl6mz",
+    "fecha": "2026-05-01T22:38:44.311Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 38
+      },
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 57
+      },
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 25
+      }
+    ],
+    "total": 101000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675381774-zzljh",
+    "fecha": "2026-05-01T22:43:02.425Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 55
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675489388-3muqq",
+    "fecha": "2026-05-01T22:44:50.051Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 55
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675595197-6zqi4",
+    "fecha": "2026-05-01T22:46:35.982Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 136
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675661648-ff2h0",
+    "fecha": "2026-05-01T22:47:42.232Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 54
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777675980980-qhm10",
+    "fecha": "2026-05-01T22:53:01.973Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 135
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777676106392-x9aui",
+    "fecha": "2026-05-01T22:55:06.806Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 217
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 122
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777676307334-zin9o",
+    "fecha": "2026-05-01T22:58:28.029Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 37
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777676756503-umznu",
+    "fecha": "2026-05-01T23:05:56.516Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 42
+      }
+    ],
+    "total": 54000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777677038742-x9mtk",
+    "fecha": "2026-05-01T23:10:39.470Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 119
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777677073579-ohpbj",
+    "fecha": "2026-05-01T23:11:13.624Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Postobon y Pepsi",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 35
+      }
+    ],
+    "total": 5000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777677251248-epzt1",
+    "fecha": "2026-05-01T23:14:12.302Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 117
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777677709192-6qvfh",
+    "fecha": "2026-05-01T23:21:49.957Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Cuarto",
+        "precio": 36000,
+        "cantidad": 1,
+        "stockMax": 12
+      }
+    ],
+    "total": 36000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777677872021-v468s",
+    "fecha": "2026-05-01T23:24:32.473Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 4,
+        "stockMax": 199
+      }
+    ],
+    "total": 32000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777678368412-d5ri7",
+    "fecha": "2026-05-01T23:32:49.009Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 55
+      }
+    ],
+    "total": 56000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777679142199-riro5",
+    "fecha": "2026-05-01T23:45:42.768Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 136
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777679148175-jkiej",
+    "fecha": "2026-05-01T23:45:42.895Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 136
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777679138738-oy72u",
+    "fecha": "2026-05-01T23:45:43.018Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 136
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 3,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777680433625-o1a27",
+    "fecha": "2026-05-02T00:07:14.356Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 189
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777680672366-sffl5",
+    "fecha": "2026-05-02T00:11:04.822Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 29
+      },
+      {
+        "nombre": "Bonfiest Bomba",
+        "precio": 3000,
+        "cantidad": 1,
+        "stockMax": 17
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777680857340-h6fzj",
+    "fecha": "2026-05-02T00:14:09.807Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 70
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 2,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777680861851-ez053",
+    "fecha": "2026-05-02T00:14:22.329Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 70
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777681240475-1rs68",
+    "fecha": "2026-05-02T00:20:40.500Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 115
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777681506547-c25ew",
+    "fecha": "2026-05-02T00:25:07.333Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 188
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777681962585-weedj",
+    "fecha": "2026-05-02T00:32:43.051Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 187
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777682123218-yt8wh",
+    "fecha": "2026-05-02T00:35:23.662Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 67
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777682331480-8gfv6",
+    "fecha": "2026-05-02T00:38:52.045Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 3,
+        "stockMax": 66
+      }
+    ],
+    "total": 24000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777682516485-a6nwy",
+    "fecha": "2026-05-02T00:41:57.082Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 63
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777682721600-67ml2",
+    "fecha": "2026-05-02T00:45:22.757Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 186
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777683104026-gcauq",
+    "fecha": "2026-05-02T00:51:44.810Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 61
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777683523201-uj42a",
+    "fecha": "2026-05-02T00:58:43.940Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Botella",
+        "precio": 88000,
+        "cantidad": 1,
+        "stockMax": 25
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 185
+      }
+    ],
+    "total": 96000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777683685046-akimv",
+    "fecha": "2026-05-02T01:01:25.820Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 54
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 28
+      }
+    ],
+    "total": 61000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777684095196-hclm2",
+    "fecha": "2026-05-02T01:08:15.812Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 59
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777684515902-q0ju9",
+    "fecha": "2026-05-02T01:15:16.705Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 31
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 27
+      }
+    ],
+    "total": 83000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777685052685-2yblc",
+    "fecha": "2026-05-02T01:24:13.303Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 113
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777685169644-3kv17",
+    "fecha": "2026-05-02T01:26:10.098Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 57
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777685284265-pux8l",
+    "fecha": "2026-05-02T01:28:04.954Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 3,
+        "stockMax": 56
+      }
+    ],
+    "total": 24000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777685664233-ey4gi",
+    "fecha": "2026-05-02T01:34:24.787Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Ligth Media",
+        "precio": 56000,
+        "cantidad": 1,
+        "stockMax": 53
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 184
+      }
+    ],
+    "total": 64000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777685774820-y8nyr",
+    "fecha": "2026-05-02T01:36:07.456Z",
+    "vendedor": "Luisa-Dreisy",
+    "items": [
+      {
+        "nombre": "Cerveza Corona",
+        "precio": 12000,
+        "cantidad": 2,
+        "stockMax": 14
+      },
+      {
+        "nombre": "Cerveza Poker",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 188
+      },
+      {
+        "nombre": "Gatorade",
+        "precio": 6000,
+        "cantidad": 1,
+        "stockMax": 43
+      }
+    ],
+    "total": 38000,
+    "numPersonas": 4,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777686320590-2bysg",
+    "fecha": "2026-05-02T01:45:21.285Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 53
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777688674556-7sj32",
+    "fecha": "2026-05-02T02:24:35.225Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 2,
+        "stockMax": 51
+      }
+    ],
+    "total": 16000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777688968212-h6rvo",
+    "fecha": "2026-05-02T02:29:28.896Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Ron 5 años Media",
+        "precio": 78000,
+        "cantidad": 1,
+        "stockMax": 30
+      },
+      {
+        "nombre": "Cerveza Aguila Ligth",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 112
+      },
+      {
+        "nombre": "Soda",
+        "precio": 5000,
+        "cantidad": 2,
+        "stockMax": 26
+      }
+    ],
+    "total": 96000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777691896382-l8vhx",
+    "fecha": "2026-05-02T03:18:17.210Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Cerveza Club Colombia",
+        "precio": 8000,
+        "cantidad": 1,
+        "stockMax": 49
+      }
+    ],
+    "total": 8000,
+    "numPersonas": 0,
+    "estado": "despachado"
+  },
+  {
+    "id": "V-1777692251928-adgcg",
+    "fecha": "2026-05-02T03:24:12.668Z",
+    "vendedor": "Fredy",
+    "items": [
+      {
+        "nombre": "Aguardiente Cristal Media",
+        "precio": 54000,
+        "cantidad": 1,
+        "stockMax": 41
+      },
+      {
+        "nombre": "Ginger Canada Dry",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 26
+      },
+      {
+        "nombre": "Agua Botella Grande",
+        "precio": 5000,
+        "cantidad": 1,
+        "stockMax": 36
+      }
+    ],
+    "total": 64000,
+    "numPersonas": 0,
+    "estado": "despachado"
   }
 ]

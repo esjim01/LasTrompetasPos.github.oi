@@ -231,6 +231,17 @@
     <!-- Toast Container -->
     <div id="toast-container"></div>
 
+    <!-- Confirmación de Cobro Modal -->
+    <div id="confirm-overlay" class="fixed inset-0 bg-slate-900/50 z-50 hidden"></div>
+    <div id="confirm-modal" class="fixed z-60 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-lg p-6 w-full max-w-md hidden">
+        <h4 class="text-lg font-bold mb-3">Confirmar Cobro</h4>
+        <p class="text-sm text-slate-600 mb-4">¿Estás seguro de realizar esta venta?</p>
+        <div class="flex gap-3 justify-end">
+            <button onclick="closeConfirmCobrar()" class="px-4 py-2 rounded-lg bg-slate-100 font-bold">Cancelar</button>
+            <button id="btn-confirmar-venta" onclick="ejecutarVentaConfirmada()" class="px-4 py-2 rounded-lg bg-brand-600 text-white font-extrabold">Confirmar</button>
+        </div>
+    </div>
+
     <script>
         // --- CUSTOM TOAST FUNCTION ---
         function showToast(message, type = 'info') {
